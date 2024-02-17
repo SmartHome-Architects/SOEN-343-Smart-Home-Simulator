@@ -1,4 +1,6 @@
 # SOEN-343-Smart-Home-Simulator
+
+<a href="https://drive.google.com/drive/folders/1JBdkYUl1C41PuekZ6pABAq4UY7PDXJRT?usp=sharing">Google Drive</a>
 <table>
   <tr>
     <td>Name</td>
