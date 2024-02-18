@@ -15,9 +15,9 @@
   </tr>
 
   <tr>
-    <td>name</td>
-    <td>id</td>
-    <td><a href="link to profile">username</a></td>
+    <td>Jenisha Sivalingam</td>
+    <td>40247937</td>
+    <td><a href="https://github.com/JenishaSiv">JenishaSiv</a></td>
   </tr>
 
   <tr>
