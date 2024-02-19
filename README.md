@@ -21,9 +21,9 @@
   </tr>
 
   <tr>
-    <td>name</td>
-    <td>id</td>
-    <td><a href="link to profile">username</a></td>
+    <td>Sonali Patel</td>
+    <td>40176580</td>
+    <td><a href="https://github.com/sonalipxtel">sonalipxtel</a></td>
   </tr>
 
   <tr>
