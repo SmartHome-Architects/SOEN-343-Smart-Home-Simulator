@@ -29,7 +29,7 @@
   <tr>
     <td>Steven Di Stefano</td>
     <td>40175474</td>
-    <td><a href="link to profile">stevendis</a></td>
+    <td><a href="https://github.com/stevendis">stevendis</a></td>
   </tr>
 
   <tr>
