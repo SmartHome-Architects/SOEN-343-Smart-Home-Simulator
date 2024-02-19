@@ -27,9 +27,9 @@
   </tr>
 
   <tr>
-    <td>name</td>
-    <td>id</td>
-    <td><a href="link to profile">username</a></td>
+    <td>Steven Di Stefano</td>
+    <td>40175474</td>
+    <td><a href="link to profile">stevendis</a></td>
   </tr>
 
   <tr>
