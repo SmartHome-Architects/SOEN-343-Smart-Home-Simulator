@@ -5,6 +5,7 @@ import src.main.java.domain.sensors.*;
 import java.util.List;
 
 public class Room {
+    private int id;
     private String roomName;
     private List<Door> doors;
     private List<Light> lights;
@@ -13,8 +14,9 @@ public class Room {
     private Heater heater;
     private double temperature;
 
-    public Room(String roomName, List<Door> doors, List<Light> lights, List<Window> windows,
+    public Room(int id,String roomName, List<Door> doors, List<Light> lights, List<Window> windows,
                 AC acUnit, Heater heater, double temperature){
+        this.id = id;
         this.roomName = roomName;
         this.doors= doors;
         this.lights = lights;
@@ -22,6 +24,10 @@ public class Room {
         this.acUnit = acUnit;
         this.heater = heater;
         this.temperature = temperature;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getRoomName() {
@@ -50,5 +56,9 @@ public class Room {
 
     public double getTemperature() {
         return temperature;
+    }
+
+    public void setTemperature(double temperature){
+        this.temperature = temperature;
     }
 }
