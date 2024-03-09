@@ -1,7 +1,6 @@
 package src.main.java.presentation.Swing;
 
-import src.main.java.domain.dateTime.Date;
-import src.main.java.domain.dateTime.Time;
+import java.awt.Dimension;
 
 import javax.swing.*;
 
@@ -34,24 +33,13 @@ public class MainFrame {
     private JSlider slider1;
     private JButton buttonLogOut;
 
-    // c
+    // 
     public MainFrame() {
-
-        //Sets Date and Time on the DASHBOARD
-        Date currentDate = new Date();
-        Time currentTime = new Time();
-
-        //Updates Time every second 
-        Timer timer = new Timer(1000, e -> updateDateTime());
-        timer.start();
-
-        date.setText(currentDate.toString());
-        time.setText(currentTime.toString());
-
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1250, 700);
+        frame.setMinimumSize(new Dimension(300,400));
         frame.setLocationRelativeTo(null);
     }
 
@@ -62,15 +50,6 @@ public class MainFrame {
         frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
-
-    //Updates display of Time and Date
-    private void updateDateTime() {
-        Date currentDate = new Date();
-        Time currentTime = new Time();
-
-        date.setText(currentDate.toString());
-        time.setText(currentTime.toString());
     }
 
 }
