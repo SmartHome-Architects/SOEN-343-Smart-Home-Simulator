@@ -41,6 +41,7 @@ public class MainFrame {
         Date currentDate = new Date();
         Time currentTime = new Time();
 
+        //Updates Time every second 
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
 
@@ -63,6 +64,7 @@ public class MainFrame {
         frame.setVisible(true);
     }
 
+    //Updates display of Time and Date
     private void updateDateTime() {
         Date currentDate = new Date();
         Time currentTime = new Time();
