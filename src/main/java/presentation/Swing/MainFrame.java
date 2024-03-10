@@ -21,7 +21,6 @@ public class MainFrame {
     private JPanel SHH;
     private JPanel plus;
     private JComboBox comboBox2;
-    private JComboBox ManageUser;
     private JPanel comboBox4;
     private JPanel combobx1;
     private JTextArea textArea1;
@@ -37,6 +36,25 @@ public class MainFrame {
     private JPanel SetTimeDate;
     private JTextField TimeText;
     private JTextField DateText;
+    private JTabbedPane ManageUsers;
+    private JPanel Add;
+    private JPanel Delete;
+    private JPanel Edit;
+    private JTextField NewUsername;
+    private JTextField NewEmail;
+    private JRadioButton NewparentRadioButton;
+    private JRadioButton NewchildRadioButton;
+    private JRadioButton NewguestRadioButton;
+    private JTextField textField1;
+    private JLabel DeleteUsername;
+    private JPasswordField NewPassword;
+    private JTextField OldUsername;
+    private JTextField UpdateUsername;
+    private JTextField UpdateEmail;
+    private JPasswordField UpdatePassword;
+    private JRadioButton UpdateparentRadioButton;
+    private JRadioButton UpdatechildRadioButton;
+    private JRadioButton UpdateguestRadioButton;
 
     private Date currentDate;
     private Time currentTime;
