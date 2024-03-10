@@ -32,7 +32,6 @@ public class MainFrame {
     private JLabel temperature;
     private JLabel date;
     private JLabel time;
-    private JSlider slider1;
     private JButton buttonLogOut;
     private JPanel SetTimeDate;
     private JTextField TimeText;
