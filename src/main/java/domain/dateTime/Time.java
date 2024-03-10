@@ -20,6 +20,13 @@ public class Time {
             this.second = second;
         }
 
+    public Time(String timeString) {
+        String[] parts = timeString.split(":");
+        this.hour = Integer.parseInt(parts[0]);
+        this.minute = Integer.parseInt(parts[1]);
+        this.second = Integer.parseInt(parts[2]);
+    }
+
         public int getHour() {
             return hour;
         }
@@ -44,7 +51,22 @@ public class Time {
             this.second = second;
         }
 
-        public String toString() {
+    public void increment() {
+        second++;
+        if (second >= 60) {
+            second = 0;
+            minute++;
+            if (minute >= 60) {
+                minute = 0;
+                hour++;
+                if (hour >= 24) {
+                    hour = 0;
+                }
+            }
+        }
+    }
+
+    public String toString() {
             return String.format("%02d:%02d:%02d", hour, minute, second);
         }
     }
