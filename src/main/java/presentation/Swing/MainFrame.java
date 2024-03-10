@@ -4,6 +4,7 @@ import src.main.java.domain.dateTime.Date;
 import src.main.java.domain.dateTime.Time;
 
 import javax.swing.*;
+import java.awt.event.*;
 
 public class MainFrame {
     private JPanel WindowContainer;
@@ -20,7 +21,7 @@ public class MainFrame {
     private JPanel SHH;
     private JPanel plus;
     private JComboBox comboBox2;
-    private JComboBox combobox3;
+    private JComboBox ManageUser;
     private JPanel comboBox4;
     private JPanel combobx1;
     private JTextArea textArea1;
@@ -33,20 +34,40 @@ public class MainFrame {
     private JLabel time;
     private JSlider slider1;
     private JButton buttonLogOut;
+    private JPanel SetTimeDate;
+    private JTextField TimeText;
+    private JTextField DateText;
+
+    private Date currentDate;
+    private Time currentTime;
 
     // c
     public MainFrame() {
 
         //Sets Date and Time on the DASHBOARD
-        Date currentDate = new Date();
-        Time currentTime = new Time();
-
-        //Updates Time every second 
-        Timer timer = new Timer(1000, e -> updateDateTime());
-        timer.start();
+        currentDate = new Date();
+        currentTime = new Time();
 
         date.setText(currentDate.toString());
         time.setText(currentTime.toString());
+
+        //Updates Time every second
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+
+        DateText.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateDate();
+            }
+        });
+
+        // Add ActionListener to timeTextField
+        TimeText.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateTime();
+            }
+        });
+
 
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
@@ -66,10 +87,27 @@ public class MainFrame {
 
     //Updates display of Time and Date
     private void updateDateTime() {
-        Date currentDate = new Date();
-        Time currentTime = new Time();
+        // Only update the time and date labels if they are not already being edited by the user
+        if (!TimeText.isFocusOwner() && !DateText.isFocusOwner()) {
+            Date currentDate = new Date();
+            Time currentTime = new Time();
 
+            date.setText(currentDate.toString());
+            time.setText(currentTime.toString());
+        }
+    }
+
+    // Update date based on user input
+    private void updateDate() {
+        String newDateStr = DateText.getText();
+        currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
+    }
+
+    // Update time based on user input
+    private void updateTime() {
+        String newTimeStr = TimeText.getText();
+        currentTime = new Time(newTimeStr);
         time.setText(currentTime.toString());
     }
 
