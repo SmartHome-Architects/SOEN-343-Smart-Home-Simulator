@@ -20,10 +20,12 @@ public class MainFrame {
     private JPanel SHP;
     private JPanel SHH;
     private JPanel plus;
+
     private JComboBox comboBox2;
     private JComboBox ManageUser;
     private JPanel comboBox4;
     private JPanel combobx1;
+
     private JTextArea textArea1;
     private JButton buttonOn;
     private JButton buttonOff;
@@ -32,7 +34,6 @@ public class MainFrame {
     private JLabel temperature;
     private JLabel date;
     private JLabel time;
-    private JSlider slider1;
     private JButton buttonLogOut;
     private JPanel SetTimeDate;
     private JTextField TimeText;
@@ -42,7 +43,6 @@ public class MainFrame {
     private Time currentTime;
     private Thread timeIncrementer;
 
-    // c
     public MainFrame() {
 
         //Sets Date and Time on the DASHBOARD
