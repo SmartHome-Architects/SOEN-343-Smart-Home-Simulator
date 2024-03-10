@@ -52,7 +52,6 @@ public class Time {
         }
 
     public void increment() {
-        // Increment logic here, for example:
         second++;
         if (second >= 60) {
             second = 0;
@@ -67,7 +66,7 @@ public class Time {
         }
     }
 
-        public String toString() {
+    public String toString() {
             return String.format("%02d:%02d:%02d", hour, minute, second);
         }
     }

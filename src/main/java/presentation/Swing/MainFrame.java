@@ -40,6 +40,7 @@ public class MainFrame {
 
     private Date currentDate;
     private Time currentTime;
+    private Thread timeIncrementer;
 
     // c
     public MainFrame() {
@@ -52,18 +53,17 @@ public class MainFrame {
         time.setText(currentTime.toString());
 
         //Updates Time every second
-        Timer timer = new Timer(1000, e -> updateDateTime());
-        timer.start();
+        Timer defaultTimer = new Timer(1000, e -> updateDateTime());
+        defaultTimer.start();
 
         DateText.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 updateDate();
             }
         });
 
-        // Add ActionListener to timeTextField
         TimeText.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 updateTime();
             }
         });
@@ -102,6 +102,7 @@ public class MainFrame {
         String newDateStr = DateText.getText();
         currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
+
     }
 
     // Update time based on user input
@@ -109,6 +110,40 @@ public class MainFrame {
         String newTimeStr = TimeText.getText();
         currentTime = new Time(newTimeStr);
         time.setText(currentTime.toString());
+
+        startIncrementingTime();
+
+    }
+
+    private void startIncrementingTime() {
+        if (timeIncrementer == null) {
+            timeIncrementer = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Thread.sleep(1000);
+                            currentTime.increment();
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    time.setText(currentTime.toString());
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
+            });
+            timeIncrementer.start();
+        }
+    }
+
+    private void stopIncrementingTime() {
+        if (timeIncrementer != null && timeIncrementer.isAlive()) {
+            timeIncrementer.interrupt();
+            timeIncrementer = null;
+        }
     }
 
 }
