@@ -56,13 +56,13 @@ public class UserAccountManager {
         }
     }
 
-    public void editUser(String username, String newProfileData) {
+    public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(Users))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith(username + "|")) {
-                    line = username + "|" + newProfileData;
+                if (line.startsWith(oldUsername + "|")) {
+                    line = username + "|" + email + "|" + password + "|" + accessibility;
                 }
                 lines.add(line);
             }

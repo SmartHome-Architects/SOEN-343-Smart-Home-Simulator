@@ -2,6 +2,11 @@ package src.main.java.presentation.Swing;
 
 import src.main.java.domain.dateTime.Date;
 import src.main.java.domain.dateTime.Time;
+import src.main.java.presentation.Swing.command.AddProfileCommand;
+import src.main.java.presentation.Swing.command.DeleteProfileCommand;
+import src.main.java.presentation.Swing.command.EditProfileCommand;
+import src.main.java.presentation.Swing.command.ProfileManager;
+import src.main.java.presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -45,7 +50,7 @@ public class MainFrame {
     private JRadioButton NewparentRadioButton;
     private JRadioButton NewchildRadioButton;
     private JRadioButton NewguestRadioButton;
-    private JTextField textField1;
+    private JTextField DeleteUser;
     private JLabel DeleteUsername;
     private JPasswordField NewPassword;
     private JTextField OldUsername;
@@ -55,10 +60,14 @@ public class MainFrame {
     private JRadioButton UpdateparentRadioButton;
     private JRadioButton UpdatechildRadioButton;
     private JRadioButton UpdateguestRadioButton;
+    private JButton Add_Profile;
+    private JButton Delete_Profile;
+    private JButton Edit_Profile;
 
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
+    private ProfileManager profileManager;
 
     // c
     public MainFrame() {
@@ -83,6 +92,69 @@ public class MainFrame {
         TimeText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 updateTime();
+            }
+        });
+
+
+        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+
+        AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
+        DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, "");
+        EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, "", "", "", "", "");
+
+        profileManager = new ProfileManager(addProfileCommand, deleteProfileCommand, editProfileCommand);
+
+        //Adds the new user profile to the text file
+        Add_Profile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = getNewUsername().getText();
+                String email = getNewEmail().getText();
+                String password = getNewPassword().getText();
+                String accessibility = "";
+                if (getParentRadioButton().isSelected()) {
+                    accessibility = "Parent";
+                } else if (getChildRadioButton().isSelected()) {
+                    accessibility = "Child";
+                } else if (getGuestRadioButton().isSelected()) {
+                    accessibility = "Guest";
+                }
+
+                AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
+                addProfileCommand.execute();
+            }
+        });
+
+        //Deletes the user profile to the text file
+        Delete_Profile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usernameToDelete = getDeleteUser().getText();
+
+                DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
+                deleteProfileCommand.execute();
+            }
+        });
+
+        //Edits the user profile in the text file
+        Edit_Profile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String oldUsername = getOldUsername().getText();
+                String username = getUpdateUsername().getText();
+                String email = getUpdateEmail().getText();
+                String password = getUpdatePassword().getText();
+                String accessibility = "";
+                if (getUpdateparentRadioButton().isSelected()) {
+                    accessibility = "Parent";
+                } else if (getUpdatechildRadioButton().isSelected()) {
+                    accessibility = "Child";
+                } else if (getUpdateguestRadioButton().isSelected()) {
+                    accessibility = "Guest";
+                }
+
+                EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
+                editProfileCommand.execute();
             }
         });
 
@@ -163,5 +235,65 @@ public class MainFrame {
             timeIncrementer = null;
         }
     }
+
+    //Getters for Adding User Profile to text file
+    public JTextField getNewUsername() {
+        return NewUsername;
+    }
+
+    public JTextField getNewEmail() {
+        return NewEmail;
+    }
+
+    public JPasswordField getNewPassword() {
+        return NewPassword;
+    }
+
+    public JRadioButton getParentRadioButton() {
+        return NewparentRadioButton;
+    }
+
+    public JRadioButton getChildRadioButton() {
+        return NewchildRadioButton;
+    }
+
+    public JRadioButton getGuestRadioButton() {
+        return NewguestRadioButton;
+    }
+
+    //Getters for Deleting User Profile from text file
+    public JTextField getDeleteUser() {
+        return DeleteUser;
+    }
+
+    //Getters for Editing User Profile in text file
+    public JTextField getOldUsername() {
+        return OldUsername;
+    }
+
+    public JTextField getUpdateUsername() {
+        return UpdateUsername;
+    }
+
+    public JTextField getUpdateEmail() {
+        return UpdateEmail;
+    }
+
+    public JPasswordField getUpdatePassword() {
+        return UpdatePassword;
+    }
+
+    public JRadioButton getUpdateparentRadioButton() {
+        return UpdateparentRadioButton;
+    }
+
+    public JRadioButton getUpdatechildRadioButton() {
+        return UpdatechildRadioButton;
+    }
+
+    public JRadioButton getUpdateguestRadioButton() {
+        return UpdateguestRadioButton;
+    }
+
 
 }
