@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f26c35f-1d97-4b4e-b08f-ca5076250c79" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/SOEN-343-Smart-Home-Simulator.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/AbstractLayout.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/DimensionInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/GridConstraints.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/GridLayoutManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/HorizontalInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/LayoutState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/Spacer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/SupportCode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/com/intellij/uiDesigner/core/VerticalInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/database/Users.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/database/txtFileContainingDataInThisDirectory" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/DomainStuffInThisDirectory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/dateTime/Date.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/dateTime/Time.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/sensors/Door.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/sensors/Light.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/sensors/Temperature.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/sensors/Window.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/smartHomeSimulator/SmartHomeSimulator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/smartHomeSimulator/modules/SmartHomeCoreFunctionality.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/smartHomeSimulator/modules/SmartHomeHeating.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/domain/smartHomeSimulator/modules/SmartHomeSecurity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/MainFrame$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/MainFrame$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/MainFrame$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/MainFrame.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/AddProfileCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/Command.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/DeleteProfileCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/EditProfileCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/ProfileManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/main/java/presentation/Swing/command/UserAccountManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/SOEN-343-Smart-Home-Simulator/src/test/java/TestingClassesInThisDirectory.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2dS9OkLeR6c8iBgvvh28zLsRlQo" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.MainFrame.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "130",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "469",
+    "git-widget-placeholder": "LoginUser__jen",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="src.main.java.presentation.Swing" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.main.java.Main" />
+      <module name="SOEN-343-Smart-Home-Simulator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="src.main.java.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f26c35f-1d97-4b4e-b08f-ca5076250c79" name="Changes" comment="" />
+      <created>1709990583497</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709990583497</updated>
+    </task>
+    <servers />
+  </component>
+</project>
