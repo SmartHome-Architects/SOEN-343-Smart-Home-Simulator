@@ -1,8 +1,6 @@
 
-package src.main.java.presentation.Swing;
+package src.main.java.presentation.Swing.LoginAndSignUp;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -90,7 +88,7 @@ public class SignUp extends javax.swing.JFrame {
         left.setBackground(new java.awt.Color(51, 153, 255));
         left.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/ranagohar/Desktop/logo.jpeg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/ranagohar/Desktop/smm.jpeg")); // NOI18N
         jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);

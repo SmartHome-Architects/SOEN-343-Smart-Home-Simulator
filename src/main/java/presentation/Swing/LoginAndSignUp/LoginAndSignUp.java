@@ -1,9 +1,4 @@
-package src.main.java.presentation;
-
-import src.main.java.presentation.Swing.LogIn;
-import src.main.java.presentation.Swing.SignUp;
-
-import javax.swing.*;
+package src.main.java.presentation.Swing.LoginAndSignUp;
 
 public class LoginAndSignUp {
     public static void main(String args[]) {
