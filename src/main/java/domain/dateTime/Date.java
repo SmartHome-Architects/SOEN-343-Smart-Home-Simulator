@@ -1,5 +1,7 @@
 package src.main.java.domain.dateTime;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Date {
     private int day;
     private int month;
@@ -21,13 +23,24 @@ public class Date {
         this.dayOfWeek = dayOfWeek;
     }
 
+    public Date(String dateString) {
+        String[] parts = dateString.split(", ");
+        this.dayOfWeek = parts[0];
+        String datePart = parts[1];
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(datePart, formatter);
+
+        this.day = localDate.getDayOfMonth();
+        this.month = localDate.getMonthValue();
+        this.year = localDate.getYear();
+    }
+
     public int getDay() {
         return day;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
+    public void setDay(int day) { this.day = day; }
 
     public int getMonth() {
         return month;
