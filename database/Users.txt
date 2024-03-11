@@ -1,0 +1,3 @@
+va_patel|vanisha1@gmail.com|patel1234|Child
+s_patel|sonali@gmail.com|patel12345|Child
+r_gohar|rana@gmail.com|gohar12345|Guest
