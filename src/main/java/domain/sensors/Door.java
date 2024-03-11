@@ -6,11 +6,11 @@ public class Door {
     private int doorID;
     private boolean isOpen; // true for open, false for close
 
-    public Door(String name, String location, int doorID, boolean isOpen) {
+    public Door(String name, String location, int doorID) {
         this.name = name;
         this.location = location;
         this.doorID = doorID;
-        this.isOpen = isOpen;
+        this.isOpen = false;
     }
 
     public String getName() {

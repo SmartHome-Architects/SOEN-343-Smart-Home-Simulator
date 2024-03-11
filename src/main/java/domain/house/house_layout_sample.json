@@ -1,0 +1,113 @@
+{
+    "rooms": [
+      {
+        "name": "Garage",
+        "doors": [
+          {"coordinates": {"x": 0, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 2, "y": 2}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 1, "y": 1}}
+        ]
+      },
+      {
+        "name": "Kitchen",
+        "doors": [
+          {"coordinates": {"x": 1, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 0, "y": 1}},
+	      {"coordinates": {"x": 0, "y": 2}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 2, "y": 2}},
+	      {"coordinates": {"x": 2, "y": 2}}
+        ]
+      },
+      {
+        "name": "Dining Room",
+        "doors": [
+          {"coordinates": {"x": 2, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 1, "y": 1}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 3, "y": 3}}
+        ]
+      },
+      {
+        "name": "Living Room",
+        "doors": [
+          {"coordinates": {"x": 3, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 2, "y": 1}},
+          {"coordinates": {"x": 2, "y": 2}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 4, "y": 4}},
+          {"coordinates": {"x": 2, "y": 2}}
+        ]
+      },
+      {
+        "name": "Bedroom1",
+        "doors": [
+          {"coordinates": {"x": 4, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 3, "y": 1}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 5, "y": 5}}
+        ]
+      },
+      {
+        "name": "Bedroom2",
+        "doors": [
+          {"coordinates": {"x": 4, "y": 1}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 3, "y": 2}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 5, "y": 6}}
+        ]
+      },
+      {
+        "name": "Bathroom",
+        "doors": [
+          {"coordinates": {"x": 5, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 4, "y": 1}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 6, "y": 7}}
+        ]
+      },
+      {
+        "name": "Hallway",
+        "doors": [
+          {"coordinates": {"x": 6, "y": 0}}
+        ],
+        "windows": [
+          {"coordinates": {"x": 5, "y": 1}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 7, "y": 8}}
+        ]
+      },
+      {
+        "name": "Entrance",
+        "doors": [
+          {"coordinates": {"x": 7, "y": 0}}
+        ],
+        "lights": [
+          {"coordinates": {"x": 8, "y": 9}}
+        ]
+      }
+    ]
+  }

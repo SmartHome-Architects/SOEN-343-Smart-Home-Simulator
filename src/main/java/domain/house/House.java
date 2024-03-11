@@ -1,12 +1,13 @@
 package domain.house;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class House {
     private List<Room> rooms = new ArrayList<>();
 
-    public House() {
+    public House(){
         this.rooms = Layout.loadLayout();
     }
 
@@ -17,4 +18,5 @@ public class House {
     public List<Room> getRooms() {
         return rooms;
     }
+
 }

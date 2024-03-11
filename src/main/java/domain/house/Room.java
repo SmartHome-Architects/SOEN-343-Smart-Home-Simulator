@@ -7,18 +7,18 @@ import java.util.List;
 public class Room {
     private int id;
     private String roomName;
-    private List<Door> doors;
+    private Door door;
     private List<Light> lights;
     private List<Window> windows;
     private AC acUnit;
     private Heater heater;
     private double temperature;
 
-    public Room(int id, String roomName, List<Door> doors, List<Light> lights, List<Window> windows,
+    public Room(int id, String roomName, Door door, List<Light> lights, List<Window> windows,
                 AC acUnit, Heater heater, double temperature) {
         this.id = id;
         this.roomName = roomName;
-        this.doors = doors;
+        this.door = door;
         this.lights = lights;
         this.windows = windows;
         this.acUnit = acUnit;
@@ -34,8 +34,8 @@ public class Room {
         return roomName;
     }
 
-    public List<Door> getDoors() {
-        return doors;
+    public Door getDoor() {
+        return door;
     }
 
     public List<Light> getLights() {
