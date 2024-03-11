@@ -1,4 +1,4 @@
-package src.main.java.domain.sensors;
+package domain.sensors;
 
 public class Door {
     private String name;

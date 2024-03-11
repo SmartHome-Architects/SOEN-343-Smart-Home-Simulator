@@ -1,4 +1,4 @@
-package src.main.java.presentation.Swing.command;
+package presentation.Swing.command;
 
 public interface Command {
 

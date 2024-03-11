@@ -1,12 +1,12 @@
-package src.main.java.presentation.Swing;
+package presentation.Swing;
 
-import src.main.java.domain.dateTime.Date;
-import src.main.java.domain.dateTime.Time;
-import src.main.java.presentation.Swing.command.AddProfileCommand;
-import src.main.java.presentation.Swing.command.DeleteProfileCommand;
-import src.main.java.presentation.Swing.command.EditProfileCommand;
-import src.main.java.presentation.Swing.command.ProfileManager;
-import src.main.java.presentation.Swing.command.UserAccountManager;
+import domain.dateTime.Date;
+import domain.dateTime.Time;
+import presentation.Swing.command.AddProfileCommand;
+import presentation.Swing.command.DeleteProfileCommand;
+import presentation.Swing.command.EditProfileCommand;
+import presentation.Swing.command.ProfileManager;
+import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import java.awt.event.*;

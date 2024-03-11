@@ -1,7 +1,7 @@
-package src.main.java.domain.sensors;
+package domain.sensors;
 
-public class Heater extends TempControlUnit{
-    public Heater(int id){
+public class Heater extends TempControlUnit {
+    public Heater(int id) {
         super(id);
     }
 }

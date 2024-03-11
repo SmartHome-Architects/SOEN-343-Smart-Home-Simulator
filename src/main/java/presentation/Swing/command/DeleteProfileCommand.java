@@ -1,6 +1,6 @@
-package src.main.java.presentation.Swing.command;
+package presentation.Swing.command;
 
-public class DeleteProfileCommand implements Command{
+public class DeleteProfileCommand implements Command {
     private UserAccountManager accountManager;
     private String username;
 

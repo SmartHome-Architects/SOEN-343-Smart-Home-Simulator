@@ -1,4 +1,4 @@
-package src.main.java.presentation.Swing.command;
+package presentation.Swing.command;
 
 import java.io.*;
 import java.util.ArrayList;

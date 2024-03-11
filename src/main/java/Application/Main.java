@@ -1,6 +1,6 @@
-package src.main.java;
+package Application;
 
-import src.main.java.presentation.Swing.MainFrame;
+import presentation.Swing.MainFrame;
 
 import javax.swing.SwingUtilities;
 
@@ -10,5 +10,6 @@ public class Main {
             MainFrame mainFrame = new MainFrame();
             mainFrame.showMainFrame();
         });
+
     }
 }

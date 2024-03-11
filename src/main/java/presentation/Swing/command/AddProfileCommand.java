@@ -1,6 +1,6 @@
-package src.main.java.presentation.Swing.command;
+package presentation.Swing.command;
 
-public class AddProfileCommand implements Command{
+public class AddProfileCommand implements Command {
     private UserAccountManager accountManager;
     private String username;
     private String password;
