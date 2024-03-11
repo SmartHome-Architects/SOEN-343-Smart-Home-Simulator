@@ -16,16 +16,6 @@ public class Main {
 
         //remove when done
         House h = new House();
-        List<Room> rooms = h.getRooms();
-        for (Room room: rooms) {
-
-            System.out.println(room.getRoomName() + " " + room.getTemperature());
-
-            if(room.getRoomName().equals("Kitchen")){
-                room.setTemperature(25.0);
-                System.out.println(room.getTemperature() + " changed.");
-            }
-        }
 
     }
 }
