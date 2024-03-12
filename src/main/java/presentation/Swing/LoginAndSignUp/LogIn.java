@@ -14,8 +14,14 @@ public class LogIn extends javax.swing.JFrame {
         initComponents();
     }
 
+
+
     public void setSignUpActionListener(ActionListener listener) {
         jButton2.addActionListener(listener);
+    }
+
+    public void setLoginActionListener(ActionListener listener) {
+        jButton1.addActionListener(listener);
     }
 
 
@@ -204,7 +210,15 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }                                           
+    }
+
+    public String getEmailText() {
+        return jTextField1.getText();
+    }
+
+    public String getPasswordText() {
+        return jTextField2.getText();
+    }
 
 
     
