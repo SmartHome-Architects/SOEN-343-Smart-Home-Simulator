@@ -1,10 +1,12 @@
 package src.main.java.presentation.Swing.LoginAndSignUp;
 
 public class LoginAndSignUp {
-    public static void main(String args[]) {
+    private LogIn login;
+    private SignUp signup;
 
-        LogIn login = new LogIn();
-        SignUp signup = new SignUp();
+    public LoginAndSignUp() {
+        login = new LogIn();
+        signup = new SignUp();
 
         // Action listener for "Sign Up" button in the login page
         login.setSignUpActionListener(e -> {
@@ -19,11 +21,16 @@ public class LoginAndSignUp {
             login.setVisible(true);
             login.setLocationRelativeTo(null); // Set location after making it visible
         });
+    }
 
+    public void showLogin() {
         login.pack();
         login.setLocationRelativeTo(null);
         login.setVisible(true);
+    }
 
-        signup.pack();
+    public static void main(String args[]) {
+        LoginAndSignUp loginAndSignUp = new LoginAndSignUp();
+        loginAndSignUp.showLogin();
     }
 }
