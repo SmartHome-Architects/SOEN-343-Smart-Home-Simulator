@@ -1,13 +1,20 @@
 
 package src.main.java.presentation.Swing.LoginAndSignUp;
 
+import src.main.java.presentation.Swing.MainFrame;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class SignUp extends javax.swing.JFrame {
 
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton1; //Sign up button
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -18,16 +25,16 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton1; //Guest
+    private javax.swing.JRadioButton jRadioButton2; //Parent
+    private javax.swing.JRadioButton jRadioButton3; //Child
+    private javax.swing.JRadioButton jRadioButton4; //Stranger
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField1; //Email
+    private javax.swing.JTextField jTextField3; //Username
     private javax.swing.JPanel left;
     private javax.swing.JPanel right;
-    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JPasswordField jPasswordField; //Password
     private javax.swing.JCheckBox showPasswordCheckBox;
 
     public SignUp() {
@@ -272,8 +279,38 @@ public class SignUp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String username = jTextField3.getText();
+        String email = jTextField1.getText();
+        String password = new String(jPasswordField.getPassword());
+        String userType = "";
+        if (jRadioButton1.isSelected()) {
+            userType = "Guest";
+        } else if (jRadioButton2.isSelected()) {
+            userType = "Parent";
+        } else if (jRadioButton3.isSelected()) {
+            userType = "Child";
+        } else if (jRadioButton4.isSelected()) {
+            userType = "Stranger";
+        }
+
+        String filePath = "database/users.txt";
+        File file = new File(filePath);
+
+        // Write user information to text file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+            writer.println(username + "|" + email + "|" + password + "|" + userType);
+            JOptionPane.showMessageDialog(this, "Registration Successful!");
+            this.setVisible(false);
+
+            // Create and display the main frame
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.showMainFrame();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error occurred while registering. Please try again later.");
+        }
     }                                        
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            

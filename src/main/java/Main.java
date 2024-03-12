@@ -17,11 +17,10 @@ public class Main {
                 String email = loginFrame.getEmailText();
                 String password = loginFrame.getPasswordText();
 
-                boolean isAuthenticated = AuthenticationManager.authenticateUser(email, password); // Replace this with actual authentication logic
+                boolean isAuthenticated = AuthenticationManager.authenticateUser(email, password);
 
                 if (isAuthenticated) {
                     // Authentication successful, open dashboard
-                    // Replace DashboardFrame with your actual dashboard frame
                     MainFrame mainFrame = new MainFrame();
                     mainFrame.showMainFrame();
                     loginFrame.dispose(); // Close the login frame
@@ -31,8 +30,8 @@ public class Main {
                 }
             });
 
-            loginFrame.setVisible(true); // Show login frame
-            loginFrame.setLocationRelativeTo(null); // Center the login frame
+            loginFrame.setVisible(true);
+            loginFrame.setLocationRelativeTo(null);
 
         });
 
