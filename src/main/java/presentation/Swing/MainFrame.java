@@ -147,6 +147,8 @@ public class MainFrame {
 
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile added successfully!");
             }
         });
 
@@ -158,6 +160,8 @@ public class MainFrame {
 
                 DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
                 deleteProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile deleted successfully!");
             }
         });
 
@@ -180,6 +184,8 @@ public class MainFrame {
 
                 EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
                 editProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile edited successfully!");
             }
         });
 
@@ -226,6 +232,8 @@ public class MainFrame {
         currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
 
+        JOptionPane.showMessageDialog(WindowContainer, "Date updated successfully");
+
     }
 
     // Update time based on user input
@@ -235,6 +243,8 @@ public class MainFrame {
         time.setText(currentTime.toString());
 
         startIncrementingTime();
+
+        JOptionPane.showMessageDialog(WindowContainer, "Time updated successfully");
 
     }
 
