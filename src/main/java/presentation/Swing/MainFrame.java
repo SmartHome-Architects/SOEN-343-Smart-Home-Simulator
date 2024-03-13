@@ -2,6 +2,7 @@ package presentation.Swing;
 
 import domain.dateTime.Date;
 import domain.dateTime.Time;
+import domain.editbutton.EditHouseInhabitantsDialog;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
@@ -64,6 +65,7 @@ public class MainFrame {
     private JButton Delete_Profile;
     private JButton Edit_Profile;
     private JLabel houseLayoutLabel;
+    private JButton editButton;
 
     private Date currentDate;
     private Time currentTime;
@@ -119,6 +121,14 @@ public class MainFrame {
                 updateTime();
             }
         });
+
+        editButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog((Frame) SwingUtilities.getWindowAncestor(WindowContainer));
+                dialog.setVisible(true);
+            }
+        });
+
 
 
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
