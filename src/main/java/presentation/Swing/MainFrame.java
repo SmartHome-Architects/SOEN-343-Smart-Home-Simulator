@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainFrame {
+public class MainFrame{
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
@@ -64,6 +64,31 @@ public class MainFrame {
     private Time currentTime;
     private Thread timeIncrementer;
     private ProfileManager profileManager;
+
+    private JLabel houseLayoutLabel;
+    private ImageIcon houseLayout;
+
+    // Lights for each room (true = on, false = off)
+    private boolean bathroomLight;
+    private boolean bedroom1Light;
+    private boolean bedroom2Light;
+    private boolean kitchenLight;
+    private boolean livingroomLight;
+    private boolean garageLight;
+    private boolean hallwayLight;
+    private boolean frontLight; //front yard light
+    private boolean backLight; //backyard light
+
+    // Doors (true = open, false = closed)
+    private boolean frontDoor;
+    private boolean backDoor;
+    private boolean bedroom1Door;
+    private boolean bedroom2Door;
+    private boolean bathroomDoor;
+    private boolean garageInsideDoor;
+    private boolean garageOutsideDoor;
+
+    // Windows needed
 
     public MainFrame() {
         //Sets Date and Time on the DASHBOARD
@@ -149,6 +174,14 @@ public class MainFrame {
         frame.setSize(1250, 700);
         frame.setMinimumSize(new Dimension(300,400));
         frame.setLocationRelativeTo(null);
+
+        // Load the image with the specified width and height
+        houseLayout = new ImageIcon("houseLayout.png");
+        Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
+        houseLayoutLabel.setIcon(new ImageIcon(image));
+        houseLayoutLabel.setText("house layout image");
+        houseImage.setLayout(new BorderLayout());
+        houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
     }
 
     public void showMainFrame() {
