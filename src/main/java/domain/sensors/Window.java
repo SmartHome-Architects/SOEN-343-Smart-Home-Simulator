@@ -1,4 +1,6 @@
-package src.main.java.domain.sensors;
+package domain.sensors;
+
+import domain.house.Coordinate;
 
 public class Window {
     private String name;
@@ -7,12 +9,15 @@ public class Window {
     private boolean isOpen; // true for open, false for close
     private boolean isBlocked; //true for blocked, false for not blocked
 
-    public Window(String name, String location, int windowID, boolean isOpen, boolean isBlocked) {
+    private Coordinate windowCoordinates;
+
+    public Window(String name, String location, int windowID,Coordinate windowCoordinates ) {
         this.name = name;
         this.location = location;
         this.windowID = windowID;
         this.isOpen = isOpen;
-        this.isBlocked = isBlocked;
+        this.isBlocked = false;
+        this.windowCoordinates = windowCoordinates;
     }
 
     public String getName() {
@@ -63,6 +68,7 @@ public class Window {
                 ", windowID=" + windowID +
                 ", isOpen=" + isOpen +
                 ", isBlocked=" + isBlocked +
+                ", windowCoordinates=" + windowCoordinates.getX() + "," + windowCoordinates.getY()+
                 '}';
     }
 }

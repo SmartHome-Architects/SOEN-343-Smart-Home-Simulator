@@ -1,24 +1,25 @@
-package src.main.java.domain.dateTime;
+package domain.dateTime;
 
 import java.time.LocalTime;
+
 public class Time {
 
-        private int hour;
-        private int minute;
-        private int second;
+    private int hour;
+    private int minute;
+    private int second;
 
-        public Time() {
-            LocalTime currentTime = LocalTime.now();
-            this.hour = currentTime.getHour();
-            this.minute = currentTime.getMinute();
-            this.second = currentTime.getSecond();
-        }
+    public Time() {
+        LocalTime currentTime = LocalTime.now();
+        this.hour = currentTime.getHour();
+        this.minute = currentTime.getMinute();
+        this.second = currentTime.getSecond();
+    }
 
-        public Time(int hour, int minute, int second) {
-            this.hour = hour;
-            this.minute = minute;
-            this.second = second;
-        }
+    public Time(int hour, int minute, int second) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
 
     public Time(String timeString) {
         String[] parts = timeString.split(":");
@@ -27,29 +28,29 @@ public class Time {
         this.second = Integer.parseInt(parts[2]);
     }
 
-        public int getHour() {
-            return hour;
-        }
+    public int getHour() {
+        return hour;
+    }
 
-        public void setHour(int hour) {
-            this.hour = hour;
-        }
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
 
-        public int getMinute() {
-            return minute;
-        }
+    public int getMinute() {
+        return minute;
+    }
 
-        public void setMinute(int minute) {
-            this.minute = minute;
-        }
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
 
-        public int getSecond() {
-            return second;
-        }
+    public int getSecond() {
+        return second;
+    }
 
-        public void setSecond(int second) {
-            this.second = second;
-        }
+    public void setSecond(int second) {
+        this.second = second;
+    }
 
     public void increment() {
         second++;
@@ -67,7 +68,7 @@ public class Time {
     }
 
     public String toString() {
-            return String.format("%02d:%02d:%02d", hour, minute, second);
-        }
+        return String.format("%02d:%02d:%02d", hour, minute, second);
     }
+}
 

@@ -1,11 +1,14 @@
-package src.main.java.presentation.Swing;
+package presentation.Swing;
 
-import src.main.java.domain.dateTime.Date;
-import src.main.java.domain.dateTime.Time;
-import src.main.java.presentation.Swing.command.*;
+import domain.dateTime.Date;
+import domain.dateTime.Time;
+import presentation.Swing.command.AddProfileCommand;
+import presentation.Swing.command.DeleteProfileCommand;
+import presentation.Swing.command.EditProfileCommand;
+import presentation.Swing.command.ProfileManager;
+import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class MainFrame {
@@ -65,7 +68,9 @@ public class MainFrame {
     private Thread timeIncrementer;
     private ProfileManager profileManager;
 
+    // c
     public MainFrame() {
+
         //Sets Date and Time on the DASHBOARD
         currentDate = new Date();
         currentTime = new Time();
@@ -89,15 +94,22 @@ public class MainFrame {
             }
         });
 
-        // Assuming UserAccountManager is defined elsewhere
+
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
+        AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
+        DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, "");
+        EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, "", "", "", "", "");
+
+        profileManager = new ProfileManager(addProfileCommand, deleteProfileCommand, editProfileCommand);
+
+        //Adds the new user profile to the text file
         Add_Profile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = getNewUsername().getText();
                 String email = getNewEmail().getText();
-                String password = new String(getNewPassword().getPassword()); // Corrected usage of getPassword()
+                String password = getNewPassword().getText();
                 String accessibility = "";
                 if (getParentRadioButton().isSelected()) {
                     accessibility = "Parent";
@@ -112,6 +124,7 @@ public class MainFrame {
             }
         });
 
+        //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,13 +135,14 @@ public class MainFrame {
             }
         });
 
+        //Edits the user profile in the text file
         Edit_Profile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String oldUsername = getOldUsername().getText();
                 String username = getUpdateUsername().getText();
                 String email = getUpdateEmail().getText();
-                String password = new String(getUpdatePassword().getPassword()); // Corrected usage of getPassword()
+                String password = getUpdatePassword().getText();
                 String accessibility = "";
                 if (getUpdateparentRadioButton().isSelected()) {
                     accessibility = "Parent";
@@ -143,11 +157,11 @@ public class MainFrame {
             }
         });
 
+
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1250, 700);
-        frame.setMinimumSize(new Dimension(300,400));
         frame.setLocationRelativeTo(null);
     }
 
@@ -177,6 +191,7 @@ public class MainFrame {
         String newDateStr = DateText.getText();
         currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
+
     }
 
     // Update time based on user input
@@ -184,7 +199,9 @@ public class MainFrame {
         String newTimeStr = TimeText.getText();
         currentTime = new Time(newTimeStr);
         time.setText(currentTime.toString());
+
         startIncrementingTime();
+
     }
 
     private void startIncrementingTime() {
@@ -276,4 +293,6 @@ public class MainFrame {
     public JRadioButton getUpdateguestRadioButton() {
         return UpdateguestRadioButton;
     }
+
+
 }

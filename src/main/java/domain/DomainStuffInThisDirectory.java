@@ -1,4 +1,4 @@
-package src.main.java.domain;
+package domain;
 
 public class DomainStuffInThisDirectory {
 }

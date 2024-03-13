@@ -1,4 +1,4 @@
-package src.main.java.presentation.Swing.LoginAndSignUp;
+package presentation.Swing.LoginAndSignUp;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

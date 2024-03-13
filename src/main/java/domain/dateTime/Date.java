@@ -1,4 +1,5 @@
-package src.main.java.domain.dateTime;
+package domain.dateTime;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -40,7 +41,9 @@ public class Date {
         return day;
     }
 
-    public void setDay(int day) { this.day = day; }
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     public int getMonth() {
         return month;

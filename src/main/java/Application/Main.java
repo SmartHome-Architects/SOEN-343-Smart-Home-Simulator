@@ -1,8 +1,8 @@
-package src.main.java;
+package Application;
 
-import src.main.java.presentation.Swing.LoginAndSignUp.AuthenticationManager;
-import src.main.java.presentation.Swing.LoginAndSignUp.LogIn;
-import src.main.java.presentation.Swing.MainFrame;
+import presentation.Swing.LoginAndSignUp.AuthenticationManager;
+import presentation.Swing.LoginAndSignUp.LogIn;
+import presentation.Swing.MainFrame;
 
 import javax.swing.*;
 
