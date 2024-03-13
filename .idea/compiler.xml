@@ -9,8 +9,5 @@
         <module name="SOEN-343-Smart-Home-Simulator" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SOEN-343-Smart-Home-Simulator" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>
