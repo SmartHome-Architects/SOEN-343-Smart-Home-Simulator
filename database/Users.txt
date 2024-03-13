@@ -1,7 +1,7 @@
-va_patel|vanisha1@gmail.com|patel1234|Child
-s_patel|sonali@gmail.com|patel12345|Child
-r_gohar|rana@gmail.com|gohar12345|Guest
-j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent
-s_distefano|steven@gmail.com|distefano12345|Child
-m_girgis|marina@gmail.com|girgis12345|Guest
-bob|bob@gmail.com|bob123|Parent
+va_patel|vanisha1@gmail.com|patel1234|Child|home|true
+s_patel|sonali@gmail.com|patel12345|Child|home|false
+r_gohar|rana@gmail.com|gohar12345|Guest|home|false
+j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent|home|true
+s_distefano|steven@gmail.com|distefano12345|Child|home|false
+m_girgis|marina@gmail.com|girgis12345|Guest|home|false
+bob|bob@gmail.com|bob123|Parent|home|true

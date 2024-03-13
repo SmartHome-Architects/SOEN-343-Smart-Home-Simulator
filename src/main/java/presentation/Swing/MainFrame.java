@@ -9,6 +9,9 @@ import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -25,7 +28,6 @@ public class MainFrame {
     private JPanel SHC;
     private JPanel SHP;
     private JPanel SHH;
-    private JPanel plus;
     private JComboBox comboBox2;
     private JPanel comboBox4;
     private JPanel combobx1;
@@ -64,6 +66,10 @@ public class MainFrame {
     private JButton Delete_Profile;
     private JButton Edit_Profile;
     private JLabel houseLayoutLabel;
+    private JTabbedPane PermissionsPane;
+    private JPanel SHCP;
+    private JTable table1;
+    private JTabbedPane tabbedPane2;
 
     private Date currentDate;
     private Time currentTime;
@@ -96,6 +102,76 @@ public class MainFrame {
 
     // c
     public MainFrame() {
+
+
+
+
+
+
+
+
+        // Create a custom table model
+        String[] columnNames = {"Role", "Permission 1", "Permission 2", "Permission 3"};
+        Object[][] data = {
+                {"User", "Anywhere", "Inside Home", "Inside Room"},
+                {"Parent", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE},
+                {"Child", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE},
+                {"Guest", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE}
+        };
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 0 ? String.class : Boolean.class;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column > 0; // Allow editing only for checkboxes
+            }
+        };
+
+        table1.setModel(model); // Set the custom table model to the table1
+
+        // Set custom cell renderer for checkboxes
+        table1.setDefaultRenderer(Boolean.class, new TableCellRenderer() {
+            private final JCheckBox checkBox = new JCheckBox();
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (row == 0) {
+                    // For the first row, display the text directly without a checkbox
+                    return new JLabel(value.toString());
+                } else {
+                    // For other rows, display checkboxes
+                    if (value instanceof Boolean) {
+                        checkBox.setSelected((Boolean) value);
+                    }
+                    return checkBox;
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Sets Date and Time on the DASHBOARD
         currentDate = new Date();
@@ -327,6 +403,16 @@ public class MainFrame {
     public JRadioButton getUpdateguestRadioButton() {
         return UpdateguestRadioButton;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 }
