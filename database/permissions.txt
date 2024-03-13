@@ -1,0 +1,7 @@
+va_patel|false|false|false|false|false|false
+s_patel|false|true|false|false|false|false
+r_gohar|false|false|false|false|false|false
+j_sivalingam|false|false|false|false|false|false
+s_distefano|false|false|false|false|false|false
+m_girgis|false|false|false|false|false|false
+bob|false|false|false|true|true|true

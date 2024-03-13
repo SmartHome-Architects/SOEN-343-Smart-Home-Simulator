@@ -32,7 +32,7 @@ public class SmartHomeCoreFunctionality {
         }
     }
 
-    // Method to close a window based on user's permissions
+    // Method to close a window based on user's permissions.txt
     public void closeWindow(Window window) {
         if (checkPermission(window, "close")) {
             window.setOpen(false);
@@ -49,7 +49,7 @@ public class SmartHomeCoreFunctionality {
                 WindowPermission windowPermission = (WindowPermission) permission;
                 if (windowPermission.isHasWindowPermission()) {
                     // Assuming permission is granted for all windows or specific window ID/location
-                    // Add your logic here to check specific window permissions
+                    // Add your logic here to check specific window permissions.txt
                     return true;
                 }
             }

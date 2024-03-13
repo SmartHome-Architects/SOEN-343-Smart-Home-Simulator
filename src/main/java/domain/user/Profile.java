@@ -80,7 +80,7 @@ public class Profile {
                 ", type='" + type + '\'' +
                 ", location='" + location + '\'' +
                 ", email='" + email + '\'' +
-                ", permissions=" + permissions +
+                ", permissions.txt=" + permissions +
                 '}';
     }
 }

@@ -116,9 +116,9 @@ public class Main {
                     String type = parts[3];
                     String location = parts[4];
                     boolean hasPermission = Boolean.parseBoolean(parts[5]);
-                    List<Permission> permissions = new ArrayList<>();
-                    permissions.add(new WindowPermission(hasPermission));
-                    profiles.add(new Profile(username, password, type, location, email, permissions));
+                    List<Permission> permissions.txt = new ArrayList<>();
+                    permissions.txt.add(new WindowPermission(hasPermission));
+                    profiles.add(new Profile(username, password, type, location, email, permissions.txt));
                 }
             }
         } catch (FileNotFoundException e) {

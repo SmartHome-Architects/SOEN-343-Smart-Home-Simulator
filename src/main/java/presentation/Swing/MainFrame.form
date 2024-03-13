@@ -653,39 +653,46 @@
                                     <properties/>
                                     <border type="none"/>
                                     <children>
-                                      <grid id="913e1" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                        <margin top="0" left="0" bottom="0" right="0"/>
+                                      <scrollpane id="907a2" binding="windowPermission">
                                         <constraints>
-                                          <tabbedpane title="Window"/>
+                                          <tabbedpane title="Untitled"/>
                                         </constraints>
-                                        <properties/>
+                                        <properties>
+                                          <maximumSize width="350" height="200"/>
+                                          <minimumSize width="350" height="200"/>
+                                          <name value="Window"/>
+                                        </properties>
                                         <border type="none"/>
                                         <children>
                                           <component id="4e9aa" class="javax.swing.JTable" binding="table1" default-binding="true">
-                                            <constraints>
-                                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                                                <minimum-size width="350" height="200"/>
-                                                <preferred-size width="350" height="200"/>
-                                                <maximum-size width="350" height="200"/>
-                                              </grid>
-                                            </constraints>
+                                            <constraints/>
                                             <properties>
                                               <autoCreateRowSorter value="false"/>
                                               <rowHeight value="50"/>
                                             </properties>
                                           </component>
-                                          <hspacer id="f7dc9">
-                                            <constraints>
-                                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                                            </constraints>
-                                          </hspacer>
-                                          <vspacer id="17c5a">
-                                            <constraints>
-                                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                                            </constraints>
-                                          </vspacer>
                                         </children>
-                                      </grid>
+                                      </scrollpane>
+                                      <scrollpane id="86412" binding="doorPermission">
+                                        <constraints>
+                                          <tabbedpane title="Untitled"/>
+                                        </constraints>
+                                        <properties>
+                                          <maximumSize width="350" height="200"/>
+                                          <minimumSize width="350" height="200"/>
+                                          <name value="Door"/>
+                                        </properties>
+                                        <border type="none"/>
+                                        <children>
+                                          <component id="fb87" class="javax.swing.JTable" binding="table2">
+                                            <constraints/>
+                                            <properties>
+                                              <autoCreateRowSorter value="false"/>
+                                              <rowHeight value="50"/>
+                                            </properties>
+                                          </component>
+                                        </children>
+                                      </scrollpane>
                                     </children>
                                   </tabbedpane>
                                 </children>
@@ -1077,7 +1084,7 @@
               </component>
             </children>
           </grid>
-          <grid id="23166" binding="consoleOutput" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="23166" binding="consoleOutput" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -1095,7 +1102,7 @@
             <children>
               <component id="306f4" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>
@@ -1105,12 +1112,12 @@
               </component>
               <vspacer id="97e21">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="a4074" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Output Console"/>

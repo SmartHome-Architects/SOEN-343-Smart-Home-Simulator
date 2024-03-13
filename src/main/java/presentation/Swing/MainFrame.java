@@ -9,7 +9,6 @@ import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -72,6 +71,9 @@ public class MainFrame {
     private JPanel SHCP;
     private JTable table1;
     private JTabbedPane tabbedPane2;
+    private JScrollPane windowPermission;
+    private JScrollPane doorPermission;
+    private JTable table2;
 
     private Date currentDate;
     private Time currentTime;
@@ -106,40 +108,39 @@ public class MainFrame {
     public MainFrame() {
 
 
-        // Create table model
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("User");
-        model.addColumn("Anywhere");
-        model.addColumn("Inside Home");
-        model.addColumn("Inside Room");
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("User");
+        model1.addColumn("Anywhere");
+        model1.addColumn("Inside Home");
+        model1.addColumn("Inside Room");
 
-        // Add data from file to table model
+// Add data from file to table model for table1
         try {
-            File file = new File("database/Users.txt");
+            File file = new File("database/permissions.txt");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split("\\|");
                 String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[5]);
-                boolean insideHome = Boolean.parseBoolean(parts[6]);
-                boolean insideRoom = Boolean.parseBoolean(parts[7]);
-                model.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+                boolean anywhere = Boolean.parseBoolean(parts[1]);
+                boolean insideHome = Boolean.parseBoolean(parts[2]);
+                boolean insideRoom = Boolean.parseBoolean(parts[3]);
+                model1.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        // Add table model to table
-        table1.setModel(model);
+// Set table model for table1
+        table1.setModel(model1);
 
-        // Customize rendering of checkboxes
+// Customize rendering of checkboxes for table1
         table1.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
         table1.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
         table1.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
 
-        // Add listener for checkbox modification
+// Add listener for checkbox modification for table1
         table1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int column = table1.getColumnModel().getColumnIndexAtX(e.getX());
@@ -155,18 +156,54 @@ public class MainFrame {
             }
         });
 
+// Create table model for table2
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2.addColumn("User");
+        model2.addColumn("Anywhere");
+        model2.addColumn("Inside Home");
+        model2.addColumn("Inside Room");
 
+// Add data from file to table model for table2
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[4]);
+                boolean insideHome = Boolean.parseBoolean(parts[5]);
+                boolean insideRoom = Boolean.parseBoolean(parts[6]);
+                model2.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
+// Set table model for table2
+        table2.setModel(model2);
 
+// Customize rendering of checkboxes for table2
+        table2.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table2.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table2.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
 
+// Add listener for checkbox modification for table2
+        table2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table2.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table2.getRowHeight();
 
-
-
-
-
-
-
-
+                if (row < table2.getRowCount() && column < table2.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table2.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table2.setValueAt(!(Boolean) value, row, column);
+                        updatedoorFile(); // Update file after checkbox modification for table2
+                    }
+                }
+            }
+        });
 
 
 
@@ -427,7 +464,7 @@ public class MainFrame {
 
     private void updateFile() {
         try {
-            File inputFile = new File("database/Users.txt");
+            File inputFile = new File("database/permissions.txt");
             File tempFile = new File("database/tempUsers.txt");
 
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -441,8 +478,7 @@ public class MainFrame {
                 boolean insideHome = (boolean) table1.getValueAt(row, 2);
                 boolean insideRoom = (boolean) table1.getValueAt(row, 3);
                 // Keep the other parts intact
-                writer.println(parts[0] + "|" + parts[1] + "|" + parts[2] + "|" + parts[3] + "|" +
-                        parts[4] + "|" + anywhere + "|" + insideHome + "|" + insideRoom);
+                writer.println(parts[0] + "|" + anywhere + "|" + insideHome + "|" + insideRoom  + "|"  + parts[4]+ "|" + parts[5] + "|" + parts[6]);
                 row++;
             }
             reader.close();
@@ -474,6 +510,47 @@ public class MainFrame {
             return this;
         }
     }
+
+
+
+
+
+
+    private void updatedoorFile() {
+        try {
+            File inputFile = new File("database/permissions.txt");
+            File tempFile = new File("database/tempUsers.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            String line;
+            int row = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                boolean anywhere = (boolean) table2.getValueAt(row, 1);
+                boolean insideHome = (boolean) table2.getValueAt(row, 2);
+                boolean insideRoom = (boolean) table2.getValueAt(row, 3);
+                // Keep the other parts intact
+                writer.println(parts[0] + "|"+ parts[1]+ "|" + parts[2] + "|" + parts[3]+ "|" + anywhere + "|" + insideHome + "|" + insideRoom   );
+                row++;
+            }
+            reader.close();
+            writer.close();
+
+            if (!inputFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Could not rename file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
