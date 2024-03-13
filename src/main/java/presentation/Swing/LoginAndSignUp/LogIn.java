@@ -1,4 +1,4 @@
-package src.main.java.presentation.Swing.LoginAndSignUp;
+package presentation.Swing.LoginAndSignUp;
 
 import javax.swing.*;
 import java.awt.*;

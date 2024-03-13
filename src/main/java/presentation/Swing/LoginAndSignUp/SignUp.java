@@ -1,7 +1,7 @@
 
-package src.main.java.presentation.Swing.LoginAndSignUp;
+package presentation.Swing.LoginAndSignUp;
 
-import src.main.java.presentation.Swing.MainFrame;
+import presentation.Swing.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
