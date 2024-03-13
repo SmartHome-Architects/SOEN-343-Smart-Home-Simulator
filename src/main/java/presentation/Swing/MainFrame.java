@@ -74,6 +74,12 @@ public class MainFrame {
     private JScrollPane windowPermission;
     private JScrollPane doorPermission;
     private JTable table2;
+    private JScrollPane lightPermission;
+    private JTable table3;
+    private JScrollPane awaymode;
+    private JTable table4;
+    private JScrollPane heating;
+    private JTable table5;
 
     private Date currentDate;
     private Time currentTime;
@@ -106,6 +112,8 @@ public class MainFrame {
 
     // c
     public MainFrame() {
+
+
 
 
         DefaultTableModel model1 = new DefaultTableModel();
@@ -199,11 +207,174 @@ public class MainFrame {
                     Object value = table2.getValueAt(row, column);
                     if (value instanceof Boolean) {
                         table2.setValueAt(!(Boolean) value, row, column);
-                        updatedoorFile(); // Update file after checkbox modification for table2
+                        updateFile(); // Update file after checkbox modification for table2
                     }
                 }
             }
         });
+
+
+        DefaultTableModel model3 = new DefaultTableModel();
+        model3.addColumn("User");
+        model3.addColumn("Anywhere");
+        model3.addColumn("Inside Home");
+        model3.addColumn("Inside Room");
+
+// Add data from file to table model for table1
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[7]);
+                boolean insideHome = Boolean.parseBoolean(parts[8]);
+                boolean insideRoom = Boolean.parseBoolean(parts[9]);
+                model3.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+// Set table model for table1
+        table3.setModel(model3);
+
+// Customize rendering of checkboxes for table1
+        table3.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table3.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table3.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
+
+// Add listener for checkbox modification for table1
+        table3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table3.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table3.getRowHeight();
+
+                if (row < table3.getRowCount() && column < table3.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table3.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table3.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+
+
+        //------------------------------------------------------
+        DefaultTableModel model4 = new DefaultTableModel();
+        model4.addColumn("User");
+        model4.addColumn("Away Mode");
+
+
+// Add data from file to table model for table1
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean awaymode = Boolean.parseBoolean(parts[10]);
+                model4.addRow(new Object[]{username, awaymode});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+// Set table model for table1
+        table4.setModel(model4);
+
+// Customize rendering of checkboxes for table1
+        table4.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+
+// Add listener for checkbox modification for table1
+        table4.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table4.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table4.getRowHeight();
+
+                if (row < table4.getRowCount() && column < table4.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table4.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table4.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+
+
+
+
+        //-------------------------------------------------------------------------------------------------------
+
+        //------------------------------------------------------
+        DefaultTableModel model5 = new DefaultTableModel();
+        model5.addColumn("User");
+        model5.addColumn("Heating");
+
+
+// Add data from file to table model for table1
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean heating = Boolean.parseBoolean(parts[11]);
+                model5.addRow(new Object[]{username, heating});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+// Set table model for table1
+        table5.setModel(model5);
+
+// Customize rendering of checkboxes for table1
+        table5.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+
+// Add listener for checkbox modification for table1
+        table5.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table5.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table5.getRowHeight();
+
+                if (row < table5.getRowCount() && column < table5.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table5.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table5.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -462,6 +633,74 @@ public class MainFrame {
 
 
 
+
+
+    // CheckBoxRenderer class for rendering checkboxes in the table
+    class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+        CheckBoxRenderer() {
+            super();
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            setSelected(value != null && (boolean) value);
+            return this;
+        }
+    }
+
+
+    private void updateFile() {
+        try {
+            File inputFile = new File("database/permissions.txt");
+            File tempFile = new File("database/tempUsers.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            String line;
+            int row = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                boolean windowAnywhere = (boolean) table1.getValueAt(row, 1);
+                boolean windowInsideHome = (boolean) table1.getValueAt(row, 2);
+                boolean windowInsideRoom = (boolean) table1.getValueAt(row, 3);
+                boolean doorAnywhere = (boolean) table2.getValueAt(row, 1);
+                boolean doorInsideHome = (boolean) table2.getValueAt(row, 2);
+                boolean doorInsideRoom = (boolean) table2.getValueAt(row, 3);
+                boolean lightAnywhere = (boolean) table3.getValueAt(row, 1);
+                boolean lightInsideHome = (boolean) table3.getValueAt(row, 2);
+                boolean lightInsideRoom = (boolean) table3.getValueAt(row, 3);
+                boolean awaymode = (boolean) table4.getValueAt(row, 1);
+                boolean heating = (boolean) table5.getValueAt(row, 1);
+
+                // Keep the other parts intact
+                writer.println(parts[0] + "|" + windowAnywhere + "|" + windowInsideHome + "|" + windowInsideRoom  + "|"  + doorAnywhere+ "|" +
+                        doorInsideHome + "|" + doorInsideRoom+ "|"  + lightAnywhere+ "|" +
+                        lightInsideHome + "|" + lightInsideRoom + "|" + awaymode + "|" + heating);
+                row++;
+            }
+            reader.close();
+            writer.close();
+
+            if (!inputFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Could not rename file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+/*
     private void updateFile() {
         try {
             File inputFile = new File("database/permissions.txt");
@@ -495,23 +734,6 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
-
-
-    // CheckBoxRenderer class for rendering checkboxes in the table
-    class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
-        CheckBoxRenderer() {
-            super();
-            setHorizontalAlignment(JLabel.CENTER);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int column) {
-            setSelected(value != null && (boolean) value);
-            return this;
-        }
-    }
-
-
 
 
 
@@ -551,7 +773,7 @@ public class MainFrame {
     }
 
 
-
+*/
 
 
 

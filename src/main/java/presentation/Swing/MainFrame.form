@@ -655,7 +655,7 @@
                                     <children>
                                       <scrollpane id="907a2" binding="windowPermission">
                                         <constraints>
-                                          <tabbedpane title="Untitled"/>
+                                          <tabbedpane title="Window"/>
                                         </constraints>
                                         <properties>
                                           <maximumSize width="350" height="200"/>
@@ -675,7 +675,7 @@
                                       </scrollpane>
                                       <scrollpane id="86412" binding="doorPermission">
                                         <constraints>
-                                          <tabbedpane title="Untitled"/>
+                                          <tabbedpane title="Door"/>
                                         </constraints>
                                         <properties>
                                           <maximumSize width="350" height="200"/>
@@ -693,18 +693,133 @@
                                           </component>
                                         </children>
                                       </scrollpane>
+                                      <scrollpane id="19cde" binding="lightPermission">
+                                        <constraints>
+                                          <tabbedpane title="Light"/>
+                                        </constraints>
+                                        <properties>
+                                          <maximumSize width="350" height="200"/>
+                                          <minimumSize width="350" height="200"/>
+                                          <name value="Light"/>
+                                        </properties>
+                                        <border type="none"/>
+                                        <children>
+                                          <component id="b5cf2" class="javax.swing.JTable" binding="table3">
+                                            <constraints/>
+                                            <properties>
+                                              <autoCreateRowSorter value="false"/>
+                                              <rowHeight value="50"/>
+                                            </properties>
+                                          </component>
+                                        </children>
+                                      </scrollpane>
                                     </children>
                                   </tabbedpane>
                                 </children>
                               </grid>
-                              <grid id="b0eb3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                              <grid id="b0eb3" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                                 <margin top="0" left="0" bottom="0" right="0"/>
                                 <constraints>
-                                  <tabbedpane title="Untitled"/>
+                                  <tabbedpane title="SHH"/>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
-                                <children/>
+                                <children>
+                                  <tabbedpane id="5b1b8" default-binding="true">
+                                    <constraints>
+                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                        <preferred-size width="200" height="200"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                    <border type="none"/>
+                                    <children>
+                                      <scrollpane id="157b8" binding="heating">
+                                        <constraints>
+                                          <tabbedpane title="Heating"/>
+                                        </constraints>
+                                        <properties>
+                                          <maximumSize width="350" height="200"/>
+                                          <minimumSize width="350" height="200"/>
+                                          <name value="Heating"/>
+                                        </properties>
+                                        <border type="none"/>
+                                        <children>
+                                          <component id="bcdd1" class="javax.swing.JTable" binding="table5">
+                                            <constraints/>
+                                            <properties>
+                                              <autoCreateRowSorter value="false"/>
+                                              <rowHeight value="50"/>
+                                              <showVerticalLines value="false"/>
+                                            </properties>
+                                          </component>
+                                        </children>
+                                      </scrollpane>
+                                    </children>
+                                  </tabbedpane>
+                                  <hspacer id="5d235">
+                                    <constraints>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </hspacer>
+                                  <vspacer id="d02de">
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </vspacer>
+                                </children>
+                              </grid>
+                              <grid id="e4550" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints>
+                                  <tabbedpane title="SHP"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <hspacer id="79d98">
+                                    <constraints>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </hspacer>
+                                  <vspacer id="a9656">
+                                    <constraints>
+                                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </vspacer>
+                                  <tabbedpane id="fad9b" default-binding="true">
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                        <preferred-size width="200" height="200"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                    <border type="none"/>
+                                    <children>
+                                      <scrollpane id="4ab1f" binding="awaymode">
+                                        <constraints>
+                                          <tabbedpane title="Away Mode"/>
+                                        </constraints>
+                                        <properties>
+                                          <maximumSize width="350" height="200"/>
+                                          <minimumSize width="350" height="200"/>
+                                          <name value="Away mode"/>
+                                        </properties>
+                                        <border type="none"/>
+                                        <children>
+                                          <component id="3a3fd" class="javax.swing.JTable" binding="table4">
+                                            <constraints/>
+                                            <properties>
+                                              <autoCreateRowSorter value="false"/>
+                                              <rowHeight value="50"/>
+                                              <showVerticalLines value="false"/>
+                                            </properties>
+                                          </component>
+                                        </children>
+                                      </scrollpane>
+                                    </children>
+                                  </tabbedpane>
+                                </children>
                               </grid>
                             </children>
                           </tabbedpane>
