@@ -1,9 +1,8 @@
-package Application;
+package src.main.java;
 
-import domain.house.House;
-import presentation.Swing.LoginAndSignUp.AuthenticationManager;
-import presentation.Swing.LoginAndSignUp.LogIn;
-import presentation.Swing.MainFrame;
+import src.main.java.presentation.Swing.LoginAndSignUp.AuthenticationManager;
+import src.main.java.presentation.Swing.LoginAndSignUp.LogIn;
+import src.main.java.presentation.Swing.MainFrame;
 
 import javax.swing.*;
 
@@ -34,7 +33,6 @@ public class Main {
             loginFrame.setVisible(true);
             loginFrame.setLocationRelativeTo(null);
 
-            House h = new House();
         });
 
 
