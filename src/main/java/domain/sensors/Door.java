@@ -1,16 +1,21 @@
 package domain.sensors;
 
+import domain.house.Coordinate;
+
 public class Door {
     private String name;
     private String location;
     private int doorID;
     private boolean isOpen; // true for open, false for close
 
-    public Door(String name, String location, int doorID) {
+    private Coordinate doorCoordinates;
+
+    public Door(String name, String location, int doorID,Coordinate doorCoordinates) {
         this.name = name;
         this.location = location;
         this.doorID = doorID;
         this.isOpen = false;
+        this.doorCoordinates = doorCoordinates;
     }
 
     public String getName() {
@@ -45,7 +50,6 @@ public class Door {
         isOpen = open;
     }
 
-
     @Override
     public String toString() {
         return "Door{" +
@@ -53,6 +57,7 @@ public class Door {
                 ", location='" + location + '\'' +
                 ", doorID=" + doorID +
                 ", isOpen=" + isOpen +
+                ", doorCoordinates=" + doorCoordinates.getX() + "," +doorCoordinates.getY()+
                 '}';
     }
 }

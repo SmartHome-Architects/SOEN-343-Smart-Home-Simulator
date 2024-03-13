@@ -2,7 +2,8 @@
     "rooms": [
       {
         "name": "Garage",
-        "doors": [
+        "coordinates": {"x": 5, "y": 0},
+        "door": [
           {"coordinates": {"x": 0, "y": 0}}
         ],
         "windows": [
@@ -14,7 +15,8 @@
       },
       {
         "name": "Kitchen",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 1, "y": 0}}
         ],
         "windows": [
@@ -28,7 +30,8 @@
       },
       {
         "name": "Dining Room",
-        "doors": [
+        "coordinates": {"x": 15, "y": 0},
+        "door": [
           {"coordinates": {"x": 2, "y": 0}}
         ],
         "windows": [
@@ -40,7 +43,8 @@
       },
       {
         "name": "Living Room",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 3, "y": 0}}
         ],
         "windows": [
@@ -54,7 +58,8 @@
       },
       {
         "name": "Bedroom1",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 4, "y": 0}}
         ],
         "windows": [
@@ -66,7 +71,8 @@
       },
       {
         "name": "Bedroom2",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 4, "y": 1}}
         ],
         "windows": [
@@ -78,7 +84,8 @@
       },
       {
         "name": "Bathroom",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 5, "y": 0}}
         ],
         "windows": [
@@ -90,9 +97,7 @@
       },
       {
         "name": "Hallway",
-        "doors": [
-          {"coordinates": {"x": 6, "y": 0}}
-        ],
+        "coordinates": {"x": 0, "y": 0},
         "windows": [
           {"coordinates": {"x": 5, "y": 1}}
         ],
@@ -102,7 +107,8 @@
       },
       {
         "name": "Entrance",
-        "doors": [
+        "coordinates": {"x": 0, "y": 0},
+        "door": [
           {"coordinates": {"x": 7, "y": 0}}
         ],
         "lights": [

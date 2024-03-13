@@ -15,4 +15,12 @@ public abstract class TempControlUnit {
     public void turnOff() {
         this.isOn = false;
     }
+
+    @Override
+    public String toString() {
+        return "TempControlUnit{" +
+                "id=" + id +
+                ", isOn=" + isOn +
+                '}';
+    }
 }

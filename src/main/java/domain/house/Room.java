@@ -14,8 +14,10 @@ public class Room {
     private Heater heater;
     private double temperature;
 
+    private Coordinate roomCoordinates;
+
     public Room(int id, String roomName, Door door, List<Light> lights, List<Window> windows,
-                AC acUnit, Heater heater, double temperature) {
+                AC acUnit, Heater heater, double temperature, Coordinate roomCoordinates) {
         this.id = id;
         this.roomName = roomName;
         this.door = door;
@@ -24,6 +26,7 @@ public class Room {
         this.acUnit = acUnit;
         this.heater = heater;
         this.temperature = temperature;
+        this.roomCoordinates = roomCoordinates;
     }
 
     public int getId() {
@@ -60,5 +63,24 @@ public class Room {
 
     public void setTemperature(double temperature) {
         this.temperature = temperature;
+    }
+
+    public Coordinate getRoomCoordinates() {
+        return roomCoordinates;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", roomName='" + roomName + '\'' +
+                ", door=" + door +
+                ", lights=" + lights +
+                ", windows=" + windows +
+                ", acUnit=" + acUnit +
+                ", heater=" + heater +
+                ", temperature=" + temperature +
+                ", roomCoordinates=" + roomCoordinates.getX() + "," +roomCoordinates.getY()+
+                '}';
     }
 }
