@@ -275,14 +275,21 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                        
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String username = jTextField3.getText();
         String email = jTextField1.getText();
         String password = new String(jPasswordField.getPassword());
+
+        // Validate input fields
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
+            return; // Exit the method if any field is empty
+        }
+
         String userType = "";
         if (jRadioButton1.isSelected()) {
             userType = "Guest";
@@ -294,7 +301,7 @@ public class SignUp extends javax.swing.JFrame {
             userType = "Stranger";
         }
 
-        String filePath = "database/users.txt";
+        String filePath = "database/Users.txt";
         File file = new File(filePath);
 
         // Write user information to text file
@@ -311,12 +318,15 @@ public class SignUp extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error occurred while registering. Please try again later.");
         }
-    }                                        
+    }
+
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }                                           
-
+    }
+    public void setSignUpActionListener(ActionListener listener) {
+        jButton2.addActionListener(listener);
+    }
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
     }                                             
