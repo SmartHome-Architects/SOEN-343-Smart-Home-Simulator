@@ -9,6 +9,7 @@ import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class MainFrame {
@@ -62,11 +63,36 @@ public class MainFrame {
     private JButton Add_Profile;
     private JButton Delete_Profile;
     private JButton Edit_Profile;
+    private JLabel houseLayoutLabel;
 
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
     private ProfileManager profileManager;
+
+    private ImageIcon houseLayout;
+
+    // Lights for each room (true = on, false = off)
+    private boolean bathroomLight;
+    private boolean bedroom1Light;
+    private boolean bedroom2Light;
+    private boolean kitchenLight;
+    private boolean livingroomLight;
+    private boolean garageLight;
+    private boolean hallwayLight;
+    private boolean frontLight; //front yard light
+    private boolean backLight; //backyard light
+
+    // Doors (true = open, false = closed)
+    private boolean frontDoor;
+    private boolean backDoor;
+    private boolean bedroom1Door;
+    private boolean bedroom2Door;
+    private boolean bathroomDoor;
+    private boolean garageInsideDoor;
+    private boolean garageOutsideDoor;
+
+    // Windows needed
 
     // c
     public MainFrame() {
@@ -121,6 +147,8 @@ public class MainFrame {
 
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
             }
         });
 
@@ -132,6 +160,8 @@ public class MainFrame {
 
                 DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
                 deleteProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
         });
 
@@ -154,6 +184,8 @@ public class MainFrame {
 
                 EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
                 editProfileCommand.execute();
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }
         });
 
@@ -163,6 +195,14 @@ public class MainFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
+
+        // Load the image with the specified width and height
+        houseLayout = new ImageIcon("images/houseLayout.png");
+        Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
+        houseLayoutLabel.setIcon(new ImageIcon(image));
+        houseLayoutLabel.setText("house layout image");
+        houseImage.setLayout(new BorderLayout());
+        houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
     }
 
     public void showMainFrame() {
@@ -192,6 +232,8 @@ public class MainFrame {
         currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
 
+        JOptionPane.showMessageDialog(WindowContainer, "Date Updated Successfully");
+
     }
 
     // Update time based on user input
@@ -201,6 +243,8 @@ public class MainFrame {
         time.setText(currentTime.toString());
 
         startIncrementingTime();
+
+        JOptionPane.showMessageDialog(WindowContainer, "Time Updated Successfully");
 
     }
 
