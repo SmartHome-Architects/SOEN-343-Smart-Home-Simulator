@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.Scanner;
 
 public class MainFrame {
     private JPanel WindowContainer;
@@ -104,53 +106,69 @@ public class MainFrame {
     public MainFrame() {
 
 
+        // Create table model
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("User");
+        model.addColumn("Anywhere");
+        model.addColumn("Inside Home");
+        model.addColumn("Inside Room");
 
-
-
-
-
-
-        // Create a custom table model
-        String[] columnNames = {"Role", "Permission 1", "Permission 2", "Permission 3"};
-        Object[][] data = {
-                {"User", "Anywhere", "Inside Home", "Inside Room"},
-                {"Parent", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE},
-                {"Child", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE},
-                {"Guest", Boolean.FALSE, Boolean.FALSE, Boolean.FALSE}
-        };
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex == 0 ? String.class : Boolean.class;
+        // Add data from file to table model
+        try {
+            File file = new File("database/Users.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[5]);
+                boolean insideHome = Boolean.parseBoolean(parts[6]);
+                boolean insideRoom = Boolean.parseBoolean(parts[7]);
+                model.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
             }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column > 0; // Allow editing only for checkboxes
-            }
-        };
+        // Add table model to table
+        table1.setModel(model);
 
-        table1.setModel(model); // Set the custom table model to the table1
+        // Customize rendering of checkboxes
+        table1.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table1.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table1.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
 
-        // Set custom cell renderer for checkboxes
-        table1.setDefaultRenderer(Boolean.class, new TableCellRenderer() {
-            private final JCheckBox checkBox = new JCheckBox();
+        // Add listener for checkbox modification
+        table1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table1.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table1.getRowHeight();
 
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if (row == 0) {
-                    // For the first row, display the text directly without a checkbox
-                    return new JLabel(value.toString());
-                } else {
-                    // For other rows, display checkboxes
+                if (row < table1.getRowCount() && column < table1.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table1.getValueAt(row, column);
                     if (value instanceof Boolean) {
-                        checkBox.setSelected((Boolean) value);
+                        table1.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
                     }
-                    return checkBox;
                 }
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -405,6 +423,57 @@ public class MainFrame {
     }
 
 
+
+
+    private void updateFile() {
+        try {
+            File inputFile = new File("database/Users.txt");
+            File tempFile = new File("database/tempUsers.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
+
+            String line;
+            int row = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                boolean anywhere = (boolean) table1.getValueAt(row, 1);
+                boolean insideHome = (boolean) table1.getValueAt(row, 2);
+                boolean insideRoom = (boolean) table1.getValueAt(row, 3);
+                // Keep the other parts intact
+                writer.println(parts[0] + "|" + parts[1] + "|" + parts[2] + "|" + parts[3] + "|" +
+                        parts[4] + "|" + anywhere + "|" + insideHome + "|" + insideRoom);
+                row++;
+            }
+            reader.close();
+            writer.close();
+
+            if (!inputFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Could not rename file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // CheckBoxRenderer class for rendering checkboxes in the table
+    class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+        CheckBoxRenderer() {
+            super();
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            setSelected(value != null && (boolean) value);
+            return this;
+        }
+    }
 
 
 

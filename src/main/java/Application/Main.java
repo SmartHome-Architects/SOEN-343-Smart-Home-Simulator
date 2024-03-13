@@ -47,10 +47,12 @@ public class Main {
 
         });
 
-        // ----- debugging
-        List<Profile> profiles = loadUsersFromFile("database/Users.txt");
 
-        SmartHomeCoreFunctionality smartHome = new SmartHomeCoreFunctionality(profiles.get(0));
+        /*
+        // ----- debugging
+        //List<Profile> profiles = loadUsersFromFile("database/Users.txt");
+
+       // SmartHomeCoreFunctionality smartHome = new SmartHomeCoreFunctionality(profiles.get(0));
 
         Coordinate window = new Coordinate(1,2);
 
@@ -63,7 +65,7 @@ public class Main {
         System.out.println(livingRoomWindow);
 
         // Deny window permission to the user
-        smartHome.grantWindowPermission(profiles.get(0));
+       // smartHome.grantWindowPermission(profiles.get(0));
         smartHome.openWindow(livingRoomWindow);
         System.out.println(livingRoomWindow);
 
@@ -73,11 +75,11 @@ public class Main {
 
 
         // Save updated user profile to file
-        saveUsersToFile(profiles, "database/Users.txt");
+        //saveUsersToFile(profiles, "database/Users.txt");
 
 
 
-
+*/
 
 
 
@@ -99,7 +101,7 @@ public class Main {
 
 
 
-
+/*
 
     private static List<Profile> loadUsersFromFile(String filename) {
         List<Profile> profiles = new ArrayList<>();
@@ -151,7 +153,7 @@ public class Main {
         }
     }
 
-
+*/
 
 
 
