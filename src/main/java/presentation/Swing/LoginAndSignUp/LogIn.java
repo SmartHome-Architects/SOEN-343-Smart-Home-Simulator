@@ -7,15 +7,22 @@ import java.awt.event.ActionListener;
 
 public class LogIn extends javax.swing.JFrame {
 
+    private SignUp signUpView;
+
     /**
      * Creates new form LogInFrame
      */
     public LogIn() {
         initComponents();
+        signUpView = new SignUp();
     }
 
     public void setSignUpActionListener(ActionListener listener) {
         jButton2.addActionListener(listener);
+    }
+
+    public void setLoginActionListener(ActionListener listener) {
+        jButton1.addActionListener(listener);
     }
 
 
@@ -194,8 +201,9 @@ public class LogIn extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        signUpView.setVisible(true);
+        this.setVisible(false); // Hide the login view
     }                                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -204,15 +212,23 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }                                           
+    }
+
+    public String getEmailText() {
+        return jTextField1.getText();
+    }
+
+    public String getPasswordText() {
+        return jTextField2.getText();
+    }
 
 
     
 
     // Variables declaration - do not modify                     
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton1; //Login button
+    private javax.swing.JButton jButton2; //Sign up button
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -221,8 +237,8 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField1; //Email Entry
+    private javax.swing.JTextField jTextField2; //Password Entry
     private javax.swing.JPanel left;
     private javax.swing.JPanel right;
     // End of variables declaration                   
