@@ -113,291 +113,7 @@ public class MainFrame {
     // c
     public MainFrame() {
 
-
-
-
-        DefaultTableModel model1 = new DefaultTableModel();
-        model1.addColumn("User");
-        model1.addColumn("Anywhere");
-        model1.addColumn("Inside Home");
-        model1.addColumn("Inside Room");
-
-// Add data from file to table model for table1
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[1]);
-                boolean insideHome = Boolean.parseBoolean(parts[2]);
-                boolean insideRoom = Boolean.parseBoolean(parts[3]);
-                model1.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-// Set table model for table1
-        table1.setModel(model1);
-
-// Customize rendering of checkboxes for table1
-        table1.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table1.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table1.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-// Add listener for checkbox modification for table1
-        table1.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table1.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table1.getRowHeight();
-
-                if (row < table1.getRowCount() && column < table1.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table1.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table1.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-// Create table model for table2
-        DefaultTableModel model2 = new DefaultTableModel();
-        model2.addColumn("User");
-        model2.addColumn("Anywhere");
-        model2.addColumn("Inside Home");
-        model2.addColumn("Inside Room");
-
-// Add data from file to table model for table2
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[4]);
-                boolean insideHome = Boolean.parseBoolean(parts[5]);
-                boolean insideRoom = Boolean.parseBoolean(parts[6]);
-                model2.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-// Set table model for table2
-        table2.setModel(model2);
-
-// Customize rendering of checkboxes for table2
-        table2.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table2.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table2.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-// Add listener for checkbox modification for table2
-        table2.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table2.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table2.getRowHeight();
-
-                if (row < table2.getRowCount() && column < table2.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table2.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table2.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification for table2
-                    }
-                }
-            }
-        });
-
-
-        DefaultTableModel model3 = new DefaultTableModel();
-        model3.addColumn("User");
-        model3.addColumn("Anywhere");
-        model3.addColumn("Inside Home");
-        model3.addColumn("Inside Room");
-
-// Add data from file to table model for table1
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[7]);
-                boolean insideHome = Boolean.parseBoolean(parts[8]);
-                boolean insideRoom = Boolean.parseBoolean(parts[9]);
-                model3.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-// Set table model for table1
-        table3.setModel(model3);
-
-// Customize rendering of checkboxes for table1
-        table3.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table3.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table3.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-// Add listener for checkbox modification for table1
-        table3.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table3.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table3.getRowHeight();
-
-                if (row < table3.getRowCount() && column < table3.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table3.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table3.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-
-
-        //------------------------------------------------------
-        DefaultTableModel model4 = new DefaultTableModel();
-        model4.addColumn("User");
-        model4.addColumn("Away Mode");
-
-
-// Add data from file to table model for table1
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean awaymode = Boolean.parseBoolean(parts[10]);
-                model4.addRow(new Object[]{username, awaymode});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-// Set table model for table1
-        table4.setModel(model4);
-
-// Customize rendering of checkboxes for table1
-        table4.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-
-// Add listener for checkbox modification for table1
-        table4.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table4.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table4.getRowHeight();
-
-                if (row < table4.getRowCount() && column < table4.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table4.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table4.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-
-
-
-
-        //-------------------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------
-        DefaultTableModel model5 = new DefaultTableModel();
-        model5.addColumn("User");
-        model5.addColumn("Heating");
-
-
-// Add data from file to table model for table1
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean heating = Boolean.parseBoolean(parts[11]);
-                model5.addRow(new Object[]{username, heating});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-// Set table model for table1
-        table5.setModel(model5);
-
-// Customize rendering of checkboxes for table1
-        table5.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-
-// Add listener for checkbox modification for table1
-        table5.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table5.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table5.getRowHeight();
-
-                if (row < table5.getRowCount() && column < table5.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table5.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table5.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //-------------------------Set Date and Time--------------------------------------------------------
 
         //Sets Date and Time on the DASHBOARD
         currentDate = new Date();
@@ -422,6 +138,7 @@ public class MainFrame {
             }
         });
 
+        //--------------------------Account Management-----------------------------------------------------------------
 
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
@@ -499,6 +216,230 @@ public class MainFrame {
         houseLayoutLabel.setText("house layout image");
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
+
+
+        //-------------------------------------Permissions Tables-------------------------------------------------------
+
+        //--------------------------------Window---------------------------------------------
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("User");
+        model1.addColumn("Anywhere");
+        model1.addColumn("Inside Home");
+        model1.addColumn("Inside Room");
+
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[1]);
+                boolean insideHome = Boolean.parseBoolean(parts[2]);
+                boolean insideRoom = Boolean.parseBoolean(parts[3]);
+                model1.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        table1.setModel(model1);
+
+        table1.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table1.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table1.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
+
+        table1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table1.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table1.getRowHeight();
+
+                if (row < table1.getRowCount() && column < table1.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table1.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table1.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+        //--------------------------------Door---------------------------------------------
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2.addColumn("User");
+        model2.addColumn("Anywhere");
+        model2.addColumn("Inside Home");
+        model2.addColumn("Inside Room");
+
+// Add data from file to table model for table2
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[4]);
+                boolean insideHome = Boolean.parseBoolean(parts[5]);
+                boolean insideRoom = Boolean.parseBoolean(parts[6]);
+                model2.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        table2.setModel(model2);
+
+        table2.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table2.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table2.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
+
+        table2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table2.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table2.getRowHeight();
+
+                if (row < table2.getRowCount() && column < table2.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table2.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table2.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification for table2
+                    }
+                }
+            }
+        });
+
+        //--------------------------------Light---------------------------------------------
+
+        DefaultTableModel model3 = new DefaultTableModel();
+        model3.addColumn("User");
+        model3.addColumn("Anywhere");
+        model3.addColumn("Inside Home");
+        model3.addColumn("Inside Room");
+
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean anywhere = Boolean.parseBoolean(parts[7]);
+                boolean insideHome = Boolean.parseBoolean(parts[8]);
+                boolean insideRoom = Boolean.parseBoolean(parts[9]);
+                model3.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        table3.setModel(model3);
+
+        table3.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+        table3.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
+        table3.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
+
+        table3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table3.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table3.getRowHeight();
+
+                if (row < table3.getRowCount() && column < table3.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table3.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table3.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+
+        //--------------------------------Security---------------------------------------------
+
+        DefaultTableModel model4 = new DefaultTableModel();
+        model4.addColumn("User");
+        model4.addColumn("Away Mode");
+
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean awaymode = Boolean.parseBoolean(parts[10]);
+                model4.addRow(new Object[]{username, awaymode});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        table4.setModel(model4);
+
+        table4.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+
+        table4.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table4.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table4.getRowHeight();
+
+                if (row < table4.getRowCount() && column < table4.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table4.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table4.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+        //--------------------------------Heating---------------------------------------------
+
+        DefaultTableModel model5 = new DefaultTableModel();
+        model5.addColumn("User");
+        model5.addColumn("Heating");
+
+
+        try {
+            File file = new File("database/permissions.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String username = parts[0];
+                boolean heating = Boolean.parseBoolean(parts[11]);
+                model5.addRow(new Object[]{username, heating});
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        table5.setModel(model5);
+
+        table5.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
+
+        table5.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = table5.getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / table5.getRowHeight();
+
+                if (row < table5.getRowCount() && column < table5.getColumnCount() && row >= 0 && column >= 0) {
+                    Object value = table5.getValueAt(row, column);
+                    if (value instanceof Boolean) {
+                        table5.setValueAt(!(Boolean) value, row, column);
+                        updateFile(); // Update file after checkbox modification
+                    }
+                }
+            }
+        });
+
+        //-------------------------------------------------------------------------------------------------------------
     }
 
     public void showMainFrame() {
@@ -631,11 +572,7 @@ public class MainFrame {
     }
 
 
-
-
-
-
-    // CheckBoxRenderer class for rendering checkboxes in the table
+    // rendering checkboxes in the table
     class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
         CheckBoxRenderer() {
             super();
@@ -694,93 +631,4 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-/*
-    private void updateFile() {
-        try {
-            File inputFile = new File("database/permissions.txt");
-            File tempFile = new File("database/tempUsers.txt");
-
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
-
-            String line;
-            int row = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                boolean anywhere = (boolean) table1.getValueAt(row, 1);
-                boolean insideHome = (boolean) table1.getValueAt(row, 2);
-                boolean insideRoom = (boolean) table1.getValueAt(row, 3);
-                // Keep the other parts intact
-                writer.println(parts[0] + "|" + anywhere + "|" + insideHome + "|" + insideRoom  + "|"  + parts[4]+ "|" + parts[5] + "|" + parts[6]);
-                row++;
-            }
-            reader.close();
-            writer.close();
-
-            if (!inputFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
-            }
-            if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Could not rename file");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-    private void updatedoorFile() {
-        try {
-            File inputFile = new File("database/permissions.txt");
-            File tempFile = new File("database/tempUsers.txt");
-
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            PrintWriter writer = new PrintWriter(new FileWriter(tempFile));
-
-            String line;
-            int row = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                boolean anywhere = (boolean) table2.getValueAt(row, 1);
-                boolean insideHome = (boolean) table2.getValueAt(row, 2);
-                boolean insideRoom = (boolean) table2.getValueAt(row, 3);
-                // Keep the other parts intact
-                writer.println(parts[0] + "|"+ parts[1]+ "|" + parts[2] + "|" + parts[3]+ "|" + anywhere + "|" + insideHome + "|" + insideRoom   );
-                row++;
-            }
-            reader.close();
-            writer.close();
-
-            if (!inputFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
-            }
-            if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Could not rename file");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-*/
-
-
-
-
-
-
-
-
-
 }

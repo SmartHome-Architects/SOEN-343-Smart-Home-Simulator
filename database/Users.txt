@@ -4,4 +4,3 @@ r_gohar|rana@gmail.com|gohar12345|Guest|home
 j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent|home
 s_distefano|steven@gmail.com|distefano12345|Child|outside
 m_girgis|marina@gmail.com|girgis12345|Guest|kitchen
-bob|bob@gmail.com|bob123|Parent|home
