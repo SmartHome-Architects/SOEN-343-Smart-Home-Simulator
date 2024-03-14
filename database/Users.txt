@@ -1,8 +1,6 @@
-va_patel|vanisha1@gmail.com|patel1234|Child
-s_patel|sonali@gmail.com|patel12345|Child
-r_gohar|rana@gmail.com|gohar12345|Guest
-j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent
-s_distefano|steven@gmail.com|distefano12345|Child
-m_girgis|marina@gmail.com|girgis12345|Guest
-bob|bob@gmail.com|bob123|Parent
-rana|rana@gmail.com|123456789|Stranger
+va_patel|vanisha1@gmail.com|patel1234|Child|home
+s_patel|sonali@gmail.com|patel12345|Child|outside
+r_gohar|rana@gmail.com|gohar12345|Guest|home
+j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent|home
+s_distefano|steven@gmail.com|distefano12345|Child|outside
+m_girgis|marina@gmail.com|girgis12345|Guest|kitchen
