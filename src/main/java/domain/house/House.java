@@ -1,6 +1,8 @@
 package domain.house;
 
 
+import domain.sensors.Door;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,17 @@ public class House {
 
     public List<Room> getRooms() {
         return rooms;
+    }
+
+    public List<Door> getDoors(){
+        List<Door> doors = new ArrayList<>();
+        for (Room room: rooms) {
+            if(room.getDoor() != null){
+                doors.add(room.getDoor());
+            }
+        }
+
+        return doors;
     }
 
 }

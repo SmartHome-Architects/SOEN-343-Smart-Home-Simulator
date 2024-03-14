@@ -3,6 +3,10 @@ package presentation.Swing;
 import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
+import domain.house.House;
+import domain.house.Room;
+import domain.sensors.Door;
+import presentation.Swing.SHC.SHCTableModel;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
@@ -10,11 +14,15 @@ import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainFrame {
@@ -32,7 +40,7 @@ public class MainFrame {
     private JPanel SHH;
     private JComboBox comboBox2;
     private JPanel comboBox4;
-    private JPanel combobx1;
+    private JPanel SHCPanel2;
     private JTextArea textArea1;
     private JButton buttonOn;
     private JButton buttonOff;
@@ -83,6 +91,9 @@ public class MainFrame {
     private JTable table4;
     private JScrollPane heating;
     private JTable table5;
+    private JPanel checkBoxPanel;
+    private JPanel SHCPanel1;
+    private JComboBox comboBox;
 
     private Date currentDate;
     private Time currentTime;
@@ -460,6 +471,24 @@ public class MainFrame {
         });
 
         //-------------------------------------------------------------------------------------------------------------
+
+
+        //-------------------------------------------------------------------------------------------------------------
+
+
+        //work in progress
+        checkBoxPanel.setLayout(new BorderLayout());
+        House h = new House();
+
+        List<Door> doors = h.getDoors();
+        DefaultTableModel model = SHCTableModel.createTableModel(doors);
+        JTable table = SHCTableModel.createTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        checkBoxPanel.add(scrollPane);
+
+        //-------------------------------------------------------------------------------------------------------------
+
     }
 
     public void showMainFrame() {
