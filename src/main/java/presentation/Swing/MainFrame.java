@@ -1,5 +1,8 @@
 package presentation.Swing;
 
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
@@ -23,9 +26,15 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class MainFrame {
+
+
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
@@ -42,7 +51,6 @@ public class MainFrame {
     private JPanel comboBox4;
     private JPanel SHCPanel2;
     private JTextArea textArea1;
-    private JButton buttonOn;
     private JButton buttonOff;
     private JLabel userTag;
     private JLabel locationTag;
@@ -94,6 +102,7 @@ public class MainFrame {
     private JPanel checkBoxPanel;
     private JPanel SHCPanel1;
     private JComboBox comboBox;
+    private JPanel screen;
 
     private Date currentDate;
     private Time currentTime;
@@ -121,12 +130,11 @@ public class MainFrame {
     private boolean bathroomDoor;
     private boolean garageInsideDoor;
     private boolean garageOutsideDoor;
-
+    private boolean isFrozen = false;
     // Windows needed
 
     // c
     public MainFrame() {
-
         //-------------------------Set Date and Time--------------------------------------------------------
 
         //Sets Date and Time on the DASHBOARD
@@ -159,7 +167,6 @@ public class MainFrame {
                 dialog.setVisible(true);
             }
         });
-
 
 
         //--------------------------Account Management-----------------------------------------------------------------
@@ -473,6 +480,7 @@ public class MainFrame {
         //-------------------------------------------------------------------------------------------------------------
 
 
+
         //-------------------------------------------------------------------------------------------------------------
 
 
@@ -489,7 +497,88 @@ public class MainFrame {
 
         //-------------------------------------------------------------------------------------------------------------
 
+
+        buttonOff.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                if (!isFrozen) {
+                    // Freeze all components except the off button
+                    freezeComponents();
+                    buttonOff.setText("ON");
+                } else {
+                    // Unfreeze all components
+                    unfreezeComponents();
+                    buttonOff.setText("Off");
+                }
+                // Toggle freeze state
+                isFrozen = !isFrozen;
+            }
+        });
+
+        //-------------------------------temperature API--------------------------------------------------------------
+        try {
+            String jsonString = getTemperatureJSON();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonResponse = objectMapper.readTree(jsonString);
+
+            // Get the current timestamp
+            LocalDateTime currentTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            String currentTimestamp = currentTime.format(formatter);
+
+            // Find the closest timestamp in the API response
+            int index = -1;
+            JsonNode timeArray = jsonResponse.get("hourly").get("time");
+            for (int i = 0; i < timeArray.size(); i++) {
+                String timestamp = timeArray.get(i).asText();
+                if (timestamp.equals(currentTimestamp) || timestamp.compareTo(currentTimestamp) > 0) {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Extract temperature if index is found
+            if (index != -1) {
+                double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
+                temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
+            } else {
+                temperature.setText("Temperature data not found for the current time.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
+    private void freezeComponents() {
+        // Disable all components
+        setComponentEnabled(WindowContainer, false);
+        time.setVisible(false);
+        // Enable the off button
+        buttonOff.setEnabled(true);
+    }
+
+    // Method to unfreeze all components
+    private void unfreezeComponents() {
+        // Enable all components
+        setComponentEnabled(WindowContainer, true);
+        time.setVisible(true);
+        // Enable the off button
+        buttonOff.setEnabled(true);
+    }
+
+    // Recursive method to set component enabled state
+    private void setComponentEnabled(Component component, boolean enabled) {
+        if (component instanceof Container) {
+            Component[] components = ((Container) component).getComponents();
+            for (Component comp : components) {
+                setComponentEnabled(comp, enabled);
+            }
+        }
+        component.setEnabled(enabled);
+
+    }
+
 
     public void showMainFrame() {
         JFrame frame = new JFrame("Dashboard");
@@ -684,4 +773,29 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
+
+
+
+    private static String getTemperatureJSON() throws Exception {
+        URL url = new URL("https://api.open-meteo.com/v1/forecast?latitude=45.5088&longitude=-73.5878&hourly=temperature_2m");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            return response.toString();
+        } else {
+            throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
+        }
+    }
+
 }

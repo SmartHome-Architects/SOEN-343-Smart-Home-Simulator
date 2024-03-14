@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class EditHouseInhabitantsDialog extends JDialog {
-    private JComboBox<String> inhabitantComboBox;
-    private JComboBox<String> locationComboBox;
+    public JComboBox<String> inhabitantComboBox;
+    public JComboBox<String> locationComboBox;
 
     public EditHouseInhabitantsDialog(Frame parent) {
         super(parent, "Edit House Inhabitants", true);
@@ -48,7 +48,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void saveChanges() {
+    public void saveChanges() {
         String inhabitant = (String) inhabitantComboBox.getSelectedItem();
         String location = (String) locationComboBox.getSelectedItem();
 
