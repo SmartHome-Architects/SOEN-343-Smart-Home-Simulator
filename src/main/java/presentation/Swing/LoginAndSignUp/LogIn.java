@@ -1,5 +1,7 @@
 package presentation.Swing.LoginAndSignUp;
 
+import presentation.Swing.LoginAndSignUp.SignUp;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
