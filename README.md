@@ -35,7 +35,7 @@
   <tr>
     <td>Marina Girgis</td>
     <td>40168639</td>
-    <td><a href="(https://github.com/marinaGirgis)">marinaGirgis</a></td>
+    <td><a href="(https://github.com/marinaGirgis")>marinaGirgis</a></td>
   </tr>
 
   <tr>
