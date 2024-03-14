@@ -9,6 +9,9 @@ import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
 import domain.house.Room;
 import domain.sensors.Door;
+import domain.sensors.Light;
+import domain.sensors.Window;
+import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.SHC.SHCTableModel;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
@@ -485,15 +488,31 @@ public class MainFrame {
 
 
         //work in progress
-        checkBoxPanel.setLayout(new BorderLayout());
+
         House h = new House();
+        comboBox.addItem("Select Item");
+        comboBox.addItem("Doors");
+        comboBox.addItem("Windows");
+        comboBox.addItem("Lights");
 
-        List<Door> doors = h.getDoors();
-        DefaultTableModel model = SHCTableModel.createTableModel(doors);
-        JTable table = SHCTableModel.createTable(model);
+        comboBox.addActionListener(new ActionListener() {
+            SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) comboBox.getSelectedItem();
+                if (selectedItem.equals("Doors")) {
+                    displayHelper.displayItems(h.getDoors());
+                } else if (selectedItem.equals("Windows")) {
+                    displayHelper.displayItems(h.getWindows());
+                } else if (selectedItem.equals("Lights")) {
+                    displayHelper.displayItems(h.getLights());
+                } else if (selectedItem.equals("Select Item")) {
+                    displayHelper.clearPanel();
+                }
+            }
+        });
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        checkBoxPanel.add(scrollPane);
+
 
         //-------------------------------------------------------------------------------------------------------------
 
@@ -548,6 +567,8 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
+
+
 
 
     private void freezeComponents() {

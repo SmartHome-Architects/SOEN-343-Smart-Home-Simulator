@@ -10,9 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SHCTableModel {
-    public static DefaultTableModel createTableModel(List<Door> doors) {
-        List<Object[]> data = getData(doors);
+public class SHCTableModel<T> {
+    public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem) {
+        List<Object[]> data = getData(items, singleItem);
         return new DefaultTableModel(
                 data.toArray(new Object[0][0]),
                 new Object[]{"Room Name", "Open/Close"}) {
@@ -28,13 +28,12 @@ public class SHCTableModel {
         };
     }
 
-    private static List<Object[]> getData(List<Door> doors) {
+    private static <T> List<Object[]> getData(List<T> items, SingleItem<T> singleItem) {
         List<Object[]> data = new ArrayList<>();
-        for (Door door : doors) {
-            if (door != null && !door.getName().isEmpty()) {
-                String name = door.getLocation() + " " + door.getName();
-                boolean isOpen = door.isOpen();
-                data.add(new Object[]{name, isOpen});
+        for (T item : items) {
+            Object[] rowData = singleItem.extractData(item);
+            if (rowData != null && rowData.length > 1) {
+                data.add(rowData);
             }
         }
         return data;
@@ -56,5 +55,11 @@ public class SHCTableModel {
                 return null;
             }
         };
+    }
+
+
+
+    public interface SingleItem<T> {
+        Object[] extractData(T item);
     }
 }
