@@ -18,6 +18,8 @@ import java.io.*;
 import java.util.Scanner;
 
 public class MainFrame {
+
+
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
@@ -34,7 +36,6 @@ public class MainFrame {
     private JPanel comboBox4;
     private JPanel combobx1;
     private JTextArea textArea1;
-    private JButton buttonOn;
     private JButton buttonOff;
     private JLabel userTag;
     private JLabel locationTag;
@@ -83,6 +84,7 @@ public class MainFrame {
     private JTable table4;
     private JScrollPane heating;
     private JTable table5;
+    private JPanel screen;
 
     private Date currentDate;
     private Time currentTime;
@@ -110,7 +112,7 @@ public class MainFrame {
     private boolean bathroomDoor;
     private boolean garageInsideDoor;
     private boolean garageOutsideDoor;
-
+    private boolean isFrozen = false;
     // Windows needed
 
     // c
@@ -148,7 +150,6 @@ public class MainFrame {
                 dialog.setVisible(true);
             }
         });
-
 
 
         //--------------------------Account Management-----------------------------------------------------------------
@@ -460,7 +461,52 @@ public class MainFrame {
         });
 
         //-------------------------------------------------------------------------------------------------------------
+        buttonOff.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                if (!isFrozen) {
+                    // Freeze all components except the off button
+                    freezeComponents();
+                    buttonOff.setText("ON");
+                } else {
+                    // Unfreeze all components
+                    unfreezeComponents();
+                    buttonOff.setText("Off");
+                }
+                // Toggle freeze state
+                isFrozen = !isFrozen;
+            }
+        });
     }
+
+
+    private void freezeComponents() {
+        // Disable all components
+        setComponentEnabled(WindowContainer, false);
+        time.setVisible(false);
+        // Enable the off button
+        buttonOff.setEnabled(true);
+    }
+
+    // Method to unfreeze all components
+    private void unfreezeComponents() {
+        // Enable all components
+        setComponentEnabled(WindowContainer, true);
+        time.setVisible(true);
+        // Enable the off button
+        buttonOff.setEnabled(true);
+    }
+
+    // Recursive method to set component enabled state
+    private void setComponentEnabled(Component component, boolean enabled) {
+        if (component instanceof Container) {
+            Component[] components = ((Container) component).getComponents();
+            for (Component comp : components) {
+                setComponentEnabled(comp, enabled);
+            }
+        }
+        component.setEnabled(enabled);
+    }
+
 
     public void showMainFrame() {
         JFrame frame = new JFrame("Dashboard");
