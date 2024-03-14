@@ -1,5 +1,8 @@
 package presentation.Swing;
 
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
@@ -15,6 +18,10 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class MainFrame {
@@ -117,7 +124,6 @@ public class MainFrame {
 
     // c
     public MainFrame() {
-
         //-------------------------Set Date and Time--------------------------------------------------------
 
         //Sets Date and Time on the DASHBOARD
@@ -476,6 +482,40 @@ public class MainFrame {
                 isFrozen = !isFrozen;
             }
         });
+
+        //-------------------------------temperature API--------------------------------------------------------------
+        try {
+            String jsonString = getTemperatureJSON();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonResponse = objectMapper.readTree(jsonString);
+
+            // Get the current timestamp
+            LocalDateTime currentTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            String currentTimestamp = currentTime.format(formatter);
+
+            // Find the closest timestamp in the API response
+            int index = -1;
+            JsonNode timeArray = jsonResponse.get("hourly").get("time");
+            for (int i = 0; i < timeArray.size(); i++) {
+                String timestamp = timeArray.get(i).asText();
+                if (timestamp.equals(currentTimestamp) || timestamp.compareTo(currentTimestamp) > 0) {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Extract temperature if index is found
+            if (index != -1) {
+                double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
+                temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
+            } else {
+                temperature.setText("Temperature data not found for the current time.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -701,4 +741,29 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
+
+
+
+    private static String getTemperatureJSON() throws Exception {
+        URL url = new URL("https://api.open-meteo.com/v1/forecast?latitude=45.5088&longitude=-73.5878&hourly=temperature_2m");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            return response.toString();
+        } else {
+            throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
+        }
+    }
+
 }

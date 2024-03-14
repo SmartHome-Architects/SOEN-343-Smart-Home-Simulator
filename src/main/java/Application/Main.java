@@ -1,10 +1,7 @@
 package Application;
-
 import presentation.Swing.LoginAndSignUp.AuthenticationManager;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.MainFrame;
-import presentation.Swing.LoginAndSignUp.SignUp;
-
 
 import javax.swing.*;
 
