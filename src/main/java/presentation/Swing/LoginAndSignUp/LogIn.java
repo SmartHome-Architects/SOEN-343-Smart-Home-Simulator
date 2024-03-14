@@ -249,7 +249,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField1; //Email Entry
+    public javax.swing.JTextField jTextField1; //Email Entry
     private javax.swing.JPasswordField jPasswordField1; // Password Entry
     private javax.swing.JPanel left;
     private javax.swing.JPanel right;
