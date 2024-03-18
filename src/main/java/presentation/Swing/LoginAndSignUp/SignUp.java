@@ -284,12 +284,6 @@ public class SignUp extends javax.swing.JFrame {
         String email = jTextField1.getText();
         String password = new String(jPasswordField.getPassword());
 
-        // Validate input fields
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
-            return; // Exit the method if any field is empty
-        }
-
         String userType = "";
         if (jRadioButton1.isSelected()) {
             userType = "Guest";
@@ -301,6 +295,20 @@ public class SignUp extends javax.swing.JFrame {
             userType = "Stranger";
         }
 
+
+        // Validate input fields
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()|| userType.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
+            return; // Exit the method if any field is empty
+        }
+        // Validate email format
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Invalid Email", JOptionPane.ERROR_MESSAGE);
+            jTextField1.requestFocus();
+            jTextField1.selectAll();
+            return; // Exit the method if email format is invalid
+        }
+
         String filePath = "database/Users.txt";
         File file = new File(filePath);
 
@@ -310,9 +318,10 @@ public class SignUp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Registration Successful!");
             this.setVisible(false);
 
-            // Create and display the main frame
-            MainFrame mainFrame = new MainFrame();
-            mainFrame.showMainFrame();
+            // Show the login window
+            LogIn login = new LogIn();
+            login.setLocationRelativeTo(null); // Center the login window
+            login.setVisible(true);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -321,7 +330,7 @@ public class SignUp extends javax.swing.JFrame {
     }
 
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
     public void setSignUpActionListener(ActionListener listener) {
@@ -333,8 +342,13 @@ public class SignUp extends javax.swing.JFrame {
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }  
+    }
 
+    public boolean isValidEmail(String email) {
+        // Regular expression to validate email format
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
     // Main method for testing
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
