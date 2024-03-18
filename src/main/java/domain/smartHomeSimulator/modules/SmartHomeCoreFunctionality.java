@@ -42,14 +42,13 @@ public class SmartHomeCoreFunctionality {
         }
     }
 
-    // Helper method to check if the user has permission to perform the action on the window
+
     private boolean checkPermission(Window window, String action) {
         for (Permission permission : user.getPermissions()) {
             if (permission instanceof WindowPermission) {
                 WindowPermission windowPermission = (WindowPermission) permission;
                 if (windowPermission.isHasWindowPermission()) {
-                    // Assuming permission is granted for all windows or specific window ID/location
-                    // Add your logic here to check specific window permissions.txt
+                    
                     return true;
                 }
             }
