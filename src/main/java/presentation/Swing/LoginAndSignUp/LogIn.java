@@ -1,11 +1,16 @@
 package presentation.Swing.LoginAndSignUp;
 
 import presentation.Swing.LoginAndSignUp.SignUp;
+import presentation.Swing.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LogIn extends javax.swing.JFrame {
 
@@ -217,13 +222,41 @@ public class LogIn extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String email = getEmailText();
         String password = getPasswordText();
+        String username = jTextField1.getText(); // Assuming jTextField1 represents the username field in your GUI
+        String userType = ""; // Assuming userType needs to be retrieved from some other component in your GUI
 
-        // Now you have both email and password, you can proceed with authentication or any other action
+        String filePath = "database/Users.txt";
+        File file = new File(filePath);
+
+        // Write user information to text file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+            writer.println(username + "|" + email + "|" + password + "|" + userType);
+            JOptionPane.showMessageDialog(this, "Successfully logged in");
+            this.setVisible(false);
+
+            // Create and display the main frame
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.showMainFrame();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error occurred while logging in.");
+        }
     }
 
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String email = getEmailText();
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Invalid Email", JOptionPane.ERROR_MESSAGE);
+            jTextField1.requestFocus();
+            jTextField1.selectAll();
+        }
+    }
+
+    public boolean isValidEmail(String email) {
+        // Regular expression to validate email format
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 
     public String getEmailText() {
@@ -233,7 +266,6 @@ public class LogIn extends javax.swing.JFrame {
     public String getPasswordText() {
         return new String(jPasswordField1.getPassword());
     }
-
 
 
 
