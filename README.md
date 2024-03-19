@@ -35,12 +35,12 @@
   <tr>
     <td>Marina Girgis</td>
     <td>40168639</td>
-    <td><a href="(https://github.com/marinaGirgis")>marinaGirgis</a></td>
+    <td><a href="https://github.com/marinaGirgis">marinaGirgis</a></td>
   </tr>
 
   <tr>
     <td>Rana Gohar</td>
     <td>40117475</td>
-    <td><a href="[link to profile](https://github.com/RanaGohar)">RanaGohar</a></td>
+    <td><a href="https://github.com/RanaGohar">RanaGohar</a></td>
   </tr>
 </table>
