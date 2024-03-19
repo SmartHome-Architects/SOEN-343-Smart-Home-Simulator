@@ -39,8 +39,8 @@
   </tr>
 
   <tr>
-    <td>name</td>
-    <td>id</td>
-    <td><a href="link to profile">username</a></td>
+    <td>Rana Gohar</td>
+    <td>40117475</td>
+    <td><a href="[link to profile](https://github.com/RanaGohar)">RanaGohar</a></td>
   </tr>
 </table>
