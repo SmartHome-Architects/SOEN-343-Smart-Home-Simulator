@@ -225,7 +225,7 @@ public class LogIn extends javax.swing.JFrame {
         String username = jTextField1.getText(); // Assuming jTextField1 represents the username field in your GUI
         String userType = ""; // Assuming userType needs to be retrieved from some other component in your GUI
 
-        String filePath = "database/Users.txt";
+        String filePath = "database/Login.txt";
         File file = new File(filePath);
 
         // Write user information to text file

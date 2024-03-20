@@ -202,7 +202,11 @@ public class MainFrame {
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
 
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Add a User Profile");
+
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
+
             }
         });
 
@@ -214,6 +218,9 @@ public class MainFrame {
 
                 DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
                 deleteProfileCommand.execute();
+
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Delete a User Profile");
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
@@ -238,6 +245,9 @@ public class MainFrame {
 
                 EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
                 editProfileCommand.execute();
+
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Edit a User Profile");
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }
