@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class LogIn extends javax.swing.JFrame {
 
@@ -228,21 +229,41 @@ public class LogIn extends javax.swing.JFrame {
         String filePath = "database/Users.txt";
         File file = new File(filePath);
 
-        // Write user information to text file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.println(username + "|" + email + "|" + password + "|" + userType);
+        // Check if the provided email and password match any entry in the file
+        boolean found = false;
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String storedEmail = parts[1];
+                String storedPassword = parts[2];
+                if (email.equals(storedEmail) && password.equals(storedPassword)) {
+                    found = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error occurred while logging in.");
+            return;
+        }
+
+        if (found) {
             JOptionPane.showMessageDialog(this, "Successfully logged in");
-            this.setVisible(false);
 
             // Create and display the main frame
             MainFrame mainFrame = new MainFrame();
             mainFrame.showMainFrame();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error occurred while logging in.");
+            // Hide the login frame
+            this.setVisible(false);
+            return; // Exit the method to prevent further execution
         }
+
+        // If the login failed, show error message
+        JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
+
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         String email = getEmailText();
