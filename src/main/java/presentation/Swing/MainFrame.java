@@ -203,7 +203,7 @@ public class MainFrame {
                 addProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Add a User Profile");
+                LogEntry.Profilelog("SHS Module", "Manage User Profiles", "Add a User Profile");
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
 
@@ -220,7 +220,7 @@ public class MainFrame {
                 deleteProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Delete a User Profile");
+                LogEntry.Profilelog("SHS Module", "Manage User Profiles", "Delete a User Profile");
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
@@ -247,7 +247,7 @@ public class MainFrame {
                 editProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHH Module", "Manage User Profiles", "Edit a User Profile");
+                LogEntry.Profilelog("SHS Module", "Manage User Profiles", "Edit a User Profile");
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }

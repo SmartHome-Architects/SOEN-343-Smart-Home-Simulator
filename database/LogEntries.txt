@@ -1,6 +1,1 @@
-Timestamp: 2024-03-19 13:49:47|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Add a User Profile
-Timestamp: 2024-03-19 14:00:18|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Add a User Profile
-Timestamp: 2024-03-19 14:05:19|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Add a User Profile
-Timestamp: 2024-03-19 14:05:40|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Delete a User Profile
-Timestamp: 2024-03-19 14:11:11|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Add a User Profile
-Timestamp: 2024-03-19 14:11:31|Device: SHH Module|Event Type: Manage User Profiles|Event Description: Delete a User Profile
+
