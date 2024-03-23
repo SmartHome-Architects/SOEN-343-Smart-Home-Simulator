@@ -64,13 +64,31 @@ public class MainFrame {
     private JButton Delete_Profile;
     private JButton Edit_Profile;
     private JLabel houseLayoutLabel;
+    private ImageIcon houseLayout;
+    private JPanel kitchenLightPanel;
+    private JPanel livingRoomLightPanel;
+    private JPanel bedroom2LightPanel;
+    private JPanel bathroomLightPanel;
+    private JPanel garageLightPanel;
+    private JPanel bedroom1LightPanel;
+    private JPanel hallwayLightPanel;
+    private JPanel backLightPanel;
+    private JPanel frontLightPanel;
+    private JLabel livingLightLabel;
+    private JLabel bedroom2LightLabel;
+    private JLabel bedroom1LightLabel;
+    private JLabel hallwayLightLabel;
+    private JLabel backLightLabel;
+    private JLabel bathroomLightLabel;
+    private JLabel garageLightLabel;
+    private JLabel frontLightLabel;
+    private JLabel kitchenLightLabel;
 
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
     private ProfileManager profileManager;
 
-    private ImageIcon houseLayout;
 
     // Lights for each room (true = on, false = off)
     private boolean bathroomLight;
@@ -82,6 +100,9 @@ public class MainFrame {
     private boolean hallwayLight;
     private boolean frontLight; //front yard light
     private boolean backLight; //backyard light
+
+    private ImageIcon lightOn;
+    private ImageIcon lightOff;
 
     // Doors (true = open, false = closed)
     private boolean frontDoor;
@@ -190,13 +211,56 @@ public class MainFrame {
         frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
 
-        // Load the image with the specified width and height
+        // Load house layout image
         houseLayout = new ImageIcon("images/houseLayout.png");
         Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
         houseLayoutLabel.setIcon(new ImageIcon(image));
         houseLayoutLabel.setText("house layout image");
-        houseImage.setLayout(new BorderLayout());
-        houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
+
+        // Set bounds for house layout label
+        houseLayoutLabel.setBounds(0, 0, 550, 450);
+        houseImage.setLayout(null); // Set null layout for absolute positioning
+
+        // Load light icon for each room
+        lightOff = new ImageIcon("images/lightOff.png");
+        Image lightOffImage = lightOff.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        lightOff = new ImageIcon(lightOffImage);
+        lightOn = new ImageIcon("images/lightOn.png");
+        Image lightOnImage = lightOn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        lightOn = new ImageIcon(lightOnImage);
+
+        // Initial state: all lights are off
+        kitchenLightLabel.setIcon(lightOff);
+        bathroomLightLabel.setIcon(lightOff);
+        garageLightLabel.setIcon(lightOff);
+        bedroom1LightLabel.setIcon(lightOff);
+        bedroom2LightLabel.setIcon(lightOff);
+        livingLightLabel.setIcon(lightOff);
+        hallwayLightLabel.setIcon(lightOff);
+        frontLightLabel.setIcon(lightOff);
+        backLightLabel.setIcon(lightOff);
+
+        // Adjust the positions of the panels associated with the labels
+        kitchenLightLabel.setBounds(110, 70, 30, 30);
+        bathroomLightPanel.setBounds(110, 180, 30, 30);
+        garageLightPanel.setBounds(110, 250, 30, 30);
+        livingRoomLightPanel.setBounds(300, 70, 30, 30);
+        bedroom2LightPanel.setBounds(300, 180, 30, 30);
+        bedroom1LightPanel.setBounds(300, 250, 30, 30);
+        hallwayLightPanel.setBounds(200, 200, 30, 30);
+        frontLightPanel.setBounds(200, 300, 30, 30);
+        backLightPanel.setBounds(200, 10, 30, 30);
+
+        // Add the light panels to the container panel
+        houseImage.add(kitchenLightLabel);
+        houseImage.add(bathroomLightPanel);
+        houseImage.add(garageLightPanel);
+        houseImage.add(livingRoomLightPanel);
+        houseImage.add(bedroom1LightPanel);
+        houseImage.add(bedroom2LightPanel);
+        houseImage.add(hallwayLightPanel);
+        houseImage.add(frontLightPanel);
+        houseImage.add(backLightPanel);
     }
 
     public void showMainFrame() {
