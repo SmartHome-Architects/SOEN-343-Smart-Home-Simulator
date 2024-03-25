@@ -21,8 +21,6 @@ import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
 
-import javax.swing.table.DefaultTableModel;
-
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
@@ -117,6 +115,36 @@ public class MainFrame {
     private JComboBox comboBox;
     private JPanel screen;
     private JButton permissionsButton;
+    private JPanel backDoorPanel;
+    private JLabel backDoorLabel;
+    private JPanel kitchenWindow1Panel;
+    private JLabel kitchenWindow1Label;
+    private JPanel kitchenWindow2Panel;
+    private JLabel kitchenWindow2Label;
+    private JPanel livingWindow1Panel;
+    private JLabel livingWindow1Label;
+    private JPanel livingWindow2Panel;
+    private JLabel livingWindow2Label;
+    private JPanel bathroomWindowPanel;
+    private JLabel bathroomWindowLabel;
+    private JPanel bathroomDoorPanel;
+    private JLabel bathroomDoorLabel;
+    private JPanel garageInDoorPanel;
+    private JPanel garageOutDoorPanel;
+    private JLabel garageInDoorLabel;
+    private JLabel garageOutDoorLabel;
+    private JPanel frontDoorPanel;
+    private JLabel frontDoorLabel;
+    private JPanel bedroom1Window1Panel;
+    private JLabel bedroom1Window1Label;
+    private JPanel bedroom1Window2Panel;
+    private JLabel bedroom1Window2Label;
+    private JPanel bedroom1DoorPanel;
+    private JLabel bedroom1DoorLabel;
+    private JPanel bedroom2DoorPanel;
+    private JLabel bedroom2DoorLabel;
+    private JPanel bedroom2WindowPanel;
+    private JLabel bedroom2WindowLabel;
 
 
     private Date currentDate;
@@ -138,12 +166,13 @@ public class MainFrame {
 
     private ImageIcon lightOn;
     private ImageIcon lightOff;
+    private ImageIcon opened;
+    private ImageIcon closed;
 
     // Doors (true = open, false = closed)
     private boolean frontDoor;
     private boolean backDoor;
     private boolean bedroom1Door;
-    private boolean bedroom2Door;
     private boolean bathroomDoor;
     private boolean garageInsideDoor;
     private boolean garageOutsideDoor;
@@ -319,15 +348,16 @@ public class MainFrame {
         frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
 
+        //-----------------------------------2D House Layout--------------------------------------------------------------------------
+
         // Load house layout image
         houseLayout = new ImageIcon("images/houseLayout.png");
         Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
         houseLayoutLabel.setIcon(new ImageIcon(image));
         houseLayoutLabel.setText("house layout image");
 
-
         // Set bounds for house layout label
-        houseLayoutLabel.setBounds(0, 0, 550, 450);
+        houseLayoutLabel.setBounds(0, 0, 550, 400);
         houseImage.setLayout(null); // Set null layout for absolute positioning
 
         // Load light icon for each room
@@ -338,27 +368,73 @@ public class MainFrame {
         Image lightOnImage = lightOn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         lightOn = new ImageIcon(lightOnImage);
 
-        // Initial state: all lights are off
-        kitchenLightLabel.setIcon(lightOff);
-        bathroomLightLabel.setIcon(lightOff);
-        garageLightLabel.setIcon(lightOff);
-        bedroom1LightLabel.setIcon(lightOff);
-        bedroom2LightLabel.setIcon(lightOff);
-        livingLightLabel.setIcon(lightOff);
-        hallwayLightLabel.setIcon(lightOff);
-        frontLightLabel.setIcon(lightOff);
-        backLightLabel.setIcon(lightOff);
+        //Load open/closed icon
+        opened = new ImageIcon("images/open.png");
+        Image openImage = opened.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        opened = new ImageIcon(openImage);
+        closed = new ImageIcon("images/open.png");
+        Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        closed = new ImageIcon(closedImage);
+
+        // Initial state: all lights are on and all windows/doors are closed-> if statements to switch between on and off/ open and closed
+        //lights
+        kitchenLightLabel.setIcon(lightOn);
+        bathroomLightLabel.setIcon(lightOn);
+        garageLightLabel.setIcon(lightOn);
+        bedroom1LightLabel.setIcon(lightOn);
+        bedroom2LightLabel.setIcon(lightOn);
+        livingLightLabel.setIcon(lightOn);
+        hallwayLightLabel.setIcon(lightOn);
+        frontLightLabel.setIcon(lightOn);
+        backLightLabel.setIcon(lightOn);
+        //outside doors
+        frontDoorLabel.setIcon(closed);
+        backDoorLabel.setIcon(closed);
+        garageOutDoorLabel.setIcon(closed);
+        //inside doors
+        garageInDoorLabel.setIcon(closed);
+        bathroomDoorLabel.setIcon(closed);
+        bedroom1DoorLabel.setIcon(closed);
+        bedroom2DoorLabel.setIcon(closed);
+        //windows
+        bedroom1Window1Label.setIcon(closed);
+        bedroom1Window2Label.setIcon(closed);
+        bedroom2WindowLabel.setIcon(closed);
+        livingWindow1Label.setIcon(closed);
+        livingWindow2Label.setIcon(closed);
+        kitchenWindow1Label.setIcon(closed);
+        kitchenWindow2Label.setIcon(closed);
+        bathroomWindowLabel.setIcon(closed);
 
         // Adjust the positions of the panels associated with the labels
+        //lights
         kitchenLightLabel.setBounds(110, 70, 30, 30);
         bathroomLightPanel.setBounds(110, 180, 30, 30);
-        garageLightPanel.setBounds(110, 250, 30, 30);
-        livingRoomLightPanel.setBounds(300, 70, 30, 30);
-        bedroom2LightPanel.setBounds(300, 180, 30, 30);
-        bedroom1LightPanel.setBounds(300, 250, 30, 30);
-        hallwayLightPanel.setBounds(200, 200, 30, 30);
-        frontLightPanel.setBounds(200, 300, 30, 30);
-        backLightPanel.setBounds(200, 10, 30, 30);
+        garageLightPanel.setBounds(130, 220, 30, 30);
+        livingRoomLightPanel.setBounds(300, 60, 30, 30);
+        bedroom2LightPanel.setBounds(310, 150, 30, 30);
+        bedroom1LightPanel.setBounds(320, 250, 30, 30);
+        hallwayLightPanel.setBounds(240, 200, 30, 30);
+        frontLightPanel.setBounds(30, 300, 30, 30);
+        backLightPanel.setBounds(470, 10, 30, 30);
+        //outside doors
+        frontDoorLabel.setBounds(235,310,30,30);
+        garageOutDoorLabel.setBounds(70,240,30,30);
+        backDoorLabel.setBounds(240,5,30,30);
+        //inside doors
+        garageInDoorLabel.setBounds(180,220,30,30);
+        bathroomDoorLabel.setBounds(180,180,30,30);
+        bedroom1DoorLabel.setBounds(300,220,30,30);
+        bedroom2DoorLabel.setBounds(300,180,30,30);
+        //windows
+        bedroom1Window1Label.setBounds(400,250,30,30);
+        bedroom1Window2Label.setBounds(325,300,30,30);
+        bedroom2WindowLabel.setBounds(400,150,30,30);
+        livingWindow1Label.setBounds(400,50,30,30);
+        livingWindow2Label.setBounds(330,5,30,30);
+        kitchenWindow1Label.setBounds(130,5,30,30);
+        kitchenWindow2Label.setBounds(70,70,30,30);
+        bathroomWindowLabel.setBounds(70,170,30,30);
 
         // Add the light panels to the container panel
         houseImage.add(kitchenLightLabel);
@@ -370,6 +446,24 @@ public class MainFrame {
         houseImage.add(hallwayLightPanel);
         houseImage.add(frontLightPanel);
         houseImage.add(backLightPanel);
+        //outside doors
+        houseImage.add(frontDoorLabel);
+        houseImage.add(garageOutDoorLabel);
+        houseImage.add(backDoorLabel);
+        //inside doors
+        houseImage.add(garageInDoorLabel);
+        houseImage.add(bathroomDoorLabel);
+        houseImage.add(bedroom1DoorLabel);
+        houseImage.add(bedroom2DoorLabel);
+        //windows
+        houseImage.add(bedroom1Window1Label);
+        houseImage.add(bedroom1Window2Label);
+        houseImage.add(bedroom2WindowLabel);
+        houseImage.add(livingWindow1Label);
+        houseImage.add(livingWindow2Label);
+        houseImage.add(kitchenWindow1Label);
+        houseImage.add(kitchenWindow2Label);
+        houseImage.add(bathroomWindowLabel);
 
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
