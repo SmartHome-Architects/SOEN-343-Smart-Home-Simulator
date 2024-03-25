@@ -14,7 +14,7 @@ public class PermissionsPopup {
     public static void show(JFrame parentFrame) {
         // popup size
         JDialog dialog = new JDialog(parentFrame, "Manage Permissions", true); // Use parentFrame as the parent window
-        dialog.setSize(600, 600);
+        dialog.setSize(600, 400);
         dialog.setLocationRelativeTo(parentFrame); // Center the dialog relative to the parent frame
 
         // combobox to select item
