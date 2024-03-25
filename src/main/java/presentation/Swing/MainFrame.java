@@ -7,12 +7,9 @@ import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
-import domain.house.Room;
-import domain.sensors.Door;
-import domain.sensors.Light;
-import domain.sensors.Window;
+import domain.smartHomeSimulator.modules.SmartHomeHeating;
+import domain.user.LoggedInUser;
 import presentation.Swing.SHC.SHCDisplay;
-import presentation.Swing.SHC.SHCTableModel;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
@@ -20,15 +17,12 @@ import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.List;
-import java.util.ArrayList;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -134,10 +128,14 @@ public class MainFrame {
     private boolean garageInsideDoor;
     private boolean garageOutsideDoor;
     private boolean isFrozen = false;
+    LoggedInUser user;
     // Windows needed
 
     // c
-    public MainFrame() {
+    public MainFrame(LoggedInUser user) {
+
+        this.user = user;
+        House h = new House();
         //-------------------------Set Date and Time--------------------------------------------------------
 
         //Sets Date and Time on the DASHBOARD
@@ -516,7 +514,6 @@ public class MainFrame {
 
         //work in progress
 
-        House h = new House();
         comboBox.addItem("Select Item");
         comboBox.addItem("Doors");
         comboBox.addItem("Windows");
@@ -539,7 +536,9 @@ public class MainFrame {
             }
         });
 
+        SmartHomeHeating shh = new SmartHomeHeating();
         //-------------------------------------------------------------------------------------------------------------
+
 
 
         buttonOff.addActionListener(new ActionListener() {
@@ -585,6 +584,7 @@ public class MainFrame {
             if (index != -1) {
                 double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
                 temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
+                shh.setOutsideTemp(temperature1);
             } else {
                 temperature.setText("Temperature data not found for the current time.");
             }

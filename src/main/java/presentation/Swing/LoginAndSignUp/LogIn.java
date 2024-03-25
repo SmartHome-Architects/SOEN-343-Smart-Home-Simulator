@@ -1,11 +1,9 @@
 package presentation.Swing.LoginAndSignUp;
 
-import presentation.Swing.LoginAndSignUp.SignUp;
+import domain.user.LoggedInUser;
 import presentation.Swing.MainFrame;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
@@ -229,6 +227,8 @@ public class LogIn extends javax.swing.JFrame {
         String filePath = "database/Users.txt";
         File file = new File(filePath);
 
+        LoggedInUser loggedInUser = null;
+
         // Check if the provided email and password match any entry in the file
         boolean found = false;
         try (Scanner scanner = new Scanner(file)) {
@@ -239,6 +239,7 @@ public class LogIn extends javax.swing.JFrame {
                 String storedPassword = parts[2];
                 if (email.equals(storedEmail) && password.equals(storedPassword)) {
                     found = true;
+                    loggedInUser = new LoggedInUser(parts[0],parts[3]);
                     // If the email and password match, retrieve the associated username
                     username = parts[0]; // Assuming username is the first part of each line in Users.txt
                     break;
@@ -253,6 +254,8 @@ public class LogIn extends javax.swing.JFrame {
         if (found) {
             JOptionPane.showMessageDialog(this, "Successfully logged in");
 
+
+
             // Write username to external file
             try (PrintWriter writer = new PrintWriter(new FileWriter("database/userNameLoggedIn.txt", true))) {
                 writer.println(username);
@@ -262,7 +265,8 @@ public class LogIn extends javax.swing.JFrame {
             }
 
             // Create and display the main frame
-            MainFrame mainFrame = new MainFrame();
+
+            MainFrame mainFrame = new MainFrame(loggedInUser);
             mainFrame.showMainFrame();
 
             // Hide the login frame

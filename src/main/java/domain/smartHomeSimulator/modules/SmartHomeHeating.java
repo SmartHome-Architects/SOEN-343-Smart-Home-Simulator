@@ -1,5 +1,6 @@
 package domain.smartHomeSimulator.modules;
 
+import domain.house.Room;
 import domain.house.Zone;
 import domain.user.Profile;
 
@@ -12,15 +13,26 @@ public class SmartHomeHeating implements Observable{
     private Profile user;
     List<Zone> zones = new ArrayList<>();
 
+    private double outsideTemp;
+
     private boolean isActive;
     private Timer timer;
 
     private double tempRate = 0.05;
 
-    public SmartHomeHeating(Profile user){
-        this.user = user;
+    public SmartHomeHeating(){
+        //this.user = user;
         this.isActive = false;
+        this.timer = new Timer();
         startTimer(); //start HVAC update timer
+    }
+
+    public double getOutsideTemp() {
+        return outsideTemp;
+    }
+
+    public void setOutsideTemp(double outsideTemp) {
+        this.outsideTemp = outsideTemp;
     }
 
     private void startTimer() {
@@ -35,6 +47,10 @@ public class SmartHomeHeating implements Observable{
     public void detach(Zone zone){
         //check permission
         zones.remove(zone);
+        for(Room room: zone.getZoneRooms()){
+            room.getAcUnit().turnOff();
+            room.getHeater().turnOff();
+        }
     }
 
     public void setZoneTemperature(String zoneName, double zoneTemp){
@@ -72,9 +88,7 @@ public class SmartHomeHeating implements Observable{
 
     public void notifyObservers(){
         for (Zone z: zones) {
-            if(isActive()){
-                z.update(tempRate);
-            }
+            z.update(tempRate,isActive(),outsideTemp);
         }
     }
 
