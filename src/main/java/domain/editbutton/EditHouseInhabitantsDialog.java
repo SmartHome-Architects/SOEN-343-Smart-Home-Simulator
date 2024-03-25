@@ -5,7 +5,11 @@ import presentation.Swing.command.UserAccountManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class EditHouseInhabitantsDialog extends JDialog {
     private JComboBox<String> inhabitantComboBox;
@@ -81,6 +85,18 @@ public class EditHouseInhabitantsDialog extends JDialog {
         dispose();
     }
 
+    private List<String> readUsernamesFromFile() {
+        List<String> usernames = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File("database/userNameLoggedIn.txt"))) {
+            while (scanner.hasNextLine()) {
+                usernames.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null; // Return null to indicate failure in reading from file
+        }
+        return usernames;
+    }
     public void updateUserDropdown(List<String> updatedUsernames, String selectedUsername) {
         populateInhabitantComboBox(updatedUsernames, selectedUsername);
     }

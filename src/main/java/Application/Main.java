@@ -25,10 +25,7 @@ public class Main {
                     MainFrame mainFrame = new MainFrame();
                     mainFrame.showMainFrame();
                     loginFrame.dispose(); // Close the login frame
-                } else {
-                    // Authentication failed, show error message
-                    JOptionPane.showMessageDialog(loginFrame, "Invalid email or password. Please try again.");
-                }
+                } 
             });
 
             loginFrame.setVisible(true);

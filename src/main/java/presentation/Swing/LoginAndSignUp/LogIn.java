@@ -223,7 +223,7 @@ public class LogIn extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String email = getEmailText();
         String password = getPasswordText();
-        String username = jTextField1.getText(); // Assuming jTextField1 represents the username field in your GUI
+        String username = ""; // Variable to store the retrieved username
         String userType = ""; // Assuming userType needs to be retrieved from some other component in your GUI
 
         String filePath = "database/Users.txt";
@@ -239,6 +239,8 @@ public class LogIn extends javax.swing.JFrame {
                 String storedPassword = parts[2];
                 if (email.equals(storedEmail) && password.equals(storedPassword)) {
                     found = true;
+                    // If the email and password match, retrieve the associated username
+                    username = parts[0]; // Assuming username is the first part of each line in Users.txt
                     break;
                 }
             }
@@ -250,6 +252,14 @@ public class LogIn extends javax.swing.JFrame {
 
         if (found) {
             JOptionPane.showMessageDialog(this, "Successfully logged in");
+
+            // Write username to external file
+            try (PrintWriter writer = new PrintWriter(new FileWriter("database/userNameLoggedIn.txt", true))) {
+                writer.println(username);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error occurred while writing username to file.");
+            }
 
             // Create and display the main frame
             MainFrame mainFrame = new MainFrame();
@@ -263,7 +273,6 @@ public class LogIn extends javax.swing.JFrame {
         // If the login failed, show error message
         JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
-
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         String email = getEmailText();
