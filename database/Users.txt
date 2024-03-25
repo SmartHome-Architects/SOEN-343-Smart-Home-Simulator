@@ -1,6 +1,5 @@
-rana|rana@gmail.com|rana|Parent
-d|d|d|Parent
-gigi|gigi@gmail.com|gigi|Child
-f|f|f|Parent
-rana2|rana@gmail.com|rana|Parent
-j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent
+rana|rana@gmail.com|rana|Parent|bathroom
+d|d|d|Parent|kitchen
+gigi|gigi@gmail.com|gigi|Children|outside
+f|f|f|Parent|outside
+rana2|rana@gmail.com|rana|Parent|room1
