@@ -7,19 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class UserPermissionInitializer {
-
-    public static void main(String[] args) {
-        // Initialize permissions for Parent, Children, and Guest
-        Permission parentPermission = initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/HeaterPermission.txt", "Parent");
-        Permission childrenPermission = initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/HeaterPermission.txt", "Children");
-        Permission guestPermission = initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/HeaterPermission.txt", "Guest");
-
-        // Test printing the initialized permissions
-        System.out.println("Parent Permission: " + parentPermission);
-        System.out.println("Children Permission: " + childrenPermission);
-        System.out.println("Guest Permission: " + guestPermission);
-    }
-
     public static Permission initializePermission(String doorPermissionFile, String lightPermissionFile, String windowPermissionFile, String shhPermissionFile, String userType) {
         boolean hasDoorPermissionOutside = false;
         boolean hasDoorPermissionInsideHome = false;

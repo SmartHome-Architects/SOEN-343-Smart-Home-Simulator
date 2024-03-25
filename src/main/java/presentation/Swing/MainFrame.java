@@ -13,6 +13,7 @@ import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
 import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
+import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -120,16 +121,12 @@ public class MainFrame {
 
     // c
     public MainFrame() {
-
-
-
-
+        //----------------------PermissionPopup----------------------------------------------------------
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
             }
         });
-
 
         //-------------------------Set Date and Time--------------------------------------------------------
 
@@ -283,32 +280,6 @@ public class MainFrame {
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
 
-
-        //-------------------------------------Permissions Tables-------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //-------------------------------------------------------------------------------------------------------------
 
         //work in progress
@@ -336,41 +307,7 @@ public class MainFrame {
             }
         });
 
-        // -------------------------------------------------------------------------------------------------------------
-
-
-/*
-        comboBoxSHCPermissions.addItem("Select Item");
-        comboBoxSHCPermissions.addItem("Doors");
-        comboBoxSHCPermissions.addItem("Windows");
-        comboBoxSHCPermissions.addItem("Lights");
-
-        comboBoxSHCPermissions.addActionListener(new ActionListener() {
-
-            SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel);
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedItem = (String) comboBox.getSelectedItem();
-                if (selectedItem.equals("Doors")) {
-                    displayHelper.displayItems(h.getDoors());
-                } else if (selectedItem.equals("Windows")) {
-                    displayHelper.displayItems(h.getWindows());
-                } else if (selectedItem.equals("Lights")) {
-                    displayHelper.displayItems(h.getLights());
-                } else if (selectedItem.equals("Select Item")) {
-                    displayHelper.clearPanel();
-                }
-            }
-
-
-        });
-
-
-
-*/
-
-
-        //-------------------------------------------------------------------------------------------------------------
+        //-----------------------------------ON/OFF button--------------------------------------------------------------------------
 
 
         buttonOff.addActionListener(new ActionListener() {

@@ -1,4 +1,4 @@
-package src.main.java.domain.smartHomeSimulator.modules;
+package domain.smartHomeSimulator.modules;
 
 public class SmartHomeSecurity {
 }

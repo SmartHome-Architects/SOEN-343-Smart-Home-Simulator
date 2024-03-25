@@ -1,8 +1,6 @@
 package domain.user;
 
 import domain.Permission.Permission;
-import domain.user.UserPermissionInitializer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -34,12 +32,8 @@ public class UsersInitializer {
         return usersList;
     }
 
-    public static void main(String[] args) {
-        String usersFileName = "database/Users.txt";
-
-        List<Users> usersList = initializeUsers(usersFileName);
-        for (Users user : usersList) {
-            System.out.println("User: " + user.getUsername() + ", Details: " + user);
-        }
+    public static List<Users> getAllUsers() {
+        // initial all users and get them
+        return initializeUsers("database/Users.txt");
     }
 }

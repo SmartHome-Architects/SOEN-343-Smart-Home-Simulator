@@ -1,4 +1,4 @@
-package presentation.Swing;
+package presentation.Swing.managePermission;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,16 +12,16 @@ import java.util.Scanner;
 
 public class PermissionsPopup {
     public static void show(JFrame parentFrame) {
-        // Create and configure your popup dialog
+        // popup size
         JDialog dialog = new JDialog(parentFrame, "Manage Permissions", true); // Use parentFrame as the parent window
         dialog.setSize(600, 600);
         dialog.setLocationRelativeTo(parentFrame); // Center the dialog relative to the parent frame
 
-        // Create a JComboBox for selecting permission categories
+        // combobox to select item
         JComboBox<String> categoryComboBox = new JComboBox<>(new String[]{"Door", "Light", "Window", "Heater"});
         dialog.add(categoryComboBox, BorderLayout.NORTH);
 
-        // Create table model with columns: User Type, Outside Permission, Inside Permission
+        // create table model
         DefaultTableModel model = new DefaultTableModel(new Object[]{"User Type", "Outside Permission", "Inside Permission"}, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
@@ -29,16 +29,14 @@ public class PermissionsPopup {
             }
         };
 
-        // Create the table using the model
+        // create table
         JTable table = new JTable(model);
 
-        // Add the table to a scroll pane
+        // style table
         JScrollPane scrollPane = new JScrollPane(table);
-
-        // Add the scroll pane to the dialog
         dialog.add(scrollPane, BorderLayout.CENTER);
 
-        // Add a Save button to save changes to permissions files
+        // Save button to save to file
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -53,13 +51,12 @@ public class PermissionsPopup {
             }
         });
 
-        // Add components to the dialog
+        // add save button
         dialog.add(saveButton, BorderLayout.SOUTH);
 
-        // Update table model
+        // update table after being saved
         updateTableModel((String) categoryComboBox.getSelectedItem(), model);
 
-        // Add action listener to the category JComboBox
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,11 +65,11 @@ public class PermissionsPopup {
             }
         });
 
-        // Set the visibility of the dialog
+        // make visible
         dialog.setVisible(true);
     }
 
-    // Method to update the table model based on the selected category
+    // update table from item selected from combobox
     private static void updateTableModel(String category, DefaultTableModel model) {
         model.setRowCount(0); // Clear existing rows
         try (Scanner scanner = new Scanner(new File("database/" + category + "Permission.txt"))) {
@@ -87,7 +84,7 @@ public class PermissionsPopup {
         }
     }
 
-    // Method to save permissions based on the selected category
+    // save permissions to appropriate files
     private static void savePermissions(String category, DefaultTableModel model) throws IOException {
         File permissionsFile = new File("database/" + category + "Permission.txt");
         FileWriter writer = new FileWriter(permissionsFile);
