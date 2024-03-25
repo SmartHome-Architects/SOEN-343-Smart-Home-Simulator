@@ -2,7 +2,6 @@ package domain.smartHomeSimulator.modules;
 
 
 import domain.Permission.Permission;
-import domain.Permission.WindowPermission;
 import domain.sensors.Window;
 import domain.user.Profile;
 
@@ -22,7 +21,7 @@ public class SmartHomeCoreFunctionality {
     public void setUser(Profile user) {
         this.user = user;
     }
-
+/*
     public void openWindow(Window window) {
         if (checkPermission(window, "open")) {
             window.setOpen(true);
@@ -45,9 +44,9 @@ public class SmartHomeCoreFunctionality {
 
     private boolean checkPermission(Window window, String action) {
         for (Permission permission : user.getPermissions()) {
-            if (permission instanceof WindowPermission) {
-                WindowPermission windowPermission = (WindowPermission) permission;
-                if (windowPermission.isHasWindowPermission()) {
+            if (permission instanceof WindowPermission.txt) {
+                WindowPermission.txt WindowPermission.txt = (WindowPermission.txt) permission;
+                if (WindowPermission.txt.isHasWindowPermission()) {
                     
                     return true;
                 }
@@ -60,7 +59,7 @@ public class SmartHomeCoreFunctionality {
     // Method to grant window permission to a user
     public void grantWindowPermission(Profile user) {
         List<Permission> permissions = user.getPermissions();
-        permissions.add(new WindowPermission(true));
+        permissions.add(new WindowPermission.txt(true));
         user.setPermissions(permissions);
         System.out.println("Window permission granted to user: " + user.getUsername());
     }
@@ -68,7 +67,7 @@ public class SmartHomeCoreFunctionality {
     // Method to deny window permission to a user
     public void denyWindowPermission(Profile user) {
         List<Permission> permissions = user.getPermissions();
-        permissions.removeIf(permission -> permission instanceof WindowPermission);
+        permissions.removeIf(permission -> permission instanceof WindowPermission.txt);
         user.setPermissions(permissions);
         System.out.println("Window permission denied to user: " + user.getUsername());
     }
@@ -81,4 +80,8 @@ public class SmartHomeCoreFunctionality {
                 "user=" + user +
                 '}';
     }
+
+
+
+ */
 }
