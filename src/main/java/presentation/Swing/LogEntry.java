@@ -22,7 +22,7 @@ public class LogEntry {
     // Method to Log User Profiles (Add, Delete, Edit)
     public static void Profilelog(String deviceID, String eventType, String eventDescription) {
         // File path for the log file
-        String logFilePath = "database/LogEntries.txt";
+        String logFilePath = "database/LogEntry.txt";
 
         // Get current timestamp
         String timestamp = getCurrentTimestamp();
