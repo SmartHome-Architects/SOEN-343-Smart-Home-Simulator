@@ -16,7 +16,7 @@ public class UserAccountManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(Users))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("|");
+                String[] parts = line.split("\\|"); // Escape the pipe character
                 usernames.add(parts[0]);
             }
         } catch (IOException e) {

@@ -1,6 +1,10 @@
 package domain.house;
 
 
+import domain.sensors.Door;
+import domain.sensors.Light;
+import domain.sensors.Window;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,41 @@ public class House {
 
     public List<Room> getRooms() {
         return rooms;
+    }
+
+    public List<Door> getDoors(){
+        List<Door> doors = new ArrayList<>();
+        for (Room room: rooms) {
+            if(room.getDoor() != null){
+                doors.add(room.getDoor());
+            }
+        }
+
+        return doors;
+    }
+
+    public List<Window> getWindows(){
+        List<Window> windows = new ArrayList<>();
+        for(Room room: rooms){
+            if(room.getWindows() != null){
+                for (Window window: room.getWindows()) {
+                    windows.add(window);
+                }
+            }
+        }
+        return windows;
+    }
+
+    public List<Light> getLights(){
+        List<Light> lights = new ArrayList<>();
+        for(Room room: rooms){
+            if(room.getLights() != null){
+                for (Light light: room.getLights()) {
+                    lights.add(light);
+                }
+            }
+        }
+        return lights;
     }
 
 }

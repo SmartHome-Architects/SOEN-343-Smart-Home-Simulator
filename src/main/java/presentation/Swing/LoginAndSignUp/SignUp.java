@@ -1,15 +1,13 @@
-
 package presentation.Swing.LoginAndSignUp;
+
 
 import presentation.Swing.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.Scanner;
 
 public class SignUp extends javax.swing.JFrame {
 
@@ -95,7 +93,7 @@ public class SignUp extends javax.swing.JFrame {
         left.setBackground(new java.awt.Color(51, 153, 255));
         left.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/ranagohar/Desktop/smm.jpeg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("src/main/java/presentation/Swing/LoginAndSignUp/smm.jpeg")); // NOI18N
         jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
@@ -275,14 +273,15 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                        
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String username = jTextField3.getText();
         String email = jTextField1.getText();
         String password = new String(jPasswordField.getPassword());
+
         String userType = "";
         if (jRadioButton1.isSelected()) {
             userType = "Guest";
@@ -294,8 +293,47 @@ public class SignUp extends javax.swing.JFrame {
             userType = "Stranger";
         }
 
-        String filePath = "database/users.txt";
+        // Validate input fields
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || userType.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
+            return; // Exit the method if any field is empty
+        }
+
+        // Validate email format
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Invalid Email", JOptionPane.ERROR_MESSAGE);
+            jTextField1.requestFocus();
+            jTextField1.selectAll();
+            return; // Exit the method if email format is invalid
+        }
+
+        String filePath = "database/Users.txt";
         File file = new File(filePath);
+
+        // Check if the email already exists
+        if (emailExists(email, file)) {
+            int choice = JOptionPane.showConfirmDialog(this, "Email already exists. Do you want to login instead?", "Email Exists", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                // Show the login window
+                LogIn login = new LogIn();
+                login.setLocationRelativeTo(null); // Center the login window
+                login.setVisible(true);
+                this.dispose(); // Close the sign-up window
+                return; // Exit the method
+            } else {
+                jTextField1.requestFocus();
+                jTextField1.selectAll();
+                return; // Exit the method if the user chooses not to login
+            }
+        }
+
+        // Check if the username already exists
+        if (usernameExists(username, file)) {
+            JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
+            jTextField3.requestFocus();
+            jTextField3.selectAll();
+            return; // Exit the method
+        }
 
         // Write user information to text file
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
@@ -303,28 +341,69 @@ public class SignUp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Registration Successful!");
             this.setVisible(false);
 
-            // Create and display the main frame
-            MainFrame mainFrame = new MainFrame();
-            mainFrame.showMainFrame();
+            // Show the login window
+            LogIn login = new LogIn();
+            login.setLocationRelativeTo(null); // Center the login window
+            login.setVisible(true);
 
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error occurred while registering. Please try again later.");
         }
-    }                                        
+    }
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+
+
+    private boolean emailExists(String email, File file) {
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                if (parts.length > 1 && parts[1].equals(email)) {
+                    return true; // Email exists
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false; // Email does not exist
+    }
+
+    private boolean usernameExists(String username, File file) {
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                if (parts.length > 0 && parts[0].equals(username)) {
+                    return true; // Username exists
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false; // Username does not exist
+    }
+
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                           
-
+    }
+    public void setSignUpActionListener(ActionListener listener) {
+        jButton2.addActionListener(listener);
+    }
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
     }                                             
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }  
+    }
 
+    public boolean isValidEmail(String email) {
+        // Regular expression to validate email format
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
     // Main method for testing
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {

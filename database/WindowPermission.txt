@@ -1,0 +1,3 @@
+Parent|true|false
+Children|false|true
+Guest|false|false
