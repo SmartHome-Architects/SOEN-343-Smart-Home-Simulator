@@ -7,6 +7,10 @@ import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
+
+import domain.smartHomeSimulator.modules.SmartHomeHeating;
+import domain.user.LoggedInUser;
+
 import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
@@ -16,6 +20,9 @@ import presentation.Swing.command.UserAccountManager;
 import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
+
+import javax.swing.table.DefaultTableModel;
+
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
@@ -117,16 +124,20 @@ public class MainFrame {
     private boolean garageInsideDoor;
     private boolean garageOutsideDoor;
     private boolean isFrozen = false;
+    LoggedInUser user;
     // Windows needed
 
-    // c
-    public MainFrame() {
+
+    public MainFrame(LoggedInUser user) {
+        this.user = user;
+        House h = new House();
         //----------------------PermissionPopup----------------------------------------------------------
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
             }
         });
+
 
         //-------------------------Set Date and Time--------------------------------------------------------
 
@@ -293,7 +304,6 @@ public class MainFrame {
 
         //work in progress
 
-        House h = new House();
         comboBox.addItem("Select Item");
         comboBox.addItem("Doors");
         comboBox.addItem("Windows");
@@ -316,7 +326,13 @@ public class MainFrame {
             }
         });
 
+
+        SmartHomeHeating shh = new SmartHomeHeating();
+        //-------------------------------------------------------------------------------------------------------------
+
         //-----------------------------------ON/OFF button--------------------------------------------------------------------------
+
+
 
 
         buttonOff.addActionListener(new ActionListener() {
@@ -362,6 +378,7 @@ public class MainFrame {
             if (index != -1) {
                 double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
                 temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
+                shh.setOutsideTemp(temperature1);
             } else {
                 temperature.setText("Temperature data not found for the current time.");
             }
