@@ -1,3 +1,5 @@
 Timestamp: 2024-03-24 22:35:20|Device: SHS Module|Event Type: Manage User Profile|Event Description: Edit a User Profile
 Timestamp: 2024-03-24 22:35:39|Device: SHS Module|Event Type: Manage User Profile|Event Description: Delete a User Profile
 Timestamp: 2024-03-24 22:36:18|Device: SHS Module|Event Type: Manage User Profile|Event Description: Add a User Profile
+Timestamp: 2024-03-25 09:41:23|Device: SHS Module|Event Type: Time and Date Settings|Event Description: Modification of Date|Old Date/Time: MONDAY, 25/03/2024|New Date/Time: TUESDAY, 26/12/2023
+Timestamp: 2024-03-25 12:56:15|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions

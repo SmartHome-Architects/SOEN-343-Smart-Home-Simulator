@@ -159,6 +159,9 @@ public class MainFrame {
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
+
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage Permissions", "Edit User's Permissions");
             }
         });
 
@@ -512,9 +515,13 @@ public class MainFrame {
 
     // Update date based on user input
     private void updateDate() {
+        String oldDateStr = date.getText();
         String newDateStr = DateText.getText();
         currentDate = new Date(newDateStr);
         date.setText(currentDate.toString());
+
+        LogEntry.setTextArea(textArea1);
+        LogEntry.DateTimelog("SHS Module", "Time and Date Settings", "Modification of Date", oldDateStr, newDateStr);
 
         JOptionPane.showMessageDialog(WindowContainer, "Date Updated Successfully");
 
@@ -522,11 +529,15 @@ public class MainFrame {
 
     // Update time based on user input
     private void updateTime() {
+        String oldDateStr = time.getText();
         String newTimeStr = TimeText.getText();
         currentTime = new Time(newTimeStr);
         time.setText(currentTime.toString());
 
         startIncrementingTime();
+
+        LogEntry.setTextArea(textArea1);
+        LogEntry.DateTimelog("SHS Module", "Time and Date Settings", "Modification of Time", oldDateStr, newTimeStr);
 
         JOptionPane.showMessageDialog(WindowContainer, "Time Updated Successfully");
     }
