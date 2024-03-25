@@ -7,17 +7,22 @@ import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
+
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
+
 import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
 import presentation.Swing.command.ProfileManager;
 import presentation.Swing.command.UserAccountManager;
+import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
+
 import javax.swing.table.DefaultTableModel;
+
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class MainFrame {
 
@@ -83,23 +87,15 @@ public class MainFrame {
     private JLabel houseLayoutLabel;
     private JButton editButton;
 
-    private JTabbedPane PermissionsPane;
-    private JPanel SHCP;
     private JTable table1;
-    private JTabbedPane tabbedPane2;
-    private JScrollPane windowPermission;
-    private JScrollPane doorPermission;
     private JTable table2;
-    private JScrollPane lightPermission;
     private JTable table3;
-    private JScrollPane awaymode;
     private JTable table4;
-    private JScrollPane heating;
     private JTable table5;
     private JPanel checkBoxPanel;
-    private JPanel SHCPanel1;
     private JComboBox comboBox;
     private JPanel screen;
+    private JButton permissionsButton;
 
     private Date currentDate;
     private Time currentTime;
@@ -131,11 +127,18 @@ public class MainFrame {
     LoggedInUser user;
     // Windows needed
 
-    // c
-    public MainFrame(LoggedInUser user) {
 
+    public MainFrame(LoggedInUser user) {
         this.user = user;
         House h = new House();
+        //----------------------PermissionPopup----------------------------------------------------------
+        permissionsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
+            }
+        });
+
+
         //-------------------------Set Date and Time--------------------------------------------------------
 
         //Sets Date and Time on the DASHBOARD
@@ -194,6 +197,9 @@ public class MainFrame {
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
 
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Add a User Profile");
+
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
             }
         });
@@ -246,6 +252,9 @@ public class MainFrame {
                 DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
                 deleteProfileCommand.execute();
 
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Delete a User Profile");
+
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
         });
@@ -270,6 +279,9 @@ public class MainFrame {
                 EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
                 editProfileCommand.execute();
 
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Edit a User Profile");
+
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }
         });
@@ -287,228 +299,6 @@ public class MainFrame {
         houseLayoutLabel.setText("house layout image");
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
-
-
-        //-------------------------------------Permissions Tables-------------------------------------------------------
-
-        //--------------------------------Window---------------------------------------------
-        DefaultTableModel model1 = new DefaultTableModel();
-        model1.addColumn("User");
-        model1.addColumn("Anywhere");
-        model1.addColumn("Inside Home");
-        model1.addColumn("Inside Room");
-
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[1]);
-                boolean insideHome = Boolean.parseBoolean(parts[2]);
-                boolean insideRoom = Boolean.parseBoolean(parts[3]);
-                model1.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        table1.setModel(model1);
-
-        table1.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table1.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table1.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-        table1.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table1.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table1.getRowHeight();
-
-                if (row < table1.getRowCount() && column < table1.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table1.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table1.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-        //--------------------------------Door---------------------------------------------
-        DefaultTableModel model2 = new DefaultTableModel();
-        model2.addColumn("User");
-        model2.addColumn("Anywhere");
-        model2.addColumn("Inside Home");
-        model2.addColumn("Inside Room");
-
-// Add data from file to table model for table2
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[4]);
-                boolean insideHome = Boolean.parseBoolean(parts[5]);
-                boolean insideRoom = Boolean.parseBoolean(parts[6]);
-                model2.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        table2.setModel(model2);
-
-        table2.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table2.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table2.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-        table2.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table2.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table2.getRowHeight();
-
-                if (row < table2.getRowCount() && column < table2.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table2.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table2.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification for table2
-                    }
-                }
-            }
-        });
-
-        //--------------------------------Light---------------------------------------------
-
-        DefaultTableModel model3 = new DefaultTableModel();
-        model3.addColumn("User");
-        model3.addColumn("Anywhere");
-        model3.addColumn("Inside Home");
-        model3.addColumn("Inside Room");
-
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean anywhere = Boolean.parseBoolean(parts[7]);
-                boolean insideHome = Boolean.parseBoolean(parts[8]);
-                boolean insideRoom = Boolean.parseBoolean(parts[9]);
-                model3.addRow(new Object[]{username, anywhere, insideHome, insideRoom});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        table3.setModel(model3);
-
-        table3.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-        table3.getColumnModel().getColumn(2).setCellRenderer(new CheckBoxRenderer());
-        table3.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-
-        table3.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table3.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table3.getRowHeight();
-
-                if (row < table3.getRowCount() && column < table3.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table3.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table3.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-
-        //--------------------------------Security---------------------------------------------
-
-        DefaultTableModel model4 = new DefaultTableModel();
-        model4.addColumn("User");
-        model4.addColumn("Away Mode");
-
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean awaymode = Boolean.parseBoolean(parts[10]);
-                model4.addRow(new Object[]{username, awaymode});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        table4.setModel(model4);
-
-        table4.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-
-        table4.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table4.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table4.getRowHeight();
-
-                if (row < table4.getRowCount() && column < table4.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table4.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table4.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
-
-        //--------------------------------Heating---------------------------------------------
-
-        DefaultTableModel model5 = new DefaultTableModel();
-        model5.addColumn("User");
-        model5.addColumn("Heating");
-
-
-        try {
-            File file = new File("database/permissions.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|");
-                String username = parts[0];
-                boolean heating = Boolean.parseBoolean(parts[11]);
-                model5.addRow(new Object[]{username, heating});
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        table5.setModel(model5);
-
-        table5.getColumnModel().getColumn(1).setCellRenderer(new CheckBoxRenderer());
-
-        table5.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int column = table5.getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / table5.getRowHeight();
-
-                if (row < table5.getRowCount() && column < table5.getColumnCount() && row >= 0 && column >= 0) {
-                    Object value = table5.getValueAt(row, column);
-                    if (value instanceof Boolean) {
-                        table5.setValueAt(!(Boolean) value, row, column);
-                        updateFile(); // Update file after checkbox modification
-                    }
-                }
-            }
-        });
 
         //-------------------------------------------------------------------------------------------------------------
 
@@ -536,8 +326,12 @@ public class MainFrame {
             }
         });
 
+
         SmartHomeHeating shh = new SmartHomeHeating();
         //-------------------------------------------------------------------------------------------------------------
+
+        //-----------------------------------ON/OFF button--------------------------------------------------------------------------
+
 
 
 

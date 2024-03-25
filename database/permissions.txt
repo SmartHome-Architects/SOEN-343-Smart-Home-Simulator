@@ -1,7 +1,0 @@
-va_patel|false|false|true|false|false|false|true|true|true|false|false
-s_patel|true|true|true|false|true|false|true|true|true|false|false
-r_gohar|false|true|true|false|false|false|false|false|false|true|false
-j_sivalingam|false|false|false|false|false|false|false|false|false|true|false
-s_distefano|false|false|false|false|false|false|false|true|false|true|false
-m_girgis|false|false|false|true|true|true|true|true|true|false|false
-bob|false|false|false|true|true|true|true|true|true|false|false
