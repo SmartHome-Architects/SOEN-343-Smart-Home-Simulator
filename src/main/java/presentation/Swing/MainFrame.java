@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MainFrame {
 
+    private boolean SHHisOn;
 
     private JPanel WindowContainer;
     private JPanel titleContainer;
@@ -145,6 +146,8 @@ public class MainFrame {
     private JLabel bedroom2DoorLabel;
     private JPanel bedroom2WindowPanel;
     private JLabel bedroom2WindowLabel;
+    private JLabel onOffSHHLabel;
+    private JButton onOffSHHButton;
 
 
     private Date currentDate;
@@ -498,7 +501,26 @@ public class MainFrame {
         SmartHomeHeating shh = new SmartHomeHeating();
         //-------------------------------------------------------------------------------------------------------------
 
-        //-----------------------------------ON/OFF button--------------------------------------------------------------------------
+        // ON/OFF SHH button
+        SHHisOn = false;
+        onOffSHHButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // toggle the state
+                SHHisOn = !SHHisOn;
+                if (SHHisOn) {
+                    onOffSHHButton.setText("On");
+                    //add functionality
+                    System.out.println("Button is turned ON");
+                } else {
+                    onOffSHHButton.setText("Off");
+                    // add functionality
+                    System.out.println("Button is turned OFF");
+                }
+            }
+        });
+
+        //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
 
 
 
