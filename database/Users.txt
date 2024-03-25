@@ -1,6 +1,5 @@
-va_patel|vanisha1@gmail.com|patel1234|Child|home
-s_patel|sonali@gmail.com|patel12345|Child|outside
-r_gohar|rana@gmail.com|gohar12345|Guest|home
-j_sivalingam|jenisha@gmail.com|sivalingam12345|Parent|home
-s_distefano|a|a|Child|outside
-m_girgis|marina@gmail.com|girgis12345|Guest|kitchen
+rana|rana@gmail.com|rana|Parent
+d|d|d|Parent
+gigi|gigi@gmail.com|gigi|Child
+f|f|f|Parent
+rana2|rana@gmail.com|rana|Parent

@@ -164,12 +164,6 @@ public class MainFrame {
         });
 
 
-        editButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog((Frame) SwingUtilities.getWindowAncestor(WindowContainer));
-                dialog.setVisible(true);
-            }
-        });
 
 
         //--------------------------Account Management-----------------------------------------------------------------
@@ -209,6 +203,45 @@ public class MainFrame {
 
             }
         });
+
+        // Assuming you have an editButton that triggers the edit action
+        editButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                // Instantiate a UserAccountManager with the appropriate file path
+                UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+
+                // Fetch all usernames from the UserAccountManager
+                List<String> usernamesList = userAccountManager.getAllUsernames();
+
+                // Check if the list of usernames is not empty
+                if (usernamesList.isEmpty()) {
+                    System.err.println("Error: No usernames found.");
+                    return; // Handle the error appropriately
+                }
+
+                // Obtain the new username JTextField
+                JTextField newUsernameField = getNewUsername();
+
+                // Check if the JTextField is valid
+                if (newUsernameField == null) {
+                    System.err.println("Error: New username field is null.");
+                    return; // Exit method or handle the error appropriately
+                }
+
+                // Retrieve the username from the JTextField
+                String username = newUsernameField.getText();
+
+                // Pass the obtained username to the EditHouseInhabitantsDialog constructor
+                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog((Frame) SwingUtilities.getWindowAncestor(WindowContainer), userAccountManager, usernamesList, username);
+
+                // Make the dialog visible to the user
+                dialog.setVisible(true);
+
+                // After adding a new username, update the list and refresh the dialog
+                dialog.updateUserDropdown(userAccountManager.getAllUsernames(), username);
+            }
+        });
+
 
         //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
@@ -252,7 +285,6 @@ public class MainFrame {
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }
         });
-
 
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
@@ -492,11 +524,6 @@ public class MainFrame {
 
         //-------------------------------------------------------------------------------------------------------------
 
-
-
-        //-------------------------------------------------------------------------------------------------------------
-
-
         //work in progress
 
         House h = new House();
@@ -521,8 +548,6 @@ public class MainFrame {
                 }
             }
         });
-
-
 
         //-------------------------------------------------------------------------------------------------------------
 
@@ -577,8 +602,6 @@ public class MainFrame {
             e.printStackTrace();
         }
     }
-
-
 
 
     private void freezeComponents() {
@@ -651,7 +674,6 @@ public class MainFrame {
         startIncrementingTime();
 
         JOptionPane.showMessageDialog(WindowContainer, "Time Updated Successfully");
-
     }
 
     private void startIncrementingTime() {
@@ -684,6 +706,7 @@ public class MainFrame {
             timeIncrementer = null;
         }
     }
+
 
     //Getters for Adding User Profile to text file
     public JTextField getNewUsername() {

@@ -6,10 +6,8 @@ import presentation.Swing.MainFrame;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.Scanner;
 
 public class SignUp extends javax.swing.JFrame {
 
@@ -295,12 +293,12 @@ public class SignUp extends javax.swing.JFrame {
             userType = "Stranger";
         }
 
-
         // Validate input fields
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()|| userType.isEmpty()) {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || userType.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
             return; // Exit the method if any field is empty
         }
+
         // Validate email format
         if (!isValidEmail(email)) {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Invalid Email", JOptionPane.ERROR_MESSAGE);
@@ -311,6 +309,31 @@ public class SignUp extends javax.swing.JFrame {
 
         String filePath = "database/Users.txt";
         File file = new File(filePath);
+
+        // Check if the email already exists
+        if (emailExists(email, file)) {
+            int choice = JOptionPane.showConfirmDialog(this, "Email already exists. Do you want to login instead?", "Email Exists", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                // Show the login window
+                LogIn login = new LogIn();
+                login.setLocationRelativeTo(null); // Center the login window
+                login.setVisible(true);
+                this.dispose(); // Close the sign-up window
+                return; // Exit the method
+            } else {
+                jTextField1.requestFocus();
+                jTextField1.selectAll();
+                return; // Exit the method if the user chooses not to login
+            }
+        }
+
+        // Check if the username already exists
+        if (usernameExists(username, file)) {
+            JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
+            jTextField3.requestFocus();
+            jTextField3.selectAll();
+            return; // Exit the method
+        }
 
         // Write user information to text file
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
@@ -327,6 +350,38 @@ public class SignUp extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error occurred while registering. Please try again later.");
         }
+    }
+
+
+
+    private boolean emailExists(String email, File file) {
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                if (parts.length > 1 && parts[1].equals(email)) {
+                    return true; // Email exists
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false; // Email does not exist
+    }
+
+    private boolean usernameExists(String username, File file) {
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                if (parts.length > 0 && parts[0].equals(username)) {
+                    return true; // Username exists
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false; // Username does not exist
     }
 
 
