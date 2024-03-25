@@ -2,15 +2,14 @@ package domain.smartHomeSimulator.modules;
 
 import domain.house.Room;
 import domain.house.Zone;
-import domain.user.Profile;
-
+import domain.user.Users;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SmartHomeHeating implements Observable{
-    private Profile user;
+    private Users user;
     List<Zone> zones = new ArrayList<>();
 
     private double outsideTemp;
