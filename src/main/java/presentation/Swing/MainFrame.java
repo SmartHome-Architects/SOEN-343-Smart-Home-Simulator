@@ -155,30 +155,11 @@ public class MainFrame {
     private Thread timeIncrementer;
     private ProfileManager profileManager;
 
-
-    // Lights for each room (true = on, false = off)
-    private boolean bathroomLight;
-    private boolean bedroom1Light;
-    private boolean bedroom2Light;
-    private boolean kitchenLight;
-    private boolean livingroomLight;
-    private boolean garageLight;
-    private boolean hallwayLight;
-    private boolean frontLight; //front yard light
-    private boolean backLight; //backyard light
-
     private ImageIcon lightOn;
     private ImageIcon lightOff;
     private ImageIcon opened;
     private ImageIcon closed;
 
-    // Doors (true = open, false = closed)
-    private boolean frontDoor;
-    private boolean backDoor;
-    private boolean bedroom1Door;
-    private boolean bathroomDoor;
-    private boolean garageInsideDoor;
-    private boolean garageOutsideDoor;
     private boolean isFrozen = false;
     LoggedInUser user;
     // Windows needed
@@ -375,7 +356,7 @@ public class MainFrame {
         opened = new ImageIcon("images/open.png");
         Image openImage = opened.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         opened = new ImageIcon(openImage);
-        closed = new ImageIcon("images/open.png");
+        closed = new ImageIcon("images/closed.png");
         Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         closed = new ImageIcon(closedImage);
 
@@ -412,14 +393,14 @@ public class MainFrame {
         // Adjust the positions of the panels associated with the labels
         //lights
         kitchenLightLabel.setBounds(110, 70, 30, 30);
-        bathroomLightPanel.setBounds(110, 180, 30, 30);
-        garageLightPanel.setBounds(130, 220, 30, 30);
-        livingRoomLightPanel.setBounds(300, 60, 30, 30);
-        bedroom2LightPanel.setBounds(310, 150, 30, 30);
-        bedroom1LightPanel.setBounds(320, 250, 30, 30);
-        hallwayLightPanel.setBounds(240, 200, 30, 30);
-        frontLightPanel.setBounds(30, 300, 30, 30);
-        backLightPanel.setBounds(470, 10, 30, 30);
+        bathroomLightLabel.setBounds(110, 180, 30, 30);
+        garageLightLabel.setBounds(130, 220, 30, 30);
+        livingLightLabel.setBounds(300, 60, 30, 30);
+        bedroom2LightLabel.setBounds(310, 150, 30, 30);
+        bedroom1LightLabel.setBounds(320, 250, 30, 30);
+        hallwayLightLabel.setBounds(240, 200, 30, 30);
+        frontLightLabel.setBounds(30, 300, 30, 30);
+        backLightLabel.setBounds(470, 10, 30, 30);
         //outside doors
         frontDoorLabel.setBounds(235,310,30,30);
         garageOutDoorLabel.setBounds(70,240,30,30);
@@ -441,14 +422,14 @@ public class MainFrame {
 
         // Add the light panels to the container panel
         houseImage.add(kitchenLightLabel);
-        houseImage.add(bathroomLightPanel);
-        houseImage.add(garageLightPanel);
-        houseImage.add(livingRoomLightPanel);
-        houseImage.add(bedroom1LightPanel);
-        houseImage.add(bedroom2LightPanel);
-        houseImage.add(hallwayLightPanel);
-        houseImage.add(frontLightPanel);
-        houseImage.add(backLightPanel);
+        houseImage.add(bathroomLightLabel);
+        houseImage.add(garageLightLabel);
+        houseImage.add(livingLightLabel);
+        houseImage.add(bedroom1LightLabel);
+        houseImage.add(bedroom2LightLabel);
+        houseImage.add(hallwayLightLabel);
+        houseImage.add(frontLightLabel);
+        houseImage.add(backLightLabel);
         //outside doors
         houseImage.add(frontDoorLabel);
         houseImage.add(garageOutDoorLabel);
