@@ -1,3 +1,5 @@
+package presentationTest;
+
 import org.junit.Test;
 import presentation.Swing.LoginAndSignUp.LogIn;
 

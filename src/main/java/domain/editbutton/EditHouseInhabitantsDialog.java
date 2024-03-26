@@ -146,8 +146,13 @@ public class EditHouseInhabitantsDialog extends JDialog {
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
         }
+
+        // Log the location change
+        logEntry.LocationLog("DeviceID", oldLocation, newLocation);
+
         dispose();
     }
+
 
 
     private void displayLoggedInUserContent(List<String> loggedInUserContent) {

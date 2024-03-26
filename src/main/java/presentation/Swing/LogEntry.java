@@ -1,8 +1,6 @@
 package presentation.Swing;
 import javax.swing.JTextArea;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -75,7 +73,7 @@ public class LogEntry {
         }
 
         // Log the event with old and new dates
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = timestamp + "" +
                 "Device: " + deviceID + "\n" +
                 "Event Type: " + eventType + "\n" +
                 "Event Description: " + eventDescription + "\n" +
@@ -94,22 +92,37 @@ public class LogEntry {
         String timestamp = getCurrentTimestamp();
 
         // Construct log entry string
-        String logEntryForConsole = "Timestamp: " + timestamp + "|" +
+        String logEntryString = timestamp + "|" +
                 "Device: " + deviceID + "|" +
-                "Event Type: Location Change" + "|" +
-                "Old Location: " + oldLocation + "|" +
-                "New Location: " + (newLocation != null ? newLocation : "Unknown");
+                "Event Type: Location Change|" +
+                "Old Location: " + oldLocation + "|"+
+                "New Location: " + (newLocation != null ? newLocation : "Unknown") + "|";
 
-        // Write log entry to the log file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
-            writer.println(logEntryForConsole);
+        // Read existing log entries
+        StringBuilder logContent = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(logFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                logContent.append(line).append("\n");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Append log entry to the JTextArea
-        textArea.setText(logEntryForConsole + "\n");
+        // Append new log entry to the log content
+        logContent.append(logEntryString).append("\n");
+
+        // Write log content back to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath))) {
+            writer.println(logContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Set log entry to JTextArea
+        textArea.setText(logContent.toString());
     }
+
 
 
     // Method to get current timestamp
