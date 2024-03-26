@@ -184,6 +184,51 @@ public class MainFrame {
                 LogEntry.Profilelog("SHS Module", "Manage Permissions", "Edit User's Permissions");
             }
         });
+public class MainFrame {
+
+    // Existing code...
+
+    private class LightCheckBoxListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Handle checkbox action events for lights
+            JCheckBox checkBox = (JCheckBox) e.getSource();
+            if (checkBox.isSelected()) {
+                // Turn the light on
+                // Your logic to turn the light on goes here
+                System.out.println(checkBox.getText() + " light turned on.");
+            } else {
+                // Turn the light off
+                // Your logic to turn the light off goes here
+                System.out.println(checkBox.getText() + " light turned off.");
+            }
+        }
+    }
+
+    // Existing code...
+
+    public MainFrame(LoggedInUser user) {
+        // Your existing constructor code
+
+        // Initialize light checkboxes and add action listeners
+        initializeLightCheckboxes();
+    }
+
+    // Existing methods...
+
+    private void initializeLightCheckboxes() {
+        // Initialize checkboxes and add action listeners
+        kitchenLightCheckBox.addActionListener(new LightCheckBoxListener());
+        livingRoomLightCheckBox.addActionListener(new LightCheckBoxListener());
+        bedroom1LightCheckBox.addActionListener(new LightCheckBoxListener());
+        bedroom2LightCheckBox.addActionListener(new LightCheckBoxListener());
+        bathroomLightCheckBox.addActionListener(new LightCheckBoxListener());
+        hallwayLightCheckBox.addActionListener(new LightCheckBoxListener());
+        garageLightCheckBox.addActionListener(new LightCheckBoxListener());
+        frontLightCheckBox.addActionListener(new LightCheckBoxListener());
+        backLightCheckBox.addActionListener(new LightCheckBoxListener());
+    }
+}
 
 
         //-------------------------Set Date and Time--------------------------------------------------------
