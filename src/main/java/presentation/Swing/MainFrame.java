@@ -8,6 +8,10 @@ import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
 
+import domain.house.Room;
+import domain.sensors.Door;
+import domain.sensors.Light;
+import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
 
@@ -25,11 +29,14 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class MainFrame {
 
@@ -365,94 +372,55 @@ public class MainFrame {
         Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         closed = new ImageIcon(closedImage);
 
-        // Initial state: all lights are on and all windows/doors are closed-> if statements to switch between on and off/ open and closed
-        //lights
-        kitchenLightLabel.setIcon(lightOn);
-        bathroomLightLabel.setIcon(lightOn);
-        garageLightLabel.setIcon(lightOn);
-        bedroom1LightLabel.setIcon(lightOn);
-        bedroom2LightLabel.setIcon(lightOn);
-        livingLightLabel.setIcon(lightOn);
-        hallwayLightLabel.setIcon(lightOn);
-        frontLightLabel.setIcon(lightOn);
-        backLightLabel.setIcon(lightOn);
-        //outside doors
-        frontDoorLabel.setIcon(closed);
-        backDoorLabel.setIcon(closed);
-        garageOutDoorLabel.setIcon(closed);
-        //inside doors
-        garageInDoorLabel.setIcon(closed);
-        bathroomDoorLabel.setIcon(closed);
-        bedroom1DoorLabel.setIcon(closed);
-        bedroom2DoorLabel.setIcon(closed);
-        //windows
-        bedroom1Window1Label.setIcon(closed);
-        bedroom1Window2Label.setIcon(closed);
-        bedroom2WindowLabel.setIcon(closed);
-        livingWindow1Label.setIcon(closed);
-        livingWindow2Label.setIcon(closed);
-        kitchenWindow1Label.setIcon(closed);
-        kitchenWindow2Label.setIcon(closed);
-        bathroomWindowLabel.setIcon(closed);
 
-        // Adjust the positions of the panels associated with the labels
-        //lights
-        kitchenLightLabel.setBounds(110, 70, 30, 30);
-        bathroomLightLabel.setBounds(110, 180, 30, 30);
-        garageLightLabel.setBounds(130, 220, 30, 30);
-        livingLightLabel.setBounds(300, 60, 30, 30);
-        bedroom2LightLabel.setBounds(310, 150, 30, 30);
-        bedroom1LightLabel.setBounds(320, 250, 30, 30);
-        hallwayLightLabel.setBounds(240, 200, 30, 30);
-        frontLightLabel.setBounds(30, 300, 30, 30);
-        backLightLabel.setBounds(470, 10, 30, 30);
-        //outside doors
-        frontDoorLabel.setBounds(235,310,30,30);
-        garageOutDoorLabel.setBounds(70,240,30,30);
-        backDoorLabel.setBounds(240,5,30,30);
-        //inside doors
-        garageInDoorLabel.setBounds(180,220,30,30);
-        bathroomDoorLabel.setBounds(180,180,30,30);
-        bedroom1DoorLabel.setBounds(300,220,30,30);
-        bedroom2DoorLabel.setBounds(300,180,30,30);
-        //windows
-        bedroom1Window1Label.setBounds(400,250,30,30);
-        bedroom1Window2Label.setBounds(325,300,30,30);
-        bedroom2WindowLabel.setBounds(400,150,30,30);
-        livingWindow1Label.setBounds(400,50,30,30);
-        livingWindow2Label.setBounds(330,5,30,30);
-        kitchenWindow1Label.setBounds(130,5,30,30);
-        kitchenWindow2Label.setBounds(70,70,30,30);
-        bathroomWindowLabel.setBounds(70,170,30,30);
+        List<Light> houseLights = h.getLights();
+        Map<Light, JLabel> lightLabels = new HashMap<>();
 
-        // Add the light panels to the container panel
-        houseImage.add(kitchenLightLabel);
-        houseImage.add(bathroomLightLabel);
-        houseImage.add(garageLightLabel);
-        houseImage.add(livingLightLabel);
-        houseImage.add(bedroom1LightLabel);
-        houseImage.add(bedroom2LightLabel);
-        houseImage.add(hallwayLightLabel);
-        houseImage.add(frontLightLabel);
-        houseImage.add(backLightLabel);
-        //outside doors
-        houseImage.add(frontDoorLabel);
-        houseImage.add(garageOutDoorLabel);
-        houseImage.add(backDoorLabel);
-        //inside doors
-        houseImage.add(garageInDoorLabel);
-        houseImage.add(bathroomDoorLabel);
-        houseImage.add(bedroom1DoorLabel);
-        houseImage.add(bedroom2DoorLabel);
-        //windows
-        houseImage.add(bedroom1Window1Label);
-        houseImage.add(bedroom1Window2Label);
-        houseImage.add(bedroom2WindowLabel);
-        houseImage.add(livingWindow1Label);
-        houseImage.add(livingWindow2Label);
-        houseImage.add(kitchenWindow1Label);
-        houseImage.add(kitchenWindow2Label);
-        houseImage.add(bathroomWindowLabel);
+        for (Light light: houseLights) {
+            JLabel label = new JLabel();
+            if(light.isOpen()){
+                label.setIcon(lightOn);
+            }
+            else{
+                label.setIcon(lightOff);
+            }
+            label.setBounds(light.getX(),light.getY(),30,30);
+            houseImage.add(label);
+            lightLabels.put(light, label);
+        }
+
+        List<Door> houseDoors = h.getDoors();
+        Map<Door,JLabel> doorLabels = new HashMap<>();
+
+        for(Door door: houseDoors){
+            JLabel label= new JLabel();
+            if(door.isOpen()){
+                label.setIcon(opened);
+            }
+            else{
+                label.setIcon(closed);
+            }
+            label.setBounds(door.getX(),door.getY(),30,30);
+            houseImage.add(label);
+            doorLabels.put(door,label);
+        }
+
+        List<Window> houseWindows = h.getWindows();
+        Map<Window,JLabel> windowLabels = new HashMap<>();
+
+        for(Window window: houseWindows){
+            JLabel label = new JLabel();
+            if(window.isOpen()){
+                label.setIcon(opened);
+            }
+            else{
+                label.setIcon(closed);
+            }
+            label.setBounds(window.getX(),window.getY(),30,30);
+            houseImage.add(label);
+            windowLabels.put(window,label);
+        }
+
 
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
