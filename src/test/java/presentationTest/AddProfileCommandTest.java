@@ -1,4 +1,2 @@
-package presentationTest;
-
-public class AddProfileCommandTest {
+package presentationTest;public class AddProfileCommandTest {
 }

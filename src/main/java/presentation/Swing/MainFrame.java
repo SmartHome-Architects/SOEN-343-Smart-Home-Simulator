@@ -15,6 +15,7 @@ import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
 
+import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
@@ -442,6 +443,20 @@ public class MainFrame {
                     displayHelper.clearPanel();
                 }
             }
+        });
+// Inside the constructor or initialization method of MainFrame
+        buttonLogOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Dispose of or close the current window
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(WindowContainer);
+                frame.dispose();
+
+                // Create a new instance of the login page
+                LogIn loginPage = new LogIn(); // Assuming LoginPage is your login page class
+
+                // Show the login page
+                loginPage.setVisible(true);            }
         });
 
 
