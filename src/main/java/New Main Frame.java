@@ -32,4 +32,26 @@ public class MainFrame {
         // Add other checkboxes to respective panels similarly...
     }
 
-   
+    // Action listener class for light checkboxes
+    private class LightCheckBoxListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBox checkBox = (JCheckBox) e.getSource();
+            String checkBoxText = checkBox.getText();
+
+            // Logic to toggle the state of the associated light
+            if (checkBox.isSelected()) {
+                // Turn the light on
+                System.out.println(checkBoxText + " is turned on");
+                // Add your logic to turn the light on
+            } else {
+                // Turn the light off
+                System.out.println(checkBoxText + " is turned off");
+                // Add your logic to turn the light off
+            }
+        }
+    }
+
+  
+}
+
