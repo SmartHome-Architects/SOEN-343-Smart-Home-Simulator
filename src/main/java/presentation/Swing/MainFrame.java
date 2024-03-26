@@ -786,6 +786,59 @@ public class MainFrame {
         } else {
             throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
         }
+        private class LightCheckBoxListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBox checkBox = (JCheckBox) e.getSource();
+            String roomName = checkBox.getText();
+            Room room = findRoomByName(roomName); // Find the room component by name
+
+            if (room != null) {
+                if (checkBox.isSelected()) {
+                    room.turnOn(); // Turn the light on
+                } else {
+                    room.turnOff(); // Turn the light off
+                }
+            } else {
+                System.out.println("Room not found: " + roomName);
+            }
+        }
+    }
+
+    // Existing code...
+
+    public MainFrame(LoggedInUser user) {
+        // Your existing constructor code
+
+        // Initialize light checkboxes and add action listeners
+        initializeLightCheckboxes();
+    }
+
+    // Existing methods...
+
+    private void initializeLightCheckboxes() {
+        // Initialize checkboxes and add action listeners
+        kitchenLightCheckBox.addActionListener(new LightCheckBoxListener());
+        livingRoomLightCheckBox.addActionListener(new LightCheckBoxListener());
+        bedroom1LightCheckBox.addActionListener(new LightCheckBoxListener());
+        bedroom2LightCheckBox.addActionListener(new LightCheckBoxListener());
+        bathroomLightCheckBox.addActionListener(new LightCheckBoxListener());
+        hallwayLightCheckBox.addActionListener(new LightCheckBoxListener());
+        garageLightCheckBox.addActionListener(new LightCheckBoxListener());
+        frontLightCheckBox.addActionListener(new LightCheckBoxListener());
+        backLightCheckBox.addActionListener(new LightCheckBoxListener());
+    }
+
+    // Method to find a room component by name
+    private Room findRoomByName(String roomName) {
+        // Implement logic to find the room component by name
+        // You need to access the appropriate room component based on the roomName
+        // Return the corresponding Room object
+        // If the roomName doesn't match any room, return null
+        // Example: if (roomName.equals("Kitchen")) return kitchenLight;
+        return null; // Placeholder, replace with actual logic
+    }
+}
     }
 
 }
