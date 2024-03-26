@@ -166,7 +166,33 @@ public class MainFrame {
     private ImageIcon opened;
     private ImageIcon closed;
 
+    // Doors (true = open, false = closed)
+    private boolean frontDoor = false;
+    private boolean backDoor = false;
+    private boolean bedroom1Door = false;
+    private boolean bathroomDoor = false;
+    private boolean garageInsideDoor = false;
+    private boolean garageOutsideDoor = false;
 
+    private boolean kitchenWindow1Closed = true;
+    private boolean kitchenWindow2Closed = true;
+
+    LoggedInUser user;
+
+    public MainFrame(LoggedInUser user) {
+        this.user = user;
+        House h = new House();
+        //----------------------PermissionPopup----------------------------------------------------------
+        permissionsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
+
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage Permissions", "Edit User's Permissions");
+            }
+        });
+    }
+}
     
 
 
