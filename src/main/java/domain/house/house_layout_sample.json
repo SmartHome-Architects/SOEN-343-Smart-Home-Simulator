@@ -104,6 +104,10 @@
         "lights": [
           {"coordinates": {"x": 8, "y": 9}}
         ]
+      },
+      {
+        "name": "Outside",
+        "coordinates" : {"x": 0, "y": 0}
       }
     ]
   }

@@ -23,6 +23,14 @@ public class House {
         return rooms;
     }
 
+    public List<String> getRoomNames(){
+        List<String> roomNames = new ArrayList<>();
+        for(Room r:rooms){
+            roomNames.add(r.getRoomName());
+        }
+        return roomNames;
+    }
+
     public List<Door> getDoors(){
         List<Door> doors = new ArrayList<>();
         for (Room room: rooms) {
