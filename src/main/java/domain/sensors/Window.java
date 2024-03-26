@@ -60,6 +60,14 @@ public class Window {
         isBlocked = blocked;
     }
 
+    public int getX(){
+        return windowCoordinates.getX();
+    }
+
+    public int getY(){
+        return windowCoordinates.getY();
+    }
+
     @Override
     public String toString() {
         return "Window{" +

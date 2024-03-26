@@ -50,6 +50,14 @@ public class Door {
         isOpen = open;
     }
 
+    public int getX(){
+        return doorCoordinates.getX();
+    }
+
+    public int getY(){
+        return doorCoordinates.getY();
+    }
+
     @Override
     public String toString() {
         return "Door{" +

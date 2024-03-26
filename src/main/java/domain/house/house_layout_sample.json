@@ -4,110 +4,101 @@
         "name": "Garage",
         "coordinates": {"x": 5, "y": 0},
         "door": [
-          {"coordinates": {"x": 0, "y": 0}}
+          {"coordinates": {"x": 180, "y": 230}}
         ],
         "windows": [
-          {"coordinates": {"x": 2, "y": 2}}
+          {"coordinates": {"x": 80, "y": 270}}
         ],
         "lights": [
-          {"coordinates": {"x": 1, "y": 1}}
+          {"coordinates": {"x": 130, "y": 220}}
         ]
       },
       {
         "name": "Kitchen",
         "coordinates": {"x": 0, "y": 0},
-        "door": [
-          {"coordinates": {"x": 1, "y": 0}}
-        ],
         "windows": [
-          {"coordinates": {"x": 0, "y": 1}},
-	      {"coordinates": {"x": 0, "y": 2}}
+          {"coordinates": {"x": 80, "y": 40}},
+	      {"coordinates": {"x": 150, "y": 1}}
         ],
         "lights": [
-          {"coordinates": {"x": 2, "y": 2}},
-	      {"coordinates": {"x": 2, "y": 2}}
-        ]
-      },
-      {
-        "name": "Dining Room",
-        "coordinates": {"x": 15, "y": 0},
-        "door": [
-          {"coordinates": {"x": 2, "y": 0}}
-        ],
-        "windows": [
-          {"coordinates": {"x": 1, "y": 1}}
-        ],
-        "lights": [
-          {"coordinates": {"x": 3, "y": 3}}
+          {"coordinates": {"x": 110, "y": 70}}
         ]
       },
       {
         "name": "Living Room",
         "coordinates": {"x": 0, "y": 0},
         "door": [
-          {"coordinates": {"x": 3, "y": 0}}
+          {"coordinates": {"x": 270, "y": 1}}
         ],
         "windows": [
-          {"coordinates": {"x": 2, "y": 1}},
-          {"coordinates": {"x": 2, "y": 2}}
+          {"coordinates": {"x": 440, "y": 40}},
+          {"coordinates": {"x": 350, "y": 1}}
         ],
         "lights": [
-          {"coordinates": {"x": 4, "y": 4}},
-          {"coordinates": {"x": 2, "y": 2}}
+          {"coordinates": {"x": 300, "y": 60}}
         ]
       },
       {
         "name": "Bedroom1",
         "coordinates": {"x": 0, "y": 0},
         "door": [
-          {"coordinates": {"x": 4, "y": 0}}
+          {"coordinates": {"x": 300, "y": 220}}
         ],
         "windows": [
-          {"coordinates": {"x": 3, "y": 1}}
+          {"coordinates": {"x": 440, "y": 260}},
+          {"coordinates": {"x": 365, "y": 330}}
         ],
         "lights": [
-          {"coordinates": {"x": 5, "y": 5}}
+          {"coordinates": {"x": 320, "y": 250}}
         ]
       },
       {
         "name": "Bedroom2",
         "coordinates": {"x": 0, "y": 0},
         "door": [
-          {"coordinates": {"x": 4, "y": 1}}
+          {"coordinates": {"x": 300, "y": 180}}
         ],
         "windows": [
-          {"coordinates": {"x": 3, "y": 2}}
+          {"coordinates": {"x": 440, "y": 150}}
         ],
         "lights": [
-          {"coordinates": {"x": 5, "y": 6}}
+          {"coordinates": {"x": 310, "y": 150}}
         ]
       },
       {
         "name": "Bathroom",
         "coordinates": {"x": 0, "y": 0},
         "door": [
-          {"coordinates": {"x": 5, "y": 0}}
+          {"coordinates": {"x": 180, "y": 180}}
         ],
         "windows": [
-          {"coordinates": {"x": 4, "y": 1}}
+          {"coordinates": {"x": 80, "y": 180}}
         ],
         "lights": [
-          {"coordinates": {"x": 6, "y": 7}}
+          {"coordinates": {"x": 110, "y": 180}}
         ]
       },
       {
         "name": "Entrance",
         "coordinates": {"x": 0, "y": 0},
         "door": [
-          {"coordinates": {"x": 7, "y": 0}}
-        ],
-        "lights": [
-          {"coordinates": {"x": 8, "y": 9}}
+          {"coordinates": {"x": 235, "y": 310}}
         ]
       },
       {
         "name": "Outside",
-        "coordinates" : {"x": 0, "y": 0}
+        "coordinates" : {"x": 0, "y": 0},
+        "lights": [
+          {"coordinates": {"x": 30, "y": 300}},
+          {"coordinates": {"x": 470, "y": 10}}
+        ]
+      },
+      {
+        "name": "Hallway",
+        "coordinates" : {"x": 0, "y": 0},
+        "lights": [
+          {"coordinates": {"x": 240, "y": 200}}
+        ]
       }
     ]
   }

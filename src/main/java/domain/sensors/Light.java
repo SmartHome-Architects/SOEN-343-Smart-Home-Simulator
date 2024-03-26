@@ -50,6 +50,14 @@ public class Light {
         isOpen = open;
     }
 
+    public int getX(){
+        return lightCoordinates.getX();
+    }
+
+    public int getY(){
+        return lightCoordinates.getY();
+    }
+
     @Override
     public String toString() {
         return "Light{" +
