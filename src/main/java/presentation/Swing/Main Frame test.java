@@ -103,6 +103,70 @@ public class MainFrame {
     private JLabel kitchenLightLabel;
 
     private JButton editButton;
+    private JTable table1;
+    private JTable table2;
+    private JTable table3;
+    private JTable table4;
+    private JTable table5;
+    private JPanel checkBoxPanel;
+    private JComboBox comboBox;
+    private JPanel screen;
+    private JButton permissionsButton;
+    private JPanel backDoorPanel;
+    private JLabel backDoorLabel;
+    private JPanel kitchenWindow1Panel;
+    private JLabel kitchenWindow1Label;
+    private JPanel kitchenWindow2Panel;
+    private JLabel kitchenWindow2Label;
+    private JPanel livingWindow1Panel;
+    private JLabel livingWindow1Label;
+    private JPanel livingWindow2Panel;
+    private JLabel livingWindow2Label;
+    private JPanel bathroomWindowPanel;
+    private JLabel bathroomWindowLabel;
+    private JPanel bathroomDoorPanel;
+    private JLabel bathroomDoorLabel;
+    private JPanel garageInDoorPanel;
+    private JPanel garageOutDoorPanel;
+    private JLabel garageInDoorLabel;
+    private JLabel garageOutDoorLabel;
+    private JPanel frontDoorPanel;
+    private JLabel frontDoorLabel;
+    private JPanel bedroom1Window1Panel;
+    private JLabel bedroom1Window1Label;
+    private JPanel bedroom1Window2Panel;
+    private JLabel bedroom1Window2Label;
+    private JPanel bedroom1DoorPanel;
+    private JLabel bedroom1DoorLabel;
+    private JPanel bedroom2DoorPanel;
+    private JLabel bedroom2DoorLabel;
+    private JPanel bedroom2WindowPanel;
+    private JLabel bedroom2WindowLabel;
 
+
+    private Date currentDate;
+    private Time currentTime;
+    private Thread timeIncrementer;
+    private ProfileManager profileManager;
+
+
+    // Lights for each room (true = on, false = off)
+    private boolean bathroomLight = false;
+    private boolean bedroom1Light = false;
+    private boolean bedroom2Light = false;
+    private boolean kitchenLight = false;
+    private boolean livingroomLight = false;
+    private boolean garageLight = false;
+    private boolean hallwayLight = false;
+    private boolean frontLight = false; //front yard light
+    private boolean backLight = false; //backyard light
+
+    private ImageIcon lightOn;
+    private ImageIcon lightOff;
+    private ImageIcon opened;
+    private ImageIcon closed;
+
+
+    
 
 
