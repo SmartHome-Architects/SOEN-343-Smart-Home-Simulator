@@ -1,5 +1,6 @@
 package domain.editbutton;
 
+import domain.house.House;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
@@ -12,25 +13,31 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private JComboBox<String> inhabitantComboBox;
     private JComboBox<String> locationComboBox;
     private UserAccountManager userAccountManager;
+    private House houseInstance; // Declare houseInstance at the class level
+
     private String selectedUsername;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username) {
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
 
         this.userAccountManager = userAccountManager;
         this.selectedUsername = username;
+        this.houseInstance = houseInstance; // Initialize House instance
 
         initComponents(usernames, username);
         layoutComponents();
         addListeners();
 
+        // Populate the locationComboBox with room names
+        populateLocationComboBoxWithRoomNames();
+
         // Retrieve the content of the logged-in user's file
         List<String> loggedInUserContent = userAccountManager.getFirstColumnContent(username);
         displayLoggedInUserContent(loggedInUserContent);
-
     }
+
 
 
     private void initComponents(List<String> usernames, String username) {
@@ -46,7 +53,15 @@ public class EditHouseInhabitantsDialog extends JDialog {
             }
         }
 
-        locationComboBox = new JComboBox<>(new String[]{"Living Room", "Bedroom 1", "Bedroom 2", "Kitchen", "Bathroom", "Outside"});
+        locationComboBox = new JComboBox<>();
+    }
+
+    public void populateLocationComboBoxWithRoomNames() {
+        List<String> roomNames = houseInstance.getRoomNames();
+        locationComboBox.removeAllItems(); // Clear existing items
+        for (String roomName : roomNames) {
+            locationComboBox.addItem(roomName);
+        }
     }
 
 

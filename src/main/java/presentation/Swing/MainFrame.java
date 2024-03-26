@@ -247,6 +247,7 @@ public class MainFrame {
         // Assuming you have an editButton that triggers the edit action
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+
                 // Get the username of the logged-in user from the UserAccountManager
                 String loggedInUsername = userAccountManager.getLoggedInUsername();
 
@@ -270,8 +271,12 @@ public class MainFrame {
                         (Frame) SwingUtilities.getWindowAncestor(WindowContainer), // parent Frame
                         userAccountManager, // UserAccountManager instance
                         firstColumnContent, // List of first column content
-                        loggedInUsername // Selected username
+                        loggedInUsername, // Selected username
+                        h // Pass your House instance here
                 );
+
+                // Populate locationComboBox with room names from House instance
+                dialog.populateLocationComboBoxWithRoomNames();
 
                 // Display the dialog
                 dialog.setVisible(true);
@@ -281,6 +286,7 @@ public class MainFrame {
                 dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
             }
         });
+
 
 
         //Deletes the user profile to the text file
