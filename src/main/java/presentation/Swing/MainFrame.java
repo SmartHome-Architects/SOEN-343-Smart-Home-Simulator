@@ -167,9 +167,28 @@ public class MainFrame {
     private ImageIcon opened;
     private ImageIcon closed;
 
-    private boolean isFrozen = false;
-    LoggedInUser user;
-    // Windows needed
+  public class MainFrame {
+
+    // Existing code...
+
+    public MainFrame(LoggedInUser user) {
+        // Your existing constructor code
+
+        // Initialize light checkboxes and add action listeners
+        initializeLightCheckboxes();
+    }
+
+    // Existing methods...
+
+    private void initializeLightCheckboxes() {
+        // Method implementation for initializing light checkboxes and adding action listeners
+    }
+
+    private class LightCheckBoxListener implements ActionListener {
+        // ActionListener implementation for handling light checkbox events
+    }
+}
+
 
 
     public MainFrame(LoggedInUser user) {
