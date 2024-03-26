@@ -235,8 +235,14 @@ public class LogIn extends javax.swing.JFrame {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split("\\|");
-                String storedEmail = parts[1];
-                String storedPassword = parts[2];
+                String storedEmail = "";
+                String storedPassword = "";
+                if (parts.length >= 3) {
+                    storedEmail = parts[1];
+                    storedPassword = parts[2];
+
+                }
+
                 if (email.equals(storedEmail) && password.equals(storedPassword)) {
                     found = true;
                     loggedInUser = new LoggedInUser(parts[0], parts[3]);
@@ -284,6 +290,7 @@ public class LogIn extends javax.swing.JFrame {
         // If the login failed, show error message
         JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
+
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         String email = getEmailText();

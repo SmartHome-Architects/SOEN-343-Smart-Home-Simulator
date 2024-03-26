@@ -211,9 +211,6 @@ public class MainFrame {
             }
         });
 
-
-
-
         //--------------------------Account Management-----------------------------------------------------------------
 
 
@@ -266,11 +263,7 @@ public class MainFrame {
                 // Get the content of the logged-in user's file
                 List<String> firstColumnContent = userAccountManager.getFirstColumnContent(loggedInUsername);
 
-                // Check if the content is not null
-                if (firstColumnContent.isEmpty()) {
-                    System.err.println("Error: No content found for user: " + loggedInUsername);
-                    return; // Handle the error appropriately
-                }
+
 
                 // Create an instance of the EditHouseInhabitantsDialog and pass the necessary parameters
                 EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog(

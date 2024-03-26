@@ -135,8 +135,6 @@ public class UserAccountManager {
             } catch (IOException e) {
                 handleFileError("Error reading user content", e);
             }
-        } else {
-            System.err.println("User file does not exist for username: " + username);
         }
         return firstColumnContent;
     }
