@@ -27,6 +27,16 @@ public class EditHouseInhabitantsDialog extends JDialog {
         this.selectedUsername = username;
         this.houseInstance = houseInstance;
 
+        // Fetch the location of the selected user from the UserAccountManager
+        String userLocation = userAccountManager.getUserLocation(username);
+
+        // If userLocation is not null, set it as the initial location
+        if (userLocation != null) {
+            oldLocation = userLocation;
+        } else {
+            System.out.println("Location for user " + username + " not found.");
+        }
+
         initComponents(usernames, username);
         layoutComponents();
         addListeners();
@@ -42,6 +52,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
         List<String> loggedInUserContent = userAccountManager.getFirstColumnContent(username);
         displayLoggedInUserContent(loggedInUserContent);
     }
+
 
     private void initComponents(List<String> usernames, String username) {
         inhabitantComboBox = new JComboBox<>();
@@ -64,34 +75,16 @@ public class EditHouseInhabitantsDialog extends JDialog {
         // If userLocation is not null, add it to the locationComboBox and store it as oldLocation
         if (userLocation != null) {
             locationComboBox.addItem(userLocation);
-            oldLocation = userLocation;
+            oldLocation = userLocation; // Update oldLocation to the initial location
         } else {
             System.out.println("Location for user " + username + " not found.");
         }
 
         // Add listener to locationComboBox to display old and new locations when a new location is selected
-        locationComboBox.addActionListener(new ActionListener() {
-            boolean firstSelection = true; // Flag to track the first selection
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newLocation = (String) locationComboBox.getSelectedItem();
-
-                if (firstSelection) {
-                    firstSelection = false;
-                    System.out.println("User's location changed from " + oldLocation + " to " + newLocation);
-                }
-
-                oldLocation = newLocation; // Update oldLocation to the new location
-
-                // Log the location change
-                logEntry.LocationLog("DeviceID", oldLocation, newLocation);
-            }
-        });
-
     }
 
-    public void populateLocationComboBoxWithRoomNames() {
+
+        public void populateLocationComboBoxWithRoomNames() {
         List<String> roomNames = houseInstance.getRoomNames();
         locationComboBox.removeAllItems();
         for (String roomName : roomNames) {
@@ -145,25 +138,24 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
     private void saveChanges() {
-        String inhabitant = (String
-                ) inhabitantComboBox.getSelectedItem();
-        String location = (String) locationComboBox.getSelectedItem();
+        String inhabitant = (String) inhabitantComboBox.getSelectedItem();
+        String newLocation = (String) locationComboBox.getSelectedItem();
 
-        if (location.equals("Outside")) {
+        if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");
         } else {
-            System.out.println("Placing " + inhabitant + " in " + location);
+            System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
         }
-
         dispose();
     }
+
 
     private void displayLoggedInUserContent(List<String> loggedInUserContent) {
         // Display the content of the logged-in user's file
         // For demonstration, let's print it to the console
         for (String line : loggedInUserContent) {
-            System.out.println(line);
-        }
+
+      }
     }
 
     public void updateUserDropdown(List<String> updatedUsernames, String selectedUsername) {
