@@ -162,4 +162,31 @@ public class UserAccountManager {
         }
         return location;
     }
+
+    public void updateUserLocation(String username, String newLocation) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5 && parts[0].equals(username)) {
+                    parts[4] = newLocation; // Update the location
+                }
+                lines.add(String.join("|", parts)); // Reconstruct the line
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating user location", e);
+            return;
+        }
+        // Write the updated content back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating user location", e);
+        }
+    }
+
 }

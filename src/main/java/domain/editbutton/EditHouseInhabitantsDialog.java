@@ -145,6 +145,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
             System.out.println("Moving " + inhabitant + " outside the home");
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
+            // Update the location in the user's file
+            updateUserLocation(inhabitant, newLocation);
         }
 
         // Log the location change
@@ -152,6 +154,15 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         dispose();
     }
+
+    private void updateUserLocation(String username, String newLocation) {
+        // Get the instance of UserAccountManager
+        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+
+        // Update the location in the user's file
+        userAccountManager.updateUserLocation(username, newLocation);
+    }
+
 
 
 
