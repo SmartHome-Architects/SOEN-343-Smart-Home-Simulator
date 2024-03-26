@@ -21,8 +21,6 @@ import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
 
-import javax.swing.table.DefaultTableModel;
-
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
@@ -35,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MainFrame {
 
+    private boolean SHHisOn;
 
     private JPanel WindowContainer;
     private JPanel titleContainer;
@@ -117,6 +116,38 @@ public class MainFrame {
     private JComboBox comboBox;
     private JPanel screen;
     private JButton permissionsButton;
+    private JPanel backDoorPanel;
+    private JLabel backDoorLabel;
+    private JPanel kitchenWindow1Panel;
+    private JLabel kitchenWindow1Label;
+    private JPanel kitchenWindow2Panel;
+    private JLabel kitchenWindow2Label;
+    private JPanel livingWindow1Panel;
+    private JLabel livingWindow1Label;
+    private JPanel livingWindow2Panel;
+    private JLabel livingWindow2Label;
+    private JPanel bathroomWindowPanel;
+    private JLabel bathroomWindowLabel;
+    private JPanel bathroomDoorPanel;
+    private JLabel bathroomDoorLabel;
+    private JPanel garageInDoorPanel;
+    private JPanel garageOutDoorPanel;
+    private JLabel garageInDoorLabel;
+    private JLabel garageOutDoorLabel;
+    private JPanel frontDoorPanel;
+    private JLabel frontDoorLabel;
+    private JPanel bedroom1Window1Panel;
+    private JLabel bedroom1Window1Label;
+    private JPanel bedroom1Window2Panel;
+    private JLabel bedroom1Window2Label;
+    private JPanel bedroom1DoorPanel;
+    private JLabel bedroom1DoorLabel;
+    private JPanel bedroom2DoorPanel;
+    private JLabel bedroom2DoorLabel;
+    private JPanel bedroom2WindowPanel;
+    private JLabel bedroom2WindowLabel;
+    private JLabel onOffSHHLabel;
+    private JButton onOffSHHButton;
 
 
     private Date currentDate;
@@ -124,29 +155,11 @@ public class MainFrame {
     private Thread timeIncrementer;
     private ProfileManager profileManager;
 
-
-    // Lights for each room (true = on, false = off)
-    private boolean bathroomLight;
-    private boolean bedroom1Light;
-    private boolean bedroom2Light;
-    private boolean kitchenLight;
-    private boolean livingroomLight;
-    private boolean garageLight;
-    private boolean hallwayLight;
-    private boolean frontLight; //front yard light
-    private boolean backLight; //backyard light
-
     private ImageIcon lightOn;
     private ImageIcon lightOff;
+    private ImageIcon opened;
+    private ImageIcon closed;
 
-    // Doors (true = open, false = closed)
-    private boolean frontDoor;
-    private boolean backDoor;
-    private boolean bedroom1Door;
-    private boolean bedroom2Door;
-    private boolean bathroomDoor;
-    private boolean garageInsideDoor;
-    private boolean garageOutsideDoor;
     private boolean isFrozen = false;
     LoggedInUser user;
     // Windows needed
@@ -234,38 +247,38 @@ public class MainFrame {
         // Assuming you have an editButton that triggers the edit action
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                // Instantiate a UserAccountManager with the appropriate file path
-                UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+                // Get the username of the logged-in user from the UserAccountManager
+                String loggedInUsername = userAccountManager.getLoggedInUsername();
 
-                // Fetch all usernames from the UserAccountManager
-                List<String> usernamesList = userAccountManager.getAllUsernames();
-
-                // Check if the list of usernames is not empty
-                if (usernamesList.isEmpty()) {
-                    System.err.println("Error: No usernames found.");
+                // Check if the loggedInUsername is not null
+                if (loggedInUsername == null) {
+                    System.err.println("Error: No logged-in user found.");
                     return; // Handle the error appropriately
                 }
 
-                // Obtain the new username JTextField
-                JTextField newUsernameField = getNewUsername();
+                // Get the content of the logged-in user's file
+                List<String> firstColumnContent = userAccountManager.getFirstColumnContent(loggedInUsername);
 
-                // Check if the JTextField is valid
-                if (newUsernameField == null) {
-                    System.err.println("Error: New username field is null.");
-                    return; // Exit method or handle the error appropriately
+                // Check if the content is not null
+                if (firstColumnContent.isEmpty()) {
+                    System.err.println("Error: No content found for user: " + loggedInUsername);
+                    return; // Handle the error appropriately
                 }
 
-                // Retrieve the username from the JTextField
-                String username = newUsernameField.getText();
+                // Create an instance of the EditHouseInhabitantsDialog and pass the necessary parameters
+                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog(
+                        (Frame) SwingUtilities.getWindowAncestor(WindowContainer), // parent Frame
+                        userAccountManager, // UserAccountManager instance
+                        firstColumnContent, // List of first column content
+                        loggedInUsername // Selected username
+                );
 
-                // Pass the obtained username to the EditHouseInhabitantsDialog constructor
-                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog((Frame) SwingUtilities.getWindowAncestor(WindowContainer), userAccountManager, usernamesList, username);
-
-                // Make the dialog visible to the user
+                // Display the dialog
                 dialog.setVisible(true);
 
-                // After adding a new username, update the list and refresh the dialog
-                dialog.updateUserDropdown(userAccountManager.getAllUsernames(), username);
+                // After making the dialog visible, display the selected username within the dialog
+                JLabel selectedUsernameLabel = new JLabel("Selected Username: " + loggedInUsername);
+                dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
             }
         });
 
@@ -319,15 +332,16 @@ public class MainFrame {
         frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
 
+        //-----------------------------------2D House Layout--------------------------------------------------------------------------
+
         // Load house layout image
         houseLayout = new ImageIcon("images/houseLayout.png");
         Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
         houseLayoutLabel.setIcon(new ImageIcon(image));
         houseLayoutLabel.setText("house layout image");
 
-
         // Set bounds for house layout label
-        houseLayoutLabel.setBounds(0, 0, 550, 450);
+        houseLayoutLabel.setBounds(0, 0, 550, 400);
         houseImage.setLayout(null); // Set null layout for absolute positioning
 
         // Load light icon for each room
@@ -338,38 +352,102 @@ public class MainFrame {
         Image lightOnImage = lightOn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         lightOn = new ImageIcon(lightOnImage);
 
-        // Initial state: all lights are off
-        kitchenLightLabel.setIcon(lightOff);
-        bathroomLightLabel.setIcon(lightOff);
-        garageLightLabel.setIcon(lightOff);
-        bedroom1LightLabel.setIcon(lightOff);
-        bedroom2LightLabel.setIcon(lightOff);
-        livingLightLabel.setIcon(lightOff);
-        hallwayLightLabel.setIcon(lightOff);
-        frontLightLabel.setIcon(lightOff);
-        backLightLabel.setIcon(lightOff);
+        //Load open/closed icon
+        opened = new ImageIcon("images/open.png");
+        Image openImage = opened.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        opened = new ImageIcon(openImage);
+        closed = new ImageIcon("images/closed.png");
+        Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        closed = new ImageIcon(closedImage);
+
+        // Initial state: all lights are on and all windows/doors are closed-> if statements to switch between on and off/ open and closed
+        //lights
+        kitchenLightLabel.setIcon(lightOn);
+        bathroomLightLabel.setIcon(lightOn);
+        garageLightLabel.setIcon(lightOn);
+        bedroom1LightLabel.setIcon(lightOn);
+        bedroom2LightLabel.setIcon(lightOn);
+        livingLightLabel.setIcon(lightOn);
+        hallwayLightLabel.setIcon(lightOn);
+        frontLightLabel.setIcon(lightOn);
+        backLightLabel.setIcon(lightOn);
+        //outside doors
+        frontDoorLabel.setIcon(closed);
+        backDoorLabel.setIcon(closed);
+        garageOutDoorLabel.setIcon(closed);
+        //inside doors
+        garageInDoorLabel.setIcon(closed);
+        bathroomDoorLabel.setIcon(closed);
+        bedroom1DoorLabel.setIcon(closed);
+        bedroom2DoorLabel.setIcon(closed);
+        //windows
+        bedroom1Window1Label.setIcon(closed);
+        bedroom1Window2Label.setIcon(closed);
+        bedroom2WindowLabel.setIcon(closed);
+        livingWindow1Label.setIcon(closed);
+        livingWindow2Label.setIcon(closed);
+        kitchenWindow1Label.setIcon(closed);
+        kitchenWindow2Label.setIcon(closed);
+        bathroomWindowLabel.setIcon(closed);
 
         // Adjust the positions of the panels associated with the labels
+        //lights
         kitchenLightLabel.setBounds(110, 70, 30, 30);
-        bathroomLightPanel.setBounds(110, 180, 30, 30);
-        garageLightPanel.setBounds(110, 250, 30, 30);
-        livingRoomLightPanel.setBounds(300, 70, 30, 30);
-        bedroom2LightPanel.setBounds(300, 180, 30, 30);
-        bedroom1LightPanel.setBounds(300, 250, 30, 30);
-        hallwayLightPanel.setBounds(200, 200, 30, 30);
-        frontLightPanel.setBounds(200, 300, 30, 30);
-        backLightPanel.setBounds(200, 10, 30, 30);
+        bathroomLightLabel.setBounds(110, 180, 30, 30);
+        garageLightLabel.setBounds(130, 220, 30, 30);
+        livingLightLabel.setBounds(300, 60, 30, 30);
+        bedroom2LightLabel.setBounds(310, 150, 30, 30);
+        bedroom1LightLabel.setBounds(320, 250, 30, 30);
+        hallwayLightLabel.setBounds(240, 200, 30, 30);
+        frontLightLabel.setBounds(30, 300, 30, 30);
+        backLightLabel.setBounds(470, 10, 30, 30);
+        //outside doors
+        frontDoorLabel.setBounds(235,310,30,30);
+        garageOutDoorLabel.setBounds(70,240,30,30);
+        backDoorLabel.setBounds(240,5,30,30);
+        //inside doors
+        garageInDoorLabel.setBounds(180,220,30,30);
+        bathroomDoorLabel.setBounds(180,180,30,30);
+        bedroom1DoorLabel.setBounds(300,220,30,30);
+        bedroom2DoorLabel.setBounds(300,180,30,30);
+        //windows
+        bedroom1Window1Label.setBounds(400,250,30,30);
+        bedroom1Window2Label.setBounds(325,300,30,30);
+        bedroom2WindowLabel.setBounds(400,150,30,30);
+        livingWindow1Label.setBounds(400,50,30,30);
+        livingWindow2Label.setBounds(330,5,30,30);
+        kitchenWindow1Label.setBounds(130,5,30,30);
+        kitchenWindow2Label.setBounds(70,70,30,30);
+        bathroomWindowLabel.setBounds(70,170,30,30);
 
         // Add the light panels to the container panel
         houseImage.add(kitchenLightLabel);
-        houseImage.add(bathroomLightPanel);
-        houseImage.add(garageLightPanel);
-        houseImage.add(livingRoomLightPanel);
-        houseImage.add(bedroom1LightPanel);
-        houseImage.add(bedroom2LightPanel);
-        houseImage.add(hallwayLightPanel);
-        houseImage.add(frontLightPanel);
-        houseImage.add(backLightPanel);
+        houseImage.add(bathroomLightLabel);
+        houseImage.add(garageLightLabel);
+        houseImage.add(livingLightLabel);
+        houseImage.add(bedroom1LightLabel);
+        houseImage.add(bedroom2LightLabel);
+        houseImage.add(hallwayLightLabel);
+        houseImage.add(frontLightLabel);
+        houseImage.add(backLightLabel);
+        //outside doors
+        houseImage.add(frontDoorLabel);
+        houseImage.add(garageOutDoorLabel);
+        houseImage.add(backDoorLabel);
+        //inside doors
+        houseImage.add(garageInDoorLabel);
+        houseImage.add(bathroomDoorLabel);
+        houseImage.add(bedroom1DoorLabel);
+        houseImage.add(bedroom2DoorLabel);
+        //windows
+        houseImage.add(bedroom1Window1Label);
+        houseImage.add(bedroom1Window2Label);
+        houseImage.add(bedroom2WindowLabel);
+        houseImage.add(livingWindow1Label);
+        houseImage.add(livingWindow2Label);
+        houseImage.add(kitchenWindow1Label);
+        houseImage.add(kitchenWindow2Label);
+        houseImage.add(bathroomWindowLabel);
 
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
@@ -404,7 +482,26 @@ public class MainFrame {
         SmartHomeHeating shh = new SmartHomeHeating();
         //-------------------------------------------------------------------------------------------------------------
 
-        //-----------------------------------ON/OFF button--------------------------------------------------------------------------
+        // ON/OFF SHH button
+        SHHisOn = false;
+        onOffSHHButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // toggle the state
+                SHHisOn = !SHHisOn;
+                if (SHHisOn) {
+                    onOffSHHButton.setText("On");
+                    //add functionality
+                    System.out.println("Button is turned ON");
+                } else {
+                    onOffSHHButton.setText("Off");
+                    // add functionality
+                    System.out.println("Button is turned OFF");
+                }
+            }
+        });
+
+        //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
 
 
 

@@ -5,11 +5,8 @@ import presentation.Swing.command.UserAccountManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 public class EditHouseInhabitantsDialog extends JDialog {
     private JComboBox<String> inhabitantComboBox;
@@ -28,14 +25,30 @@ public class EditHouseInhabitantsDialog extends JDialog {
         initComponents(usernames, username);
         layoutComponents();
         addListeners();
+
+        // Retrieve the content of the logged-in user's file
+        List<String> loggedInUserContent = userAccountManager.getFirstColumnContent(username);
+        displayLoggedInUserContent(loggedInUserContent);
+
     }
+
 
     private void initComponents(List<String> usernames, String username) {
         inhabitantComboBox = new JComboBox<>();
-        populateInhabitantComboBox(usernames, username);
+
+        // Add the logged-in username directly to the dropdown
+        inhabitantComboBox.addItem(username);
+
+        // Add other usernames from the list
+        for (String name : usernames) {
+            if (!name.equals(username)) {
+                inhabitantComboBox.addItem(name);
+            }
+        }
 
         locationComboBox = new JComboBox<>(new String[]{"Living Room", "Bedroom 1", "Bedroom 2", "Kitchen", "Bathroom", "Outside"});
     }
+
 
     private void layoutComponents() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
@@ -62,7 +75,16 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> dispose());
+
+        // Add save and cancel buttons to the button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+
+        // Add the button panel to the dialog
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
+
 
     private void populateInhabitantComboBox(List<String> usernames, String username) {
         inhabitantComboBox.removeAllItems();
@@ -70,6 +92,14 @@ public class EditHouseInhabitantsDialog extends JDialog {
             inhabitantComboBox.addItem(name);
         }
         inhabitantComboBox.setSelectedItem(username);
+    }
+
+    private void displayLoggedInUserContent(List<String> loggedInUserContent) {
+        // Display the content of the logged-in user's file
+        // For demonstration, let's print it to the console
+        for (String line : loggedInUserContent) {
+            System.out.println(line);
+        }
     }
 
     public void saveChanges() {
@@ -85,19 +115,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
         dispose();
     }
 
-    private List<String> readUsernamesFromFile() {
-        List<String> usernames = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File("database/userNameLoggedIn.txt"))) {
-            while (scanner.hasNextLine()) {
-                usernames.add(scanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null; // Return null to indicate failure in reading from file
-        }
-        return usernames;
-    }
     public void updateUserDropdown(List<String> updatedUsernames, String selectedUsername) {
         populateInhabitantComboBox(updatedUsernames, selectedUsername);
+    }
+
+    public String getSelectedUsername() {
+        return selectedUsername;
     }
 }
