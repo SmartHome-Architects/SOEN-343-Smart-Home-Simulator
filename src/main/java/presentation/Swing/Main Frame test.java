@@ -104,13 +104,5 @@ public class MainFrame {
 
     private JButton editButton;
 
-    private JTable table1;
-    private JTable table2;
-    private JTable table3;
-    private JTable table4;
-    private JTable table5;
-    private JPanel checkBoxPanel;
-    private JComboBox comboBox;
-    
-    
+
 
