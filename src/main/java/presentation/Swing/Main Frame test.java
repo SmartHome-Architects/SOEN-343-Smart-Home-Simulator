@@ -40,4 +40,16 @@ public class MainFrame {
     private JPanel houseImage;
     private JPanel consoleOutput;
     private JTabbedPane tabbedPane1;
+    private JPanel SHS;
+    private JPanel SHC;
+    private JPanel SHP;
+    private JPanel SHH;
+    private JComboBox comboBox2;
+    private JPanel comboBox4;
+    private JPanel SHCPanel2;
+    private JTextArea textArea1;
+    private JButton buttonOff;
+    private JLabel userTag;
+    private JLabel locationTag;
     
+
