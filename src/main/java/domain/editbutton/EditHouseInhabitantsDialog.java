@@ -1,21 +1,22 @@
 package domain.editbutton;
 
-import domain.house.House;
-import presentation.Swing.command.UserAccountManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import java.util.Map;
+import presentation.Swing.LogEntry;
+import presentation.Swing.command.UserAccountManager;
+import domain.house.House;
 
 public class EditHouseInhabitantsDialog extends JDialog {
+    private String oldLocation;
+
     private JComboBox<String> inhabitantComboBox;
     private JComboBox<String> locationComboBox;
     private UserAccountManager userAccountManager;
-    private House houseInstance; // Declare houseInstance at the class level
-
+    private House houseInstance;
     private String selectedUsername;
+    private LogEntry logEntry;
 
     public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance) {
         super(parent, "Edit House Inhabitants", true);
@@ -24,11 +25,15 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         this.userAccountManager = userAccountManager;
         this.selectedUsername = username;
-        this.houseInstance = houseInstance; // Initialize House instance
+        this.houseInstance = houseInstance;
 
         initComponents(usernames, username);
         layoutComponents();
         addListeners();
+
+        // Initialize LogEntry instance
+        logEntry = new LogEntry();
+        logEntry.setTextArea(new JTextArea()); // Set JTextArea reference, replace with actual JTextArea reference if available
 
         // Populate the locationComboBox with room names
         populateLocationComboBoxWithRoomNames();
@@ -37,8 +42,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
         List<String> loggedInUserContent = userAccountManager.getFirstColumnContent(username);
         displayLoggedInUserContent(loggedInUserContent);
     }
-
-
 
     private void initComponents(List<String> usernames, String username) {
         inhabitantComboBox = new JComboBox<>();
@@ -54,16 +57,47 @@ public class EditHouseInhabitantsDialog extends JDialog {
         }
 
         locationComboBox = new JComboBox<>();
+
+        // Fetch the location of the selected user from the UserAccountManager
+        String userLocation = userAccountManager.getUserLocation(username);
+
+        // If userLocation is not null, add it to the locationComboBox and store it as oldLocation
+        if (userLocation != null) {
+            locationComboBox.addItem(userLocation);
+            oldLocation = userLocation;
+        } else {
+            System.out.println("Location for user " + username + " not found.");
+        }
+
+        // Add listener to locationComboBox to display old and new locations when a new location is selected
+        locationComboBox.addActionListener(new ActionListener() {
+            boolean firstSelection = true; // Flag to track the first selection
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newLocation = (String) locationComboBox.getSelectedItem();
+
+                if (firstSelection) {
+                    firstSelection = false;
+                    System.out.println("User's location changed from " + oldLocation + " to " + newLocation);
+                }
+
+                oldLocation = newLocation; // Update oldLocation to the new location
+
+                // Log the location change
+                logEntry.LocationLog("DeviceID", oldLocation, newLocation);
+            }
+        });
+
     }
 
     public void populateLocationComboBoxWithRoomNames() {
         List<String> roomNames = houseInstance.getRoomNames();
-        locationComboBox.removeAllItems(); // Clear existing items
+        locationComboBox.removeAllItems();
         for (String roomName : roomNames) {
             locationComboBox.addItem(roomName);
         }
     }
-
 
     private void layoutComponents() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
@@ -85,11 +119,21 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
     private void addListeners() {
+        // ActionListener for saveButton
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> saveChanges());
+        saveButton.addActionListener(e -> {
+            saveChanges();
+            // Example of logging an event
+            logEntry.logEntry("DeviceID", "SaveButtonClicked", "Save button clicked.");
+        });
 
+        // ActionListener for cancelButton
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> dispose());
+        cancelButton.addActionListener(e -> {
+            dispose();
+            // Example of logging an event
+            logEntry.logEntry("DeviceID", "CancelButtonClicked", "Cancel button clicked.");
+        });
 
         // Add save and cancel buttons to the button panel
         JPanel buttonPanel = new JPanel();
@@ -100,25 +144,9 @@ public class EditHouseInhabitantsDialog extends JDialog {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
-
-    private void populateInhabitantComboBox(List<String> usernames, String username) {
-        inhabitantComboBox.removeAllItems();
-        for (String name : usernames) {
-            inhabitantComboBox.addItem(name);
-        }
-        inhabitantComboBox.setSelectedItem(username);
-    }
-
-    private void displayLoggedInUserContent(List<String> loggedInUserContent) {
-        // Display the content of the logged-in user's file
-        // For demonstration, let's print it to the console
-        for (String line : loggedInUserContent) {
-            System.out.println(line);
-        }
-    }
-
-    public void saveChanges() {
-        String inhabitant = (String) inhabitantComboBox.getSelectedItem();
+    private void saveChanges() {
+        String inhabitant = (String
+                ) inhabitantComboBox.getSelectedItem();
         String location = (String) locationComboBox.getSelectedItem();
 
         if (location.equals("Outside")) {
@@ -130,8 +158,24 @@ public class EditHouseInhabitantsDialog extends JDialog {
         dispose();
     }
 
+    private void displayLoggedInUserContent(List<String> loggedInUserContent) {
+        // Display the content of the logged-in user's file
+        // For demonstration, let's print it to the console
+        for (String line : loggedInUserContent) {
+            System.out.println(line);
+        }
+    }
+
     public void updateUserDropdown(List<String> updatedUsernames, String selectedUsername) {
         populateInhabitantComboBox(updatedUsernames, selectedUsername);
+    }
+
+    private void populateInhabitantComboBox(List<String> usernames, String username) {
+        inhabitantComboBox.removeAllItems();
+        for (String name : usernames) {
+            inhabitantComboBox.addItem(name);
+        }
+        inhabitantComboBox.setSelectedItem(username);
     }
 
     public String getSelectedUsername() {

@@ -147,4 +147,21 @@ public class UserAccountManager {
         System.err.println(message);
         e.printStackTrace();
     }
+
+    public String getUserLocation(String username) {
+        String location = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5 && parts[0].equals(username)) {
+                    location = parts[4]; // Assuming location is stored in the fifth column
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            handleFileError("Error reading Users.txt", e);
+        }
+        return location;
+    }
 }

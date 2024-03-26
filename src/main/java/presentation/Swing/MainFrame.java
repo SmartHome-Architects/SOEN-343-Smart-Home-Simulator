@@ -247,7 +247,6 @@ public class MainFrame {
         // Assuming you have an editButton that triggers the edit action
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-
                 // Get the username of the logged-in user from the UserAccountManager
                 String loggedInUsername = userAccountManager.getLoggedInUsername();
 

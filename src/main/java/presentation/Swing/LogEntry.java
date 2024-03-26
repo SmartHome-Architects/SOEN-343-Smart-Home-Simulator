@@ -49,6 +49,7 @@ public class LogEntry {
         textArea.setText(logEntryForConsole + "\n");
     }
 
+
     //
     public static void DateTimelog(String deviceID, String eventType, String eventDescription,
                                   String oldDate, String newDate) {
@@ -80,6 +81,31 @@ public class LogEntry {
                 "Event Description: " + eventDescription + "\n" +
                 "Old Date/Time: " + oldDate + "\n" +
                 "New Date/Time: " + newDate + "\n";
+
+        // Append log entry to the JTextArea
+        textArea.setText(logEntryForConsole + "\n");
+    }
+    // Method to Log Location Changes
+    public static void LocationLog(String deviceID, String oldLocation, String newLocation) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForConsole = "Timestamp: " + timestamp + "|" +
+                "Device: " + deviceID + "|" +
+                "Event Type: Location Change" + "|" +
+                "Old Location: " + oldLocation + "|" +
+                "New Location: " + (newLocation != null ? newLocation : "Unknown");
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForConsole);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Append log entry to the JTextArea
         textArea.setText(logEntryForConsole + "\n");
