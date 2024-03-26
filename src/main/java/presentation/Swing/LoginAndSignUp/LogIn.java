@@ -335,3 +335,4 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPanel right;
     // End of variables declaration                   
 }
+
