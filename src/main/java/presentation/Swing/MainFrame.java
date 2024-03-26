@@ -247,38 +247,38 @@ public class MainFrame {
         // Assuming you have an editButton that triggers the edit action
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                // Instantiate a UserAccountManager with the appropriate file path
-                UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+                // Get the username of the logged-in user from the UserAccountManager
+                String loggedInUsername = userAccountManager.getLoggedInUsername();
 
-                // Fetch all usernames from the UserAccountManager
-                List<String> usernamesList = userAccountManager.getAllUsernames();
-
-                // Check if the list of usernames is not empty
-                if (usernamesList.isEmpty()) {
-                    System.err.println("Error: No usernames found.");
+                // Check if the loggedInUsername is not null
+                if (loggedInUsername == null) {
+                    System.err.println("Error: No logged-in user found.");
                     return; // Handle the error appropriately
                 }
 
-                // Obtain the new username JTextField
-                JTextField newUsernameField = getNewUsername();
+                // Get the content of the logged-in user's file
+                List<String> firstColumnContent = userAccountManager.getFirstColumnContent(loggedInUsername);
 
-                // Check if the JTextField is valid
-                if (newUsernameField == null) {
-                    System.err.println("Error: New username field is null.");
-                    return; // Exit method or handle the error appropriately
+                // Check if the content is not null
+                if (firstColumnContent.isEmpty()) {
+                    System.err.println("Error: No content found for user: " + loggedInUsername);
+                    return; // Handle the error appropriately
                 }
 
-                // Retrieve the username from the JTextField
-                String username = newUsernameField.getText();
+                // Create an instance of the EditHouseInhabitantsDialog and pass the necessary parameters
+                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog(
+                        (Frame) SwingUtilities.getWindowAncestor(WindowContainer), // parent Frame
+                        userAccountManager, // UserAccountManager instance
+                        firstColumnContent, // List of first column content
+                        loggedInUsername // Selected username
+                );
 
-                // Pass the obtained username to the EditHouseInhabitantsDialog constructor
-                EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog((Frame) SwingUtilities.getWindowAncestor(WindowContainer), userAccountManager, usernamesList, username);
-
-                // Make the dialog visible to the user
+                // Display the dialog
                 dialog.setVisible(true);
 
-                // After adding a new username, update the list and refresh the dialog
-                dialog.updateUserDropdown(userAccountManager.getAllUsernames(), username);
+                // After making the dialog visible, display the selected username within the dialog
+                JLabel selectedUsernameLabel = new JLabel("Selected Username: " + loggedInUsername);
+                dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
             }
         });
 

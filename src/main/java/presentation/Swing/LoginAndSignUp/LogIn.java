@@ -239,7 +239,7 @@ public class LogIn extends javax.swing.JFrame {
                 String storedPassword = parts[2];
                 if (email.equals(storedEmail) && password.equals(storedPassword)) {
                     found = true;
-                    loggedInUser = new LoggedInUser(parts[0],parts[3]);
+                    loggedInUser = new LoggedInUser(parts[0], parts[3]);
                     // If the email and password match, retrieve the associated username
                     username = parts[0]; // Assuming username is the first part of each line in Users.txt
                     break;
@@ -252,9 +252,14 @@ public class LogIn extends javax.swing.JFrame {
         }
 
         if (found) {
-            JOptionPane.showMessageDialog(this, "Successfully logged in");
-
-
+            // Clear the content of userNameLoggedIn.txt before writing username
+            try (PrintWriter writer = new PrintWriter(new FileWriter("database/userNameLoggedIn.txt", false))) {
+                writer.print(""); // Truncate the file by writing an empty string
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error occurred while clearing username file.");
+                return;
+            }
 
             // Write username to external file
             try (PrintWriter writer = new PrintWriter(new FileWriter("database/userNameLoggedIn.txt", true))) {
@@ -262,10 +267,12 @@ public class LogIn extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error occurred while writing username to file.");
+                return;
             }
 
-            // Create and display the main frame
+            JOptionPane.showMessageDialog(this, "Successfully logged in");
 
+            // Create and display the main frame
             MainFrame mainFrame = new MainFrame(loggedInUser);
             mainFrame.showMainFrame();
 
