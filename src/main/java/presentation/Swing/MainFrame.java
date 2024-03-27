@@ -19,6 +19,7 @@ import domain.user.Users;
 import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
+import presentation.Swing.SHH.PopupWindow;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
@@ -32,7 +33,6 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.net.HttpURLConnection;
@@ -57,7 +57,6 @@ public class MainFrame {
     private JPanel SHC;
     private JPanel SHP;
     private JPanel SHH;
-    private JComboBox comboBox2;
     private JPanel comboBox4;
     private JPanel SHCPanel2;
     private JTextArea textArea1;
@@ -158,6 +157,9 @@ public class MainFrame {
     private JLabel bedroom2WindowLabel;
     private JLabel onOffSHHLabel;
     private JButton onOffSHHButton;
+    private JLabel zoneManagementLabel;
+    private JPanel zoneManagement;
+    private JButton zoneManagementButton;
 
 
     private Date currentDate;
@@ -180,6 +182,17 @@ public class MainFrame {
     public MainFrame(LoggedInUser user) {
         this.user = user;
         House h = new House();
+
+        //----------------------zone management------------------------------
+
+        zoneManagementButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Create an instance of your popup window
+                PopupWindow.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton));
+            }
+        });
+
+
         //----------------------PermissionPopup----------------------------------------------------------
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -839,6 +852,11 @@ public class MainFrame {
         } else {
             throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
         }
+    }
+
+
+    public JPanel getZoneManagementPanel() {
+        return zoneManagement;
     }
 
 }

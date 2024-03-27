@@ -2,9 +2,10 @@ package domain.house;
 
 import domain.sensors.*;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Room {
+public class Room implements Serializable {
     private int id;
     private String roomName;
     private Door door;

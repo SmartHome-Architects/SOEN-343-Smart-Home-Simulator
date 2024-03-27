@@ -1,4 +1,4 @@
 rana|rana@gmail.com|rana|Parent|Entrance
 d|d|d|Parent|Bedroom2
 gigi|gigi@gmail.com|gigi|Children|Living Room
-f|f|f|Parent|Bedroom1
+f|f|f|Parent|Living Room

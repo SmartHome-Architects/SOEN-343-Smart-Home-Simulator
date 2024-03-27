@@ -3,10 +3,11 @@ package domain.house;
 import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Zone implements Observer{
+public class Zone implements Observer, Serializable {
     List<Room> zoneRooms = new ArrayList<>();
 
     private String zoneName;
@@ -18,6 +19,9 @@ public class Zone implements Observer{
         this.desiredZoneTemperature = desiredZoneTemperature;
     }
 
+    public Zone(String zoneName){
+        this.zoneName = zoneName;
+    }
     public List<Room> getZoneRooms() {
         return zoneRooms;
     }
