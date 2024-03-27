@@ -69,6 +69,14 @@ public class Room {
         return roomCoordinates;
     }
 
+    public int getX(){
+        return roomCoordinates.getX();
+    }
+
+    public int getY(){
+        return roomCoordinates.getY();
+    }
+
     @Override
     public String toString() {
         return "Room{" +

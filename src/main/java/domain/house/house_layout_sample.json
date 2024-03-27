@@ -2,7 +2,7 @@
     "rooms": [
       {
         "name": "Garage",
-        "coordinates": {"x": 5, "y": 0},
+        "coordinates": {"x": 130, "y": 300},
         "door": [
           {"coordinates": {"x": 180, "y": 230}}
         ],
@@ -15,7 +15,7 @@
       },
       {
         "name": "Kitchen",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 140, "y": 60},
         "windows": [
           {"coordinates": {"x": 80, "y": 40}},
 	      {"coordinates": {"x": 150, "y": 1}}
@@ -26,7 +26,7 @@
       },
       {
         "name": "Living Room",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 365, "y": 50},
         "door": [
           {"coordinates": {"x": 270, "y": 1}}
         ],
@@ -40,7 +40,7 @@
       },
       {
         "name": "Bedroom1",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 365, "y": 270},
         "door": [
           {"coordinates": {"x": 300, "y": 220}}
         ],
@@ -54,7 +54,7 @@
       },
       {
         "name": "Bedroom2",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 365, "y": 160},
         "door": [
           {"coordinates": {"x": 300, "y": 180}}
         ],
@@ -67,7 +67,7 @@
       },
       {
         "name": "Bathroom",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 145, "y": 180},
         "door": [
           {"coordinates": {"x": 180, "y": 180}}
         ],
@@ -80,14 +80,14 @@
       },
       {
         "name": "Entrance",
-        "coordinates": {"x": 0, "y": 0},
+        "coordinates": {"x": 260, "y": 305},
         "door": [
           {"coordinates": {"x": 235, "y": 310}}
         ]
       },
       {
         "name": "Outside",
-        "coordinates" : {"x": 0, "y": 0},
+        "coordinates" : {"x": 30, "y": 350},
         "lights": [
           {"coordinates": {"x": 30, "y": 300}},
           {"coordinates": {"x": 470, "y": 10}}
@@ -95,9 +95,9 @@
       },
       {
         "name": "Hallway",
-        "coordinates" : {"x": 0, "y": 0},
+        "coordinates" : {"x": 240, "y": 235},
         "lights": [
-          {"coordinates": {"x": 240, "y": 200}}
+          {"coordinates": {"x": 240, "y": 180}}
         ]
       }
     ]

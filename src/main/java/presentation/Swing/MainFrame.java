@@ -15,6 +15,8 @@ import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
 
+import domain.user.Users;
+import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.command.AddProfileCommand;
@@ -167,6 +169,8 @@ public class MainFrame {
     private ImageIcon lightOff;
     private ImageIcon opened;
     private ImageIcon closed;
+
+    private ImageIcon userIcon;
 
     private boolean isFrozen = false;
     LoggedInUser user;
@@ -366,6 +370,11 @@ public class MainFrame {
         Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         closed = new ImageIcon(closedImage);
 
+        // Load user icon.
+        userIcon = new ImageIcon("images/UserIcon.png");
+        Image userImage = userIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        userIcon = new ImageIcon(userImage);
+
 
         List<Light> houseLights = h.getLights();
         Map<Light, JLabel> lightLabels = new HashMap<>();
@@ -416,8 +425,44 @@ public class MainFrame {
         }
 
 
+
+        List<Users> usersList = UsersInitializer.getAllUsers();
+        List<Room> rooms = h.getRooms();
+        Map<Users,JLabel> userLabels = new HashMap<>();
+        for (Users u: usersList) {
+            String location = u.getLocation();
+            for (Room r : rooms) {
+                if(r.getRoomName().equals(location)){
+                    JLabel label = new JLabel();
+                    label.setForeground(Color.red);
+                    label.setIcon(userIcon);
+                    label.setText(u.getUsername());
+                    label.setHorizontalTextPosition(JLabel.CENTER);
+                    label.setVerticalTextPosition(JLabel.CENTER);
+                    label.setBounds(r.getX(),r.getY(),30,30);
+                    houseImage.add(label);
+                    userLabels.put(u,label);
+                }
+            }
+        }
+
+        Map<Room,JLabel> temperatureLabels = new HashMap<>();
+        for (Room r: rooms) {
+            if(!(r.getRoomName().equals("Outside"))){
+                JLabel label = new JLabel();
+                String temp = Double.toString(r.getTemperature());
+                label.setForeground(Color.blue);
+                label.setText(temp);
+                label.setBounds(r.getX(),r.getY() - 30,30,30);
+                houseImage.add(label);
+                temperatureLabels.put(r,label);
+            }
+        }
+
         houseImage.setLayout(new BorderLayout());
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
+
+
 
         //-------------------------------------------------------------------------------------------------------------
 
