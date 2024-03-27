@@ -45,5 +45,5 @@ public class DoorTest {
         assertTrue(door.isOpen());
     }
 
-    // You can add more test methods to cover other functionalities or edge cases of your Door class.
+
 }
