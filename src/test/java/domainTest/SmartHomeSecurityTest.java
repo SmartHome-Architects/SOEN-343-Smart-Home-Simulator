@@ -16,5 +16,5 @@ public class SmartHomeSecurityTest {
         assertNotNull(smartHomeSecurity);
     }
 
-    // You can add more test methods to test other functionalities of SmartHomeSecurity class
+
 }
