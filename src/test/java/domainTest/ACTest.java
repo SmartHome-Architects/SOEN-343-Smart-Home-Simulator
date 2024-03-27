@@ -13,6 +13,6 @@ public class ACTest {
         AC ac = new AC(1);
         assertNotNull(ac);
     }
-
+//test passed
 
 }
