@@ -48,6 +48,6 @@ public class RoomTest {
         assertEquals(10, room.getY());
     }
 
-    // Add more test cases as needed
+
 
 }
