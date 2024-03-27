@@ -14,7 +14,7 @@ public class SmartHomeCoreFunctionalityTest {
 
 
 
-        // assertEquals(expectedValue, actualValue);
+
         // assertTrue(condition);
         // assertFalse(condition);
         // etc.
