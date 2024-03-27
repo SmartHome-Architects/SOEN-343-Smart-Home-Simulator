@@ -1,11 +1,7 @@
 package Application;
-import domain.user.Users;
-import domain.user.UsersInitializer;
-import presentation.Swing.LoginAndSignUp.AuthenticationManager;
 import presentation.Swing.LoginAndSignUp.LogIn;
-import presentation.Swing.MainFrame;
+
 import javax.swing.*;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,13 +13,5 @@ public class Main {
             loginFrame.setLocationRelativeTo(null);
 
         });
-
-        /*
-        List<Users> allUsers = UsersInitializer.getAllUsers();
-        for(Users user : allUsers) {
-            System.out.println("User: " + user.getUsername() + ", Details: " + user);
-        }
-        */
-
     }
 }

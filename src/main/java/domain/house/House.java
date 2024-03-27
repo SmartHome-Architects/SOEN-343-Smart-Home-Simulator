@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class House {
+    private List<Zone> savedZones = new ArrayList<>(); // New list to store saved zones
     private List<Room> rooms = new ArrayList<>();
 
     public House(){
@@ -64,6 +65,10 @@ public class House {
             }
         }
         return lights;
+    }
+
+    public List<Zone> getSavedZones() {
+        return savedZones;
     }
 
 }
