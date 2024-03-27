@@ -1,5 +1,7 @@
 package domainTest;
 
+
+
 import domain.Permission.Permission;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
@@ -7,7 +9,6 @@ import domain.user.LoggedInUser;
 import domain.user.Users;
 import org.junit.Before;
 import org.junit.Test;
-import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
