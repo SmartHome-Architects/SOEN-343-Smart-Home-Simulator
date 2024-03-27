@@ -449,7 +449,7 @@ public class MainFrame {
                 JLabel label = new JLabel();
                 String temp = Double.toString(r.getTemperature());
                 label.setForeground(Color.blue);
-                label.setText(temp);
+                label.setText(temp + "°");
                 label.setBounds(r.getX(),r.getY() - 30,30,30);
                 houseImage.add(label);
                 temperatureLabels.put(r,label);
