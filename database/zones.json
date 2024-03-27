@@ -1,0 +1,1 @@
+[{"desiredTemperature":7.0,"zoneName":"hello","rooms":[{"roomId":1,"roomName":"Garage"},{"roomId":2,"roomName":"Kitchen"}]},{"desiredTemperature":12.0,"zoneName":"apple","rooms":[{"roomId":6,"roomName":"Bathroom"},{"roomId":8,"roomName":"Outside"}]}]

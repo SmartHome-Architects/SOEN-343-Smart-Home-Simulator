@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ZoneNameSerializer {
+public class ZoneSerializer {
 
-    private static final String JSON_FILE_PATH = "zones.json";
+    private static final String JSON_FILE_PATH = "database/zones.json";
 
     public static void saveZones(List<Zone> zones) {
         ObjectMapper mapper = new ObjectMapper();
@@ -66,31 +66,5 @@ public class ZoneNameSerializer {
             roomList.add(roomMap);
         }
         return roomList;
-    }
-
-    public static void loadAndPrintZones() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            // Deserialize the zones from the JSON file
-            List<Map<String, Object>> zoneList = mapper.readValue(new File(JSON_FILE_PATH),
-                    new TypeReference<List<Map<String, Object>>>() {});
-
-            // Output the zones in the console
-            System.out.println("Zones loaded from " + JSON_FILE_PATH);
-            for (Map<String, Object> zoneMap : zoneList) {
-                String zoneName = (String) zoneMap.get("zoneName");
-                double desiredTemperature = (double) zoneMap.get("desiredTemperature"); // Load desired temperature
-                System.out.println("Zone Name: " + zoneName);
-                System.out.println("Desired Temperature: " + desiredTemperature); // Display desired temperature
-                List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
-                for (Map<String, Object> roomMap : roomList) {
-                    int roomId = (int) roomMap.get("roomId");
-                    String roomName = (String) roomMap.get("roomName");
-                    System.out.println("Room ID: " + roomId + ", Room Name: " + roomName);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading zones: " + e.getMessage());
-        }
     }
 }

@@ -19,38 +19,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PopupWindow extends JDialog {
 
-    private static final String JSON_FILE_PATH = "zones.json";
+// link to Zone class with zone name??
+// can create a zone object by fetching saved values from json
+public class ZoneManager extends JDialog {
 
+    private static final String JSON_FILE_PATH = "database/zones.json";
+
+    // house object to get rooms
     private House house;
 
-    public PopupWindow(JFrame parent) {
+    public ZoneManager(JFrame parent) {
+
+        // set up popup
         super(parent, "Manage Zones", true);
         setSize(600, 400);
         setLocationRelativeTo(parent);
 
+        // initialize house object
         house = new House();
 
-        // Create a table model with a single column for room names
+        // Table model with a column for room names
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Room Name");
 
-        // Add room names to the table model
+        // Add room names to the table
         for (String roomName : house.getRoomNames()) {
             tableModel.addRow(new Object[]{roomName});
         }
 
-        // Create the JTable with the table model
+        //formatting
         JTable table = new JTable(tableModel);
-
-        // Add the table to a scroll pane to make it scrollable
         JScrollPane scrollPane = new JScrollPane(table);
-
-        // Add the scroll pane to the dialog's content pane
         getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-        // Create a button for creating a zone
+        // Create Zone button
         JButton createZoneButton = new JButton("Create Zone");
         createZoneButton.addActionListener(new ActionListener() {
             @Override
@@ -59,11 +62,10 @@ public class PopupWindow extends JDialog {
             }
         });
 
-        // Add the button to the dialog's content pane
         getContentPane().add(createZoneButton, BorderLayout.SOUTH);
 
-        // Create a button for viewing zones
-        JButton viewZonesButton = new JButton("See Zones");
+        // View Zones button
+        JButton viewZonesButton = new JButton("View Zones");
         viewZonesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,12 +73,11 @@ public class PopupWindow extends JDialog {
             }
         });
 
-        // Add the "See Zones" button to the dialog's content pane
         getContentPane().add(viewZonesButton, BorderLayout.NORTH);
     }
 
     private void createZone() {
-        // Get selected rows from the table
+        // Get selected rows from the table to select zone keep pressing on Ctrl and click on zones
         int[] selectedRows = ((JTable) ((JScrollPane) getContentPane().getComponent(0)).getViewport().getView()).getSelectedRows();
 
         // Create a list to store selected room names
@@ -86,10 +87,10 @@ public class PopupWindow extends JDialog {
             selectedRoomNames.add((String) ((JTable) ((JScrollPane) getContentPane().getComponent(0)).getViewport().getView()).getValueAt(row, 0));
         }
 
-        // Prompt user to input the zone name
+        // Prompt for zone name
         String zoneName = JOptionPane.showInputDialog(this, "Enter zone name:");
 
-        // Prompt user to input the desired temperature
+        // Prompt for desired temperature
         String tempInput = JOptionPane.showInputDialog(this, "Enter desired temperature for the zone:");
         double desiredTemperature = Double.parseDouble(tempInput);
 
@@ -102,25 +103,11 @@ public class PopupWindow extends JDialog {
             }
         }
 
-        // Output the newly created zone in the console
-        System.out.println("New Zone Created:");
-        System.out.println("Zone Name: " + newZone.getZoneName());
-        System.out.println("Desired Temperature: " + newZone.getDesiredZoneTemperature());
-        for (Room room : newZone.getZoneRooms()) {
-            System.out.println("Room ID: " + room.getId() + ", Room Name: " + room.getRoomName());
-        }
-
         // Save the zone information in a JSON file
         List<Zone> zones = new ArrayList<>();
         zones.add(newZone);
-        ZoneNameSerializer.saveZones(zones);
+        ZoneSerializer.saveZones(zones);
     }
-
-
-
-
-
-
 
     private void loadAndDisplayZones() {
         ObjectMapper mapper = new ObjectMapper();
@@ -129,16 +116,15 @@ public class PopupWindow extends JDialog {
             List<Map<String, Object>> zoneList = mapper.readValue(new File(JSON_FILE_PATH),
                     new TypeReference<List<Map<String, Object>>>() {});
 
-            // Create a table model for displaying zones
-            DefaultTableModel tempTableModel = new DefaultTableModel(new Object[]{"Zone Name", "Rooms", "Temperature"}, 0) {
+            // Create a table for displaying zones
+            DefaultTableModel tempTableModel = new DefaultTableModel(new Object[]{"Zone Name", "Rooms", "Desired Temperature"}, 0) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
-                    // Allow editing only for the temperature column
                     return column == 2;
                 }
             };
 
-            // Populate the table model with zone information
+            // table model with zone information
             for (Map<String, Object> zoneMap : zoneList) {
                 String zoneName = (String) zoneMap.get("zoneName");
                 double desiredTemperature = (double) zoneMap.get("desiredTemperature");
@@ -148,23 +134,23 @@ public class PopupWindow extends JDialog {
                     roomNames.append(roomMap.get("roomName")).append(", ");
                 }
                 if (roomNames.length() > 0) {
-                    roomNames.setLength(roomNames.length() - 2); // Remove the last comma and space
+                    roomNames.setLength(roomNames.length() - 2);
                 }
                 Object[] rowData = {zoneName, roomNames.toString(), desiredTemperature};
                 tempTableModel.addRow(rowData);
             }
 
-            // Create a JTable with the table model
             JTable tempTable = new JTable(tempTableModel);
 
-            // Add a mouse listener to the temperature column
+            // mouse listener to the temperature column
             tempTable.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     int column = tempTable.getColumnModel().getColumnIndexAtX(e.getX());
                     int row = e.getY() / tempTable.getRowHeight();
 
-                    // If the clicked column is the temperature column
+                    // clicked column is the temperature column
+                    // edit temperature
                     if (column == 2 && row < tempTable.getRowCount() && row >= 0) {
                         double currentTemperature = (double) tempTableModel.getValueAt(row, column);
                         String newTemperatureStr = JOptionPane.showInputDialog(null, "Enter new temperature for the selected zone:", currentTemperature);
@@ -180,10 +166,9 @@ public class PopupWindow extends JDialog {
                 }
             });
 
-            // Create a scroll pane for the table
             JScrollPane scrollPane = new JScrollPane(tempTable);
 
-            // Create a button to save changes
+            // Save button
             JButton saveChangesButton = new JButton("Save Changes");
             saveChangesButton.addActionListener(new ActionListener() {
                 @Override
@@ -194,12 +179,10 @@ public class PopupWindow extends JDialog {
                 }
             });
 
-            // Add the components to a panel
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(scrollPane, BorderLayout.CENTER);
             panel.add(saveChangesButton, BorderLayout.SOUTH);
 
-            // Create a dialog to display zones
             JDialog zoneDialog = new JDialog(this, "Zones Information", true);
             zoneDialog.getContentPane().add(panel);
             zoneDialog.setSize(600, 400);
@@ -213,7 +196,7 @@ public class PopupWindow extends JDialog {
 
     private void saveUpdatedTemperatures(List<Map<String, Object>> zoneList, DefaultTableModel tempTableModel) {
         try {
-            // Update the temperature values in the zone list based on the table model
+            // Update the temperature values in the zone list
             for (int i = 0; i < tempTableModel.getRowCount(); i++) {
                 double newTemperature = (double) tempTableModel.getValueAt(i, 2);
                 zoneList.get(i).put("desiredTemperature", newTemperature);
@@ -228,56 +211,8 @@ public class PopupWindow extends JDialog {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void saveZoneChanges(List<Zone> zones) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            List<Map<String, Object>> zoneList = new ArrayList<>();
-            for (Zone zone : zones) {
-                Map<String, Object> zoneMap = Map.of(
-                        "zoneName", zone.getZoneName(),
-                        "desiredTemperature", zone.getDesiredZoneTemperature(),
-                        "rooms", ZoneNameSerializer.convertRoomsToMapList(zone.getZoneRooms())
-                );
-                zoneList.add(zoneMap);
-            }
-            // Serialize the updated zone list to the JSON file
-            mapper.writeValue(new File(JSON_FILE_PATH), zoneList);
-            System.out.println("Zones updated and saved to " + JSON_FILE_PATH);
-        } catch (IOException e) {
-            System.err.println("Error saving zones: " + e.getMessage());
-        }
-    }
-
-
-
-
-
-
-
-
     public static void show(JFrame parent) {
-        PopupWindow dialog = new PopupWindow(parent);
+        ZoneManager dialog = new ZoneManager(parent);
         dialog.setVisible(true);
     }
 }

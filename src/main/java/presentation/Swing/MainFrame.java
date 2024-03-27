@@ -19,7 +19,7 @@ import domain.user.Users;
 import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
-import presentation.Swing.SHH.PopupWindow;
+import presentation.Swing.SHH.ZoneManager;
 import presentation.Swing.SHH.RoomTemperature;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
@@ -201,7 +201,7 @@ public class MainFrame {
         zoneManagementButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Create an instance of your popup window
-                PopupWindow.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton));
+                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton));
             }
         });
 
