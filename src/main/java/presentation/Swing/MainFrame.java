@@ -20,6 +20,7 @@ import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
 import presentation.Swing.SHH.PopupWindow;
+import presentation.Swing.SHH.RoomTemperature;
 import presentation.Swing.command.AddProfileCommand;
 import presentation.Swing.command.DeleteProfileCommand;
 import presentation.Swing.command.EditProfileCommand;
@@ -160,6 +161,7 @@ public class MainFrame {
     private JLabel zoneManagementLabel;
     private JPanel zoneManagement;
     private JButton zoneManagementButton;
+    private JButton roomTempButton;
 
 
     private Date currentDate;
@@ -182,6 +184,17 @@ public class MainFrame {
     public MainFrame(LoggedInUser user) {
         this.user = user;
         House h = new House();
+
+        //---------------------individual room temp --------------------------
+        roomTempButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Create an instance of your popup window
+                RoomTemperature.show((JFrame) SwingUtilities.getWindowAncestor(roomTempButton));
+            }
+        });
+
+
+
 
         //----------------------zone management------------------------------
 

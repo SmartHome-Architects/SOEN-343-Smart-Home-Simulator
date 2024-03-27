@@ -14,6 +14,7 @@ public class Room implements Serializable {
     private AC acUnit;
     private Heater heater;
     private double temperature;
+    private double desiredRoomTemperature;
 
     private Coordinate roomCoordinates;
 
@@ -28,6 +29,16 @@ public class Room implements Serializable {
         this.heater = heater;
         this.temperature = temperature;
         this.roomCoordinates = roomCoordinates;
+    }
+
+    public Room(double desiredRoomTemperature, int id, String roomName){
+        this.desiredRoomTemperature = desiredRoomTemperature;
+        this.id = id;
+        this.roomName = roomName;
+    }
+
+    public double getDesiredRoomTemperature() {
+        return desiredRoomTemperature;
     }
 
     public int getId() {
