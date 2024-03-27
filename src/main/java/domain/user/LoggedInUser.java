@@ -2,19 +2,14 @@ package domain.user;
 
 public class LoggedInUser {
 
-    private String username;
-    private String userType;
 
-    public LoggedInUser(String username, String userType){
-        this.username = username;
-        this.userType = userType;
+    private Users loggedInUser;
+
+    public LoggedInUser(Users user) {
+        this.loggedInUser = user;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getUserType() {
-        return userType;
+    public Users getLoggedInUser() {
+        return loggedInUser;
     }
 }

@@ -174,6 +174,7 @@ public class MainFrame {
 
     private boolean isFrozen = false;
     LoggedInUser user;
+    Map<String,JLabel> userLabels = new HashMap<>();
     // Windows needed
 
 
@@ -276,7 +277,9 @@ public class MainFrame {
                         userAccountManager, // UserAccountManager instance
                         firstColumnContent, // List of first column content
                         loggedInUsername, // Selected username
-                        h // Pass your House instance here
+                        h,//Pass your House instance here
+                        userLabels,
+                        user
                 );
 
                 // Populate locationComboBox with room names from House instance
@@ -425,20 +428,21 @@ public class MainFrame {
 
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
-        Map<Users,JLabel> userLabels = new HashMap<>();
         for (Users u: usersList) {
             String location = u.getLocation();
             for (Room r : rooms) {
                 if(r.getRoomName().equals(location)){
                     JLabel label = new JLabel();
-                    label.setForeground(Color.red);
                     label.setIcon(userIcon);
-                    label.setText(u.getUsername());
-                    label.setHorizontalTextPosition(JLabel.CENTER);
-                    label.setVerticalTextPosition(JLabel.CENTER);
-                    label.setBounds(r.getX(),r.getY(),30,30);
+                    if(u.getUsername().equals(user.getLoggedInUser().getUsername())){
+                        label.setForeground(Color.red);
+                        label.setText(u.getUsername());
+                        label.setHorizontalTextPosition(JLabel.CENTER);
+                        label.setVerticalTextPosition(JLabel.CENTER);
+                    }
+                    label.setBounds(r.getX() + (int)(Math.random() * 10) + 4,r.getY() + (int)(Math.random() * 10) + 2,30,30);
                     houseImage.add(label);
-                    userLabels.put(u,label);
+                    userLabels.put(u.getUsername(),label);
                 }
             }
         }
