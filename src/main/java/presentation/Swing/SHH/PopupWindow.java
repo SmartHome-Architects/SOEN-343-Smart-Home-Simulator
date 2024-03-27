@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,6 +116,12 @@ public class PopupWindow extends JDialog {
         ZoneNameSerializer.saveZones(zones);
     }
 
+
+
+
+
+
+
     private void loadAndDisplayZones() {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -121,70 +129,80 @@ public class PopupWindow extends JDialog {
             List<Map<String, Object>> zoneList = mapper.readValue(new File(JSON_FILE_PATH),
                     new TypeReference<List<Map<String, Object>>>() {});
 
-            // Create a dialog to display zones
-            JDialog zoneDialog = new JDialog(this, "Zones Information", true);
-            zoneDialog.setLayout(new BorderLayout());
+            // Create a table model for displaying zones
+            DefaultTableModel tempTableModel = new DefaultTableModel(new Object[]{"Zone Name", "Rooms", "Temperature"}, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    // Allow editing only for the temperature column
+                    return column == 2;
+                }
+            };
 
-            // Create a panel to hold zone information
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-            // Create a list to store zones for selection
-            List<Zone> zones = new ArrayList<>();
-
-            // Append zone information to the panel
-            int index = 0;
+            // Populate the table model with zone information
             for (Map<String, Object> zoneMap : zoneList) {
                 String zoneName = (String) zoneMap.get("zoneName");
                 double desiredTemperature = (double) zoneMap.get("desiredTemperature");
                 List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
-                StringBuilder zoneInfo = new StringBuilder();
-                zoneInfo.append("Zone Name: ").append(zoneName).append("\n");
-                zoneInfo.append("Desired Temperature: ").append(desiredTemperature).append("°C\n");
-                zoneInfo.append("Rooms in the Zone:\n");
+                StringBuilder roomNames = new StringBuilder();
                 for (Map<String, Object> roomMap : roomList) {
-                    zoneInfo.append("- ").append(roomMap.get("roomName")).append("\n");
+                    roomNames.append(roomMap.get("roomName")).append(", ");
                 }
-                JTextArea zoneTextArea = new JTextArea(zoneInfo.toString());
-                zoneTextArea.setEditable(false);
-                panel.add(zoneTextArea);
-                panel.add(Box.createVerticalStrut(10));
-
-                // Create Zone objects for selection
-                Zone zone = new Zone(zoneName, desiredTemperature);
-                zones.add(zone);
-                index++;
+                if (roomNames.length() > 0) {
+                    roomNames.setLength(roomNames.length() - 2); // Remove the last comma and space
+                }
+                Object[] rowData = {zoneName, roomNames.toString(), desiredTemperature};
+                tempTableModel.addRow(rowData);
             }
 
-            // Add the panel to the dialog
-            JScrollPane scrollPane = new JScrollPane(panel);
-            zoneDialog.add(scrollPane, BorderLayout.CENTER);
+            // Create a JTable with the table model
+            JTable tempTable = new JTable(tempTableModel);
 
-            // Create a button to edit the temperature
-            JButton editTemperatureButton = new JButton("Edit Temperature");
-            editTemperatureButton.addActionListener(new ActionListener() {
+            // Add a mouse listener to the temperature column
+            tempTable.addMouseListener(new MouseAdapter() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                    int selectedIndex = JOptionPane.showConfirmDialog(null, "Select a zone to edit the temperature:");
-                    if (selectedIndex >= 0 && selectedIndex < zones.size()) {
-                        double newTemperature = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter new temperature for the selected zone:"));
-                        zones.get(selectedIndex).setDesiredZoneTemperature(newTemperature);
-                        saveZoneChanges(zones);
-                        JOptionPane.showMessageDialog(null, "Temperature updated successfully.");
-                        // Refresh the dialog to reflect the updated temperature
-                        zoneDialog.dispose();
-                        loadAndDisplayZones();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid selection.");
+                public void mouseClicked(MouseEvent e) {
+                    int column = tempTable.getColumnModel().getColumnIndexAtX(e.getX());
+                    int row = e.getY() / tempTable.getRowHeight();
+
+                    // If the clicked column is the temperature column
+                    if (column == 2 && row < tempTable.getRowCount() && row >= 0) {
+                        double currentTemperature = (double) tempTableModel.getValueAt(row, column);
+                        String newTemperatureStr = JOptionPane.showInputDialog(null, "Enter new temperature for the selected zone:", currentTemperature);
+                        if (newTemperatureStr != null && !newTemperatureStr.isEmpty()) {
+                            try {
+                                double newTemperature = Double.parseDouble(newTemperatureStr);
+                                tempTableModel.setValueAt(newTemperature, row, column);
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "Invalid temperature format.");
+                            }
+                        }
                     }
                 }
             });
 
-            // Add the edit temperature button to the dialog
-            zoneDialog.add(editTemperatureButton, BorderLayout.SOUTH);
+            // Create a scroll pane for the table
+            JScrollPane scrollPane = new JScrollPane(tempTable);
 
-            // Set dialog size and make it visible
-            zoneDialog.setSize(400, 300);
+            // Create a button to save changes
+            JButton saveChangesButton = new JButton("Save Changes");
+            saveChangesButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Save the updated temperatures to the JSON file
+                    saveUpdatedTemperatures(zoneList, tempTableModel);
+                    JOptionPane.showMessageDialog(null, "Temperature changes saved successfully.");
+                }
+            });
+
+            // Add the components to a panel
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(scrollPane, BorderLayout.CENTER);
+            panel.add(saveChangesButton, BorderLayout.SOUTH);
+
+            // Create a dialog to display zones
+            JDialog zoneDialog = new JDialog(this, "Zones Information", true);
+            zoneDialog.getContentPane().add(panel);
+            zoneDialog.setSize(600, 400);
             zoneDialog.setLocationRelativeTo(this);
             zoneDialog.setVisible(true);
 
@@ -192,6 +210,41 @@ public class PopupWindow extends JDialog {
             System.err.println("Error loading zones: " + e.getMessage());
         }
     }
+
+    private void saveUpdatedTemperatures(List<Map<String, Object>> zoneList, DefaultTableModel tempTableModel) {
+        try {
+            // Update the temperature values in the zone list based on the table model
+            for (int i = 0; i < tempTableModel.getRowCount(); i++) {
+                double newTemperature = (double) tempTableModel.getValueAt(i, 2);
+                zoneList.get(i).put("desiredTemperature", newTemperature);
+            }
+
+            // Write the updated zone list to the JSON file
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(JSON_FILE_PATH), zoneList);
+            System.out.println("Temperature changes saved to " + JSON_FILE_PATH);
+        } catch (IOException e) {
+            System.err.println("Error saving temperature changes: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

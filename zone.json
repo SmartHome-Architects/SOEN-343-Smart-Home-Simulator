@@ -1,1 +1,0 @@
-{"zoneRooms":[{"id":1,"roomName":"Garage","door":{"name":"Door","location":"Garage","doorID":1,"open":false,"x":180,"y":230},"lights":[{"name":"Light","location":"Garage","lightID":1,"open":false,"x":130,"y":220}],"windows":[{"name":"Window","location":"Garage","windowID":1,"open":false,"x":80,"y":270,"blocked":false}],"acUnit"
