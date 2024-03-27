@@ -12,7 +12,7 @@ public class SmartHomeCoreFunctionalityTest {
         // Create an instance of SmartHomeCoreFunctionality
         SmartHomeCoreFunctionality smartHomeCore = new SmartHomeCoreFunctionality();
 
-        // You can add test cases here to verify the functionality of SmartHomeCoreFunctionality class
+
         // For example:
         // assertEquals(expectedValue, actualValue);
         // assertTrue(condition);
