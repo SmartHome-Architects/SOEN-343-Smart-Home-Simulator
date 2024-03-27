@@ -19,5 +19,5 @@ public class CoordinateTest {
         assertEquals(10, coordinate.getY());
     }
 
-    // Add more test cases as needed
+
 }
