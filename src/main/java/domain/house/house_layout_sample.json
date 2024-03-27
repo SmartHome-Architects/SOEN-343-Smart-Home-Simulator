@@ -2,102 +2,102 @@
     "rooms": [
       {
         "name": "Garage",
-        "coordinates": {"x": 130, "y": 300},
+        "coordinates": {"x": 140, "y": 313},
         "door": [
-          {"coordinates": {"x": 180, "y": 230}}
+          {"coordinates": {"x": 180, "y": 270}}
         ],
         "windows": [
-          {"coordinates": {"x": 80, "y": 270}}
+          {"coordinates": {"x": 80, "y": 310}}
         ],
         "lights": [
-          {"coordinates": {"x": 130, "y": 220}}
+          {"coordinates": {"x": 120, "y": 260}}
         ]
       },
       {
         "name": "Kitchen",
-        "coordinates": {"x": 140, "y": 60},
+        "coordinates": {"x": 155, "y": 105},
         "windows": [
-          {"coordinates": {"x": 80, "y": 40}},
-	      {"coordinates": {"x": 150, "y": 1}}
+          {"coordinates": {"x": 80, "y": 80}},
+	      {"coordinates": {"x": 150, "y": 10}}
         ],
         "lights": [
-          {"coordinates": {"x": 110, "y": 70}}
+          {"coordinates": {"x": 110, "y": 130}}
         ]
       },
       {
         "name": "Living Room",
-        "coordinates": {"x": 365, "y": 50},
+        "coordinates": {"x": 365, "y": 90},
         "door": [
-          {"coordinates": {"x": 270, "y": 1}}
+          {"coordinates": {"x": 270, "y": 10}}
         ],
         "windows": [
-          {"coordinates": {"x": 440, "y": 40}},
-          {"coordinates": {"x": 350, "y": 1}}
+          {"coordinates": {"x": 440, "y": 80}},
+          {"coordinates": {"x": 350, "y": 10}}
         ],
         "lights": [
-          {"coordinates": {"x": 300, "y": 60}}
+          {"coordinates": {"x": 290, "y": 80}}
         ]
       },
       {
         "name": "Bedroom1",
-        "coordinates": {"x": 365, "y": 270},
+        "coordinates": {"x": 365, "y": 310},
         "door": [
-          {"coordinates": {"x": 300, "y": 220}}
+          {"coordinates": {"x": 300, "y": 260}}
         ],
         "windows": [
-          {"coordinates": {"x": 440, "y": 260}},
-          {"coordinates": {"x": 365, "y": 330}}
+          {"coordinates": {"x": 440, "y": 305}},
+          {"coordinates": {"x": 365, "y": 370}}
         ],
         "lights": [
-          {"coordinates": {"x": 320, "y": 250}}
+          {"coordinates": {"x": 320, "y": 290}}
         ]
       },
       {
         "name": "Bedroom2",
-        "coordinates": {"x": 365, "y": 160},
+        "coordinates": {"x": 365, "y": 200},
         "door": [
-          {"coordinates": {"x": 300, "y": 180}}
+          {"coordinates": {"x": 300, "y": 215}}
         ],
         "windows": [
-          {"coordinates": {"x": 440, "y": 150}}
+          {"coordinates": {"x": 440, "y": 190}}
         ],
         "lights": [
-          {"coordinates": {"x": 310, "y": 150}}
+          {"coordinates": {"x": 320, "y": 190}}
         ]
       },
       {
         "name": "Bathroom",
-        "coordinates": {"x": 145, "y": 180},
+        "coordinates": {"x": 145, "y": 220},
         "door": [
-          {"coordinates": {"x": 180, "y": 180}}
+          {"coordinates": {"x": 180, "y": 220}}
         ],
         "windows": [
-          {"coordinates": {"x": 80, "y": 180}}
+          {"coordinates": {"x": 80, "y": 220}}
         ],
         "lights": [
-          {"coordinates": {"x": 110, "y": 180}}
+          {"coordinates": {"x": 110, "y": 220}}
         ]
       },
       {
         "name": "Entrance",
-        "coordinates": {"x": 260, "y": 305},
+        "coordinates": {"x": 260, "y": 350},
         "door": [
-          {"coordinates": {"x": 235, "y": 310}}
+          {"coordinates": {"x": 235, "y": 370}}
         ]
       },
       {
         "name": "Outside",
-        "coordinates" : {"x": 30, "y": 350},
+        "coordinates" : {"x": 30, "y": 300},
         "lights": [
-          {"coordinates": {"x": 30, "y": 300}},
-          {"coordinates": {"x": 470, "y": 10}}
+          {"coordinates": {"x": 30, "y": 330}},
+          {"coordinates": {"x": 480, "y": 70}}
         ]
       },
       {
         "name": "Hallway",
-        "coordinates" : {"x": 240, "y": 235},
+        "coordinates" : {"x": 240, "y": 275},
         "lights": [
-          {"coordinates": {"x": 240, "y": 180}}
+          {"coordinates": {"x": 240, "y": 205}}
         ]
       }
     ]

@@ -3,7 +3,13 @@ package domain.editbutton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import domain.house.Room;
+import domain.user.LoggedInUser;
+import domain.user.Users;
 import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
 import domain.house.House;
@@ -18,7 +24,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private String selectedUsername;
     private LogEntry logEntry;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance) {
+    private Map<String,JLabel> userLabels;
+
+    private LoggedInUser user;
+
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
@@ -26,6 +36,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
         this.userAccountManager = userAccountManager;
         this.selectedUsername = username;
         this.houseInstance = houseInstance;
+        this.userLabels = userLabels;
+        this.user = user;
 
         // Fetch the location of the selected user from the UserAccountManager
         String userLocation = userAccountManager.getUserLocation(username);
@@ -140,6 +152,23 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private void saveChanges() {
         String inhabitant = (String) inhabitantComboBox.getSelectedItem();
         String newLocation = (String) locationComboBox.getSelectedItem();
+
+        List<Room> rooms = houseInstance.getRooms();
+
+        int new_x_bound = 0;
+        int new_y_bound = 0;
+        for (Room r: rooms) {
+            if(r.getRoomName().equals(newLocation)){
+                new_x_bound = r.getX();
+                new_y_bound = r.getY();
+            }
+        }
+
+
+        JLabel jLabel = userLabels.get(user.getLoggedInUser().getUsername());
+        jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10),new_y_bound,30,30);
+
+
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");

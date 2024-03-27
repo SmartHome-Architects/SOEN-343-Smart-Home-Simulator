@@ -1,6 +1,7 @@
 package presentation.Swing.LoginAndSignUp;
 
 import domain.user.LoggedInUser;
+import domain.user.Users;
 import presentation.Swing.MainFrame;
 
 import javax.swing.*;
@@ -245,7 +246,7 @@ public class LogIn extends javax.swing.JFrame {
 
                 if (email.equals(storedEmail) && password.equals(storedPassword)) {
                     found = true;
-                    loggedInUser = new LoggedInUser(parts[0], parts[3]);
+                    loggedInUser = new LoggedInUser(new Users(parts[0],parts[1],parts[2],parts[3],parts[4],null));
                     // If the email and password match, retrieve the associated username
                     username = parts[0]; // Assuming username is the first part of each line in Users.txt
                     break;

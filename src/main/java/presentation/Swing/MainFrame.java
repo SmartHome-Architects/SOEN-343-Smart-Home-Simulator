@@ -178,6 +178,7 @@ public class MainFrame {
 
     private boolean isFrozen = false;
     LoggedInUser user;
+    Map<String,JLabel> userLabels = new HashMap<>();
     // Windows needed
 
 
@@ -302,7 +303,9 @@ public class MainFrame {
                         userAccountManager, // UserAccountManager instance
                         firstColumnContent, // List of first column content
                         loggedInUsername, // Selected username
-                        h // Pass your House instance here
+                        h,//Pass your House instance here
+                        userLabels,
+                        user
                 );
 
                 // Populate locationComboBox with room names from House instance
@@ -376,8 +379,6 @@ public class MainFrame {
         houseLayoutLabel.setIcon(new ImageIcon(image));
         houseLayoutLabel.setText("house layout image");
 
-        // Set bounds for house layout label
-        houseLayoutLabel.setBounds(0, 0, 550, 400);
         houseImage.setLayout(null); // Set null layout for absolute positioning
 
         // Load light icon for each room
@@ -451,23 +452,23 @@ public class MainFrame {
         }
 
 
-
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
-        Map<Users,JLabel> userLabels = new HashMap<>();
         for (Users u: usersList) {
             String location = u.getLocation();
             for (Room r : rooms) {
                 if(r.getRoomName().equals(location)){
                     JLabel label = new JLabel();
-                    label.setForeground(Color.red);
                     label.setIcon(userIcon);
-                    label.setText(u.getUsername());
-                    label.setHorizontalTextPosition(JLabel.CENTER);
-                    label.setVerticalTextPosition(JLabel.CENTER);
-                    label.setBounds(r.getX(),r.getY(),30,30);
+                    if(u.getUsername().equals(user.getLoggedInUser().getUsername())){
+                        label.setForeground(Color.red);
+                        label.setText(u.getUsername());
+                        label.setHorizontalTextPosition(JLabel.CENTER);
+                        label.setVerticalTextPosition(JLabel.CENTER);
+                    }
+                    label.setBounds(r.getX() + (int)(Math.random() * 10) + 4,r.getY() + (int)(Math.random() * 10) + 2,30,30);
                     houseImage.add(label);
-                    userLabels.put(u,label);
+                    userLabels.put(u.getUsername(),label);
                 }
             }
         }
@@ -478,17 +479,15 @@ public class MainFrame {
                 JLabel label = new JLabel();
                 String temp = Double.toString(r.getTemperature());
                 label.setForeground(Color.blue);
-                label.setText(temp);
+                label.setText(temp + "°");
                 label.setBounds(r.getX(),r.getY() - 30,30,30);
                 houseImage.add(label);
                 temperatureLabels.put(r,label);
             }
         }
 
-        houseImage.setLayout(new BorderLayout());
+        houseLayoutLabel.setBounds(0, -60, 550, 500);
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
-
-
 
         //-------------------------------------------------------------------------------------------------------------
 
