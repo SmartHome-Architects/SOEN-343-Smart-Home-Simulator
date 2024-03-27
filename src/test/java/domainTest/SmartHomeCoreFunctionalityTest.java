@@ -13,7 +13,7 @@ public class SmartHomeCoreFunctionalityTest {
         SmartHomeCoreFunctionality smartHomeCore = new SmartHomeCoreFunctionality();
 
 
-        // For example:
+
         // assertEquals(expectedValue, actualValue);
         // assertTrue(condition);
         // assertFalse(condition);
