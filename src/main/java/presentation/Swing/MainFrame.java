@@ -350,8 +350,6 @@ public class MainFrame {
         houseLayoutLabel.setIcon(new ImageIcon(image));
         houseLayoutLabel.setText("house layout image");
 
-        // Set bounds for house layout label
-        houseLayoutLabel.setBounds(0, 0, 550, 400);
         houseImage.setLayout(null); // Set null layout for absolute positioning
 
         // Load light icon for each room
@@ -425,7 +423,6 @@ public class MainFrame {
         }
 
 
-
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
         Map<Users,JLabel> userLabels = new HashMap<>();
@@ -459,10 +456,8 @@ public class MainFrame {
             }
         }
 
-        houseImage.setLayout(new BorderLayout());
+        houseLayoutLabel.setBounds(0, -60, 550, 500);
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
-
-
 
         //-------------------------------------------------------------------------------------------------------------
 
