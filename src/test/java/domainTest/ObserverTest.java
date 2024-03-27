@@ -12,9 +12,7 @@ public class ObserverTest {
         Observer mockObserver = new Observer() {
             @Override
             public void update(double tempRate, boolean isActive, double outsideTemp) {
-                // Implement update method behavior for testing
-                // Here you can add assertions to verify the behavior
-                // For example:
+
                 assertTrue(isActive);
                 assertEquals(25.0, outsideTemp, 0.01); // Assuming outside temp is 25.0
             }
