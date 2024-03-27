@@ -14,5 +14,5 @@ public class ACTest {
         assertNotNull(ac);
     }
 
-    // You can add more test methods to cover other functionalities or edge cases of your AC class.
+
 }
