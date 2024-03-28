@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.house.House;
 import domain.house.Room;
 import domain.house.Zone;
+import domain.smartHomeSimulator.modules.SmartHomeHeating;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +30,9 @@ public class ZoneManager extends JDialog {
     // house object to get rooms
     private House house;
 
-    public ZoneManager(JFrame parent) {
+    SmartHomeHeating shh;
+
+    public ZoneManager(JFrame parent, House h, SmartHomeHeating shh) {
 
         // set up popup
         super(parent, "Manage Zones", true);
@@ -37,7 +40,8 @@ public class ZoneManager extends JDialog {
         setLocationRelativeTo(parent);
 
         // initialize house object
-        house = new House();
+        this.house = h;
+        this.shh = shh;
 
         // Table model with a column for room names
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -102,6 +106,9 @@ public class ZoneManager extends JDialog {
                 selectedRoomIds.add(room.getId());
             }
         }
+
+        shh.attach(newZone);
+        System.out.println(shh.getZones().size());
 
         // Save the zone information in a JSON file
         List<Zone> zones = new ArrayList<>();
@@ -211,8 +218,8 @@ public class ZoneManager extends JDialog {
         }
     }
 
-    public static void show(JFrame parent) {
-        ZoneManager dialog = new ZoneManager(parent);
+    public static void show(JFrame parent, House h, SmartHomeHeating shh) {
+        ZoneManager dialog = new ZoneManager(parent,h,shh);
         dialog.setVisible(true);
     }
 }
