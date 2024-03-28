@@ -36,3 +36,4 @@ public class AuthenticationManagerTest {
         assertFalse(AuthenticationManager.authenticateUser("test@example.com", ""), "Authentication should fail for empty password");
     }
 }
+
