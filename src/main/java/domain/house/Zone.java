@@ -1,9 +1,13 @@
 package domain.house;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +56,13 @@ public class Zone implements Observer {
 
         double temp_outside = outsideTemp;
 
+        try{
+            desiredZoneTemperature = readZoneDesiredTemp();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
+
         for (Room room: zoneRooms) {
             double roomTemp = room.getTemperature();
             if(!isActive){ // SHH is off. Room temp adjusts itself until temp outside is approximately equal to room temp.
@@ -72,6 +83,7 @@ public class Zone implements Observer {
                     }
                     room.getAcUnit().turnOff();
                     room.getHeater().turnOff();
+
                 }
                 else if(roomTemp <= desiredZoneTemperature){ // turn heating on until
                     room.getHeater().turnOn();
@@ -98,11 +110,24 @@ public class Zone implements Observer {
                     room.getAcUnit().turnOn();
                     room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
                 }
-
             }
             JLabel label = temperatureLabels.get(room);
             String labelText = Double.toString(room.getTemperature()) + "°";
             label.setText(labelText);
         }
+    }
+
+    private double readZoneDesiredTemp() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String file = "database/zones.json";
+        double temp = 0;
+        List<Map<String, Object>> zoneList = mapper.readValue(new File(file), new TypeReference<List<Map<String, Object>>>() {});
+        for (Map<String, Object> zoneMap : zoneList) {
+            String zoneName = (String) zoneMap.get("zoneName");
+            if(zoneName.equals(this.zoneName)){
+                temp = (double) zoneMap.get("desiredTemperature");
+            }
+        }
+        return temp;
     }
 }

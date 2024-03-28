@@ -37,7 +37,7 @@ public class SmartHomeHeating implements Observable{
     }
 
     private void startTimer() {
-            timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 5000); // update every 15 seconds
+            timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000); // update every 15 seconds
     }
 
     public void attach(Zone zone){
