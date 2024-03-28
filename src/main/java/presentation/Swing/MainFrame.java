@@ -515,7 +515,7 @@ public class MainFrame {
                 String temp = Double.toString(r.getTemperature());
                 label.setForeground(Color.blue);
                 label.setText(temp + "°");
-                label.setBounds(r.getX(),r.getY() - 30,30,30);
+                label.setBounds(r.getX(),r.getY() - 30,35,35);
                 houseImage.add(label);
                 temperatureLabels.put(r,label);
             }

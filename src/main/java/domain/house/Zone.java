@@ -8,6 +8,7 @@ import domain.sensors.Window;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +84,7 @@ public class Zone implements Observer {
                     }
                     room.getAcUnit().turnOff();
                     room.getHeater().turnOff();
-
+                    room.setTemperature(desiredZoneTemperature);
                 }
                 else if(roomTemp <= desiredZoneTemperature){ // turn heating on until
                     room.getHeater().turnOn();
@@ -91,7 +92,7 @@ public class Zone implements Observer {
                     if(Math.floor(temp) > desiredZoneTemperature){
                         temp = temp - 1;
                     }
-                    room.setTemperature(Math.floor(temp));
+                    room.setTemperature(temp);
                 }
 
 //                else if(temp_outside < roomTemp && temp_outside < desiredZoneTemperature){
@@ -111,8 +112,11 @@ public class Zone implements Observer {
                     room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
                 }
             }
+            DecimalFormat df = new DecimalFormat("#.#");
             JLabel label = temperatureLabels.get(room);
-            String labelText = Double.toString(room.getTemperature()) + "°";
+            Double rTemp = room.getTemperature();
+            String room_temp = df.format(Math.floor(rTemp));
+            String labelText = room_temp + "°";
             label.setText(labelText);
         }
     }
