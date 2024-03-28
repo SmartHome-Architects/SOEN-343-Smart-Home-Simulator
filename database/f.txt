@@ -1,0 +1,4 @@
+newUser|newUser@example.com|newPassword|admin
+newUser|newUser@example.com|newPassword|admin
+newUser|newUser@example.com|newPassword|admin
+newUser|newUser@example.com|newPassword|admin
