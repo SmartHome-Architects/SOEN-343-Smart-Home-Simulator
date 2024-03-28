@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import javax.swing.JLabel;
 import domain.house.Room;
 import domain.user.LoggedInUser;
 import domain.user.Users;
@@ -16,6 +16,7 @@ import domain.house.House;
 
 public class EditHouseInhabitantsDialog extends JDialog {
     private String oldLocation;
+    private JLabel locationTag;
 
     private JComboBox<String> inhabitantComboBox;
     private JComboBox<String> locationComboBox;
@@ -28,11 +29,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
     private LoggedInUser user;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user) {
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user, JLabel locationTag) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
-
+        this.locationTag = locationTag;
         this.userAccountManager = userAccountManager;
         this.selectedUsername = username;
         this.houseInstance = houseInstance;
@@ -164,11 +165,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
             }
         }
 
-
         JLabel jLabel = userLabels.get(user.getLoggedInUser().getUsername());
         jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10),new_y_bound,30,30);
-
-
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");
@@ -176,6 +174,10 @@ public class EditHouseInhabitantsDialog extends JDialog {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
             // Update the location in the user's file
             updateUserLocation(inhabitant, newLocation);
+            // Update the oldLocation to the new location
+            oldLocation = newLocation;
+            // Assuming you have a JLabel locationTag to display the location
+            locationTag.setText(newLocation); // Update the displayed location in locationTag
         }
 
         // Log the location change
