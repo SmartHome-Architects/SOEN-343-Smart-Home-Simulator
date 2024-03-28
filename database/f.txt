@@ -2,3 +2,10 @@ newUser|newUser@example.com|newPassword|admin
 newUser|newUser@example.com|newPassword|admin
 newUser|newUser@example.com|newPassword|admin
 newUser|newUser@example.com|newPassword|admin
+testUser|test@example.com|password|access
+testUser|test@example.com|password|access
+testUser|test@example.com|password|access
+testUser|test@example.com|password|access
+testUser|test@example.com|password|access
+testUser|test@example.com|password|access
+newUser|newUser@example.com|newPassword|admin
