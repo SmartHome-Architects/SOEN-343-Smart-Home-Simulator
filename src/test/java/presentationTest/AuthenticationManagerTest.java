@@ -1,42 +1,33 @@
 package presentationTest;
 
-import org.junit.After;
-import org.junit.Before;
+import presentation.Swing.LoginAndSignUp.*;
 import org.junit.Test;
-import presentation.Swing.LoginAndSignUp.AuthenticationManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import static org.junit.Assert.*;
 
 public class AuthenticationManagerTest {
 
-    private static final String TEST_FILE_PATH = "testUsers.txt";
-
-    @Before
-    public void setUp() {
-        // Create a test file with user credentials
-        try (PrintWriter writer = new PrintWriter(TEST_FILE_PATH)) {
-            writer.println("TestUser1|test1@example.com|hashedPassword1");
-            writer.println("TestUser2|test2@example.com|hashedPassword2");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @After
-    public void tearDown() {
-        // Delete the test file
-        File file = new File(TEST_FILE_PATH);
-        file.delete();
-    }
-
     @Test
-    public void testAuthenticateUser_ValidCredentials() {
-        assertTrue(AuthenticationManager.authenticateUser("test1@example.com", "password123"));
-    }
+    public void testAuthenticateAndGetUsername() {
+        // Test case with valid email and password
+        assertEquals("rana", AuthenticationManager.authenticateAndGetUsername("rana@gmail.com", "rana"));
 
-    // Other test methods
+        // Test case with invalid email
+        assertNull(AuthenticationManager.authenticateAndGetUsername("invalid@example.com", "password123"));
+
+        // Test case with invalid password
+        assertNull(AuthenticationManager.authenticateAndGetUsername("rana@gmail.com", "invalidpassword"));
+
+        // Test case with null email
+        assertNull(AuthenticationManager.authenticateAndGetUsername(null, "password123"));
+
+        // Test case with null password
+        assertNull(AuthenticationManager.authenticateAndGetUsername("rana@gmail.com", null));
+
+        // Test case with empty email
+        assertNull(AuthenticationManager.authenticateAndGetUsername("", "password123"));
+
+        // Test case with empty password
+        assertNull(AuthenticationManager.authenticateAndGetUsername("rana@gmail.com", ""));
+    }
 }
+
