@@ -1,6 +1,7 @@
 package presentation.Swing;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.dateTime.Date;
@@ -9,6 +10,7 @@ import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
 
 import domain.house.Room;
+import domain.house.Zone;
 import domain.sensors.Door;
 import domain.sensors.Light;
 import domain.sensors.Window;
@@ -179,12 +181,21 @@ public class MainFrame {
     private boolean isFrozen = false;
     LoggedInUser user;
     Map<String,JLabel> userLabels = new HashMap<>();
+    Map<Room,JLabel> temperatureLabels = new HashMap<>();
     // Windows needed
 
 
     public MainFrame(LoggedInUser user) {
         this.user = user;
         House h = new House();
+        SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels);
+
+
+        try{
+            loadZones(h,shh);
+        }catch (IOException e){
+            System.out.println(e);
+        }
 
         //---------------------individual room temp --------------------------
         roomTempButton.addActionListener(new ActionListener() {
@@ -202,7 +213,7 @@ public class MainFrame {
         zoneManagementButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Create an instance of your popup window
-                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton));
+                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh);
             }
         });
 
@@ -473,7 +484,6 @@ public class MainFrame {
             }
         }
 
-        Map<Room,JLabel> temperatureLabels = new HashMap<>();
         for (Room r: rooms) {
             if(!(r.getRoomName().equals("Outside"))){
                 JLabel label = new JLabel();
@@ -530,7 +540,7 @@ public class MainFrame {
         });
 
 
-        SmartHomeHeating shh = new SmartHomeHeating();
+
         //-------------------------------------------------------------------------------------------------------------
 
         // ON/OFF SHH button
@@ -542,11 +552,11 @@ public class MainFrame {
                 SHHisOn = !SHHisOn;
                 if (SHHisOn) {
                     onOffSHHButton.setText("On");
-                    //add functionality
+                    shh.setActive(true);
                     System.out.println("Button is turned ON");
                 } else {
                     onOffSHHButton.setText("Off");
-                    // add functionality
+                    shh.setActive(false);
                     System.out.println("Button is turned OFF");
                 }
             }
@@ -864,6 +874,29 @@ public class MainFrame {
         } else {
             throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
         }
+    }
+
+    public void loadZones(House h, SmartHomeHeating shh) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String file = "database/zones.json";
+        List<Map<String, Object>> zoneList = mapper.readValue(new File(file), new TypeReference<List<Map<String, Object>>>() {});
+        for (Map<String, Object> zoneMap : zoneList) {
+            String zoneName = (String) zoneMap.get("zoneName");
+            double desiredTemperature = (double) zoneMap.get("desiredTemperature");
+            Zone zone = new Zone(zoneName,desiredTemperature);
+            List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
+            for (Map<String, Object> roomMap : roomList) {
+                String roomName = roomMap.get("roomName").toString();
+                List<Room> rooms = h.getRooms();
+                for (Room r:rooms) {
+                    if(r.getRoomName().equals(roomName)){
+                        zone.addRoomToZone(r);
+                    }
+                }
+            }
+            shh.attach(zone);
+        }
+
     }
 
 

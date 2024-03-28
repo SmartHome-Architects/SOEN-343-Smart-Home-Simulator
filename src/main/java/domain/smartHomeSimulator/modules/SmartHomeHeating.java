@@ -3,14 +3,15 @@ package domain.smartHomeSimulator.modules;
 import domain.house.Room;
 import domain.house.Zone;
 import domain.user.Users;
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.*;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class SmartHomeHeating implements Observable{
     private Users user;
     List<Zone> zones = new ArrayList<>();
+    Map<Room, JLabel> temperatureLabels = new HashMap<>();
 
     private double outsideTemp;
 
@@ -19,10 +20,11 @@ public class SmartHomeHeating implements Observable{
 
     private double tempRate = 0.05;
 
-    public SmartHomeHeating(){
+    public SmartHomeHeating(Map<Room,JLabel> temperatureLabels){
         //this.user = user;
         this.isActive = false;
         this.timer = new Timer();
+        this.temperatureLabels = temperatureLabels;
         startTimer(); //start HVAC update timer
     }
 
@@ -35,7 +37,7 @@ public class SmartHomeHeating implements Observable{
     }
 
     private void startTimer() {
-            timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000); // update every second
+            timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 5000); // update every 15 seconds
     }
 
     public void attach(Zone zone){
@@ -87,7 +89,7 @@ public class SmartHomeHeating implements Observable{
 
     public void notifyObservers(){
         for (Zone z: zones) {
-            z.update(tempRate,isActive(),outsideTemp);
+            z.update(tempRate,isActive(),outsideTemp,temperatureLabels);
         }
     }
 
@@ -96,5 +98,9 @@ public class SmartHomeHeating implements Observable{
         public void run() {
             notifyObservers();
         }
+    }
+
+    public List<Zone> getZones() {
+        return zones;
     }
 }

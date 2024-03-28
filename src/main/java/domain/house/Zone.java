@@ -3,8 +3,10 @@ package domain.house;
 import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Zone implements Observer {
     List<Room> zoneRooms = new ArrayList<>();
@@ -46,7 +48,7 @@ public class Zone implements Observer {
     }
 
     @Override
-    public void update(double tempRate, boolean isActive, double outsideTemp) {
+    public void update(double tempRate, boolean isActive, double outsideTemp, Map<Room, JLabel> temperatureLabels) {
 
         double temp_outside = outsideTemp;
 
@@ -54,40 +56,53 @@ public class Zone implements Observer {
             double roomTemp = room.getTemperature();
             if(!isActive){ // SHH is off. Room temp adjusts itself until temp outside is approximately equal to room temp.
                 if(Math.floor(temp_outside) < Math.floor(roomTemp)){
-                    room.setTemperature(roomTemp - (roomTemp * tempRate));
+                    room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
                 }
                 else if(Math.floor(temp_outside) > Math.floor(roomTemp)){
-                    room.setTemperature(roomTemp + (roomTemp * tempRate));
+                    room.setTemperature(Math.floor(roomTemp + (roomTemp * tempRate)));
                 }
             }
             else{ // SHH is on.
                 double upperThreshold = desiredZoneTemperature + 0.25;
                 double lowerThreshold = desiredZoneTemperature - 0.25;
 
-                if(roomTemp >= lowerThreshold && roomTemp <= upperThreshold){ // HVAC is paused if room temp is between thresholds.
+                if(lowerThreshold <= roomTemp && roomTemp <= upperThreshold){ // HVAC is paused if room temp is between thresholds.
                     for(Window w : room.getWindows()){
                         w.setOpen(false);
                     }
                     room.getAcUnit().turnOff();
-                    return;
+                    room.getHeater().turnOff();
                 }
-                else if(temp_outside < roomTemp && temp_outside < desiredZoneTemperature){
-                    room.getAcUnit().turnOff();
-                    for (Window w : room.getWindows()) {
-                        if(!w.isBlocked()){
-                            w.setOpen(true);
-                        }
-                        else{
-                            System.out.println("Window is blocked. Unable to close: " + w.getLocation() + w.getName() + w.getWindowID());
-                        }
+                else if(roomTemp <= desiredZoneTemperature){ // turn heating on until
+                    room.getHeater().turnOn();
+                    double temp = roomTemp + (roomTemp * tempRate);
+                    if(Math.floor(temp) > desiredZoneTemperature){
+                        temp = temp - 1;
                     }
-                    room.setTemperature(roomTemp - (roomTemp * tempRate));
+                    room.setTemperature(Math.floor(temp));
                 }
+
+//                else if(temp_outside < roomTemp && temp_outside < desiredZoneTemperature){
+//                    room.getAcUnit().turnOff();
+//                    for (Window w : room.getWindows()) {
+//                        if(!w.isBlocked()){
+//                            w.setOpen(true);
+//                        }
+//                        else{
+//                            System.out.println("Window is blocked. Unable to close: " + w.getLocation() + w.getName() + w.getWindowID());
+//                        }
+//                    }
+//                    room.setTemperature(roomTemp - (roomTemp * tempRate));
+//                }
                 else if(temp_outside > roomTemp && roomTemp > desiredZoneTemperature){
                     room.getAcUnit().turnOn();
-                    room.setTemperature(roomTemp - (roomTemp * tempRate));
+                    room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
                 }
+
             }
+            JLabel label = temperatureLabels.get(room);
+            String labelText = Double.toString(room.getTemperature()) + "°";
+            label.setText(labelText);
         }
     }
 }
