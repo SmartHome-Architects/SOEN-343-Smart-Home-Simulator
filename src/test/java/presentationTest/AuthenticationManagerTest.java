@@ -1,7 +1,7 @@
-package presentation.Swing.LoginAndSignUp;
-
+package presentationTest;
 
 import org.junit.jupiter.api.Test;
+import presentation.Swing.LoginAndSignUp.AuthenticationManager;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
