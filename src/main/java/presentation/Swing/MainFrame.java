@@ -291,7 +291,11 @@ public class MainFrame {
             }
         });
 
-        // Assuming you have an editButton that triggers the edit action
+    // Assuming you have a JLabel locationTag to display the location
+        String loggedInUsername = userAccountManager.getLoggedInUsername();
+        String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
+        locationTag.setText(oldLocation);
+
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 // Get the username of the logged-in user from the UserAccountManager
@@ -302,25 +306,27 @@ public class MainFrame {
                     System.err.println("Error: No logged-in user found.");
                     return; // Handle the error appropriately
                 }
+                String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
 
                 // Get the content of the logged-in user's file
                 List<String> firstColumnContent = userAccountManager.getFirstColumnContent(loggedInUsername);
 
-
-
-                // Create an instance of the EditHouseInhabitantsDialog and pass the necessary parameters
                 EditHouseInhabitantsDialog dialog = new EditHouseInhabitantsDialog(
                         (Frame) SwingUtilities.getWindowAncestor(WindowContainer), // parent Frame
                         userAccountManager, // UserAccountManager instance
                         firstColumnContent, // List of first column content
                         loggedInUsername, // Selected username
-                        h,//Pass your House instance here
+                        h, // Pass your House instance here
                         userLabels,
-                        user
+                        user,
+                        locationTag // Pass the locationTag JLabel to the dialog
                 );
 
                 // Populate locationComboBox with room names from House instance
                 dialog.populateLocationComboBoxWithRoomNames();
+
+                // Update the locationTag with the old location
+                locationTag.setText(oldLocation);
 
                 // Display the dialog
                 dialog.setVisible(true);
@@ -328,6 +334,25 @@ public class MainFrame {
                 // After making the dialog visible, display the selected username within the dialog
                 JLabel selectedUsernameLabel = new JLabel("Selected Username: " + loggedInUsername);
                 dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
+            }
+        });
+
+
+
+
+        //Deletes the user profile to the text file
+        Delete_Profile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usernameToDelete = getDeleteUser().getText();
+
+                DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
+                deleteProfileCommand.execute();
+
+                LogEntry.setTextArea(textArea1);
+                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Delete a User Profile");
+
+                JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
         });
 
