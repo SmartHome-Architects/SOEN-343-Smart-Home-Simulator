@@ -8,6 +8,7 @@ import domain.sensors.Window;
 import java.util.ArrayList;
 import java.util.List;
 
+//The class serves as a model for a house containing rooms and various sensors such as doors, windows, and lights.
 public class House {
     private List<Zone> savedZones = new ArrayList<>(); // New list to store saved zones
     private List<Room> rooms = new ArrayList<>();
