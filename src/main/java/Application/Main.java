@@ -8,7 +8,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
 
             LogIn loginFrame = new LogIn();
-
+//we are using swing to create the loginFrame
             loginFrame.setVisible(true);
             loginFrame.setLocationRelativeTo(null);
 
