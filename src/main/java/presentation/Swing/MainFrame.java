@@ -208,8 +208,6 @@ public class MainFrame {
         });
 
 
-
-
         //----------------------zone management------------------------------
 
         zoneManagementButton.addActionListener(new ActionListener() {
@@ -298,6 +296,7 @@ public class MainFrame {
         String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
         locationTag.setText(oldLocation);
 
+        //Edit User Location
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 // Get the username of the logged-in user from the UserAccountManager
@@ -321,7 +320,8 @@ public class MainFrame {
                         h, // Pass your House instance here
                         userLabels,
                         user,
-                        locationTag // Pass the locationTag JLabel to the dialog
+                        locationTag,// Pass the locationTag JLabel to the dialog
+                        textArea1 //Output Console
                 );
 
                 // Populate locationComboBox with room names from House instance
@@ -338,7 +338,6 @@ public class MainFrame {
                 dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
             }
         });
-
 
 
 

@@ -29,6 +29,8 @@ public class EditHouseInhabitantsDialogTest {
     private LoggedInUser user;
     private JLabel locationTag;
 
+    private JTextArea textArea1;
+
 
     @Before
     public void setUp() {
@@ -55,7 +57,7 @@ public class EditHouseInhabitantsDialogTest {
         usernames.add("user3");
 
         String selectedUsername = "user2";
-        editDialog = new EditHouseInhabitantsDialog(null, userAccountManager, usernames, selectedUsername, houseInstance, userLabels, user, locationTag);
+        editDialog = new EditHouseInhabitantsDialog(null, userAccountManager, usernames, selectedUsername, houseInstance, userLabels, user, locationTag, textArea1);
 
         assertNotNull(editDialog);
         assertEquals("Edit House Inhabitants", editDialog.getTitle());

@@ -48,7 +48,7 @@ public class LogEntry {
     }
 
 
-    //
+    //Method to log Date and Time
     public static void DateTimelog(String deviceID, String eventType, String eventDescription,
                                   String oldDate, String newDate) {
         // File path for the log file
@@ -73,7 +73,7 @@ public class LogEntry {
         }
 
         // Log the event with old and new dates
-        String logEntryForConsole = timestamp + "" +
+        String logEntryForConsole = timestamp + "\n" +
                 "Device: " + deviceID + "\n" +
                 "Event Type: " + eventType + "\n" +
                 "Event Description: " + eventDescription + "\n" +
@@ -83,8 +83,9 @@ public class LogEntry {
         // Append log entry to the JTextArea
         textArea.setText(logEntryForConsole + "\n");
     }
+
     // Method to Log Location Changes
-    public static void LocationLog(String deviceID, String oldLocation, String newLocation) {
+    public static void LocationLog(String user, String inhabitant, String oldLocation, String newLocation) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
 
@@ -92,35 +93,28 @@ public class LogEntry {
         String timestamp = getCurrentTimestamp();
 
         // Construct log entry string
-        String logEntryString = timestamp + "|" +
-                "Device: " + deviceID + "|" +
-                "Event Type: Location Change|" +
+        String logEntryString = "Timestamp: " + timestamp + "|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: Location Change of Inhabitant: " + inhabitant + "|" +
                 "Old Location: " + oldLocation + "|"+
-                "New Location: " + (newLocation != null ? newLocation : "Unknown") + "|";
+                "New Location: " + (newLocation != null ? newLocation : "Unknown");
 
-        // Read existing log entries
-        StringBuilder logContent = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(logFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                logContent.append(line).append("\n");
-            }
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryString);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Append new log entry to the log content
-        logContent.append(logEntryString).append("\n");
+        // Log the event with old and new dates
+        String logEntryForConsole = timestamp + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: Location Change" + "\n" +
+                "Event Description: Moving Inhabitant " + inhabitant + " to a new location" + "\n" +
+                "Old Location: " + oldLocation + "\n" +
+                "New Location: " + newLocation + "\n";
 
-        // Write log content back to the log file
-        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath))) {
-            writer.println(logContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Set log entry to JTextArea
-        textArea.setText(logContent.toString());
+        textArea.setText(logEntryForConsole + "\n");
     }
 
 
