@@ -13,12 +13,12 @@ public class LogEntry {
         textArea = area;
     }
 
-    public static void logEntry(String deviceID, String eventType, String eventDescription) {
-        Profilelog(deviceID, eventType, eventDescription);
+    public static void logEntry(String user, String deviceID, String eventType, String eventDescription) {
+        Profilelog(user,deviceID, eventType, eventDescription);
     }
 
     // Method to Log User Profiles (Add, Delete, Edit)
-    public static void Profilelog(String deviceID, String eventType, String eventDescription) {
+    public static void Profilelog(String user, String deviceID, String eventType, String eventDescription) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
 
@@ -28,6 +28,7 @@ public class LogEntry {
         // Construct log entry string
         String logEntryForFile = "Timestamp: " + timestamp + "|" +
                 "Device: " + deviceID + "|" +
+                "Event Triggered by: " + user + "|" +
                 "Event Type: " + eventType + "|" +
                 "Event Description: " + eventDescription;
 
@@ -40,6 +41,7 @@ public class LogEntry {
 
         String logEntryForConsole = timestamp + "\n" +
                 "Device: " + deviceID + "\n" +
+                "Event Triggered by: " + user + "\n" +
                 "Event Type: " + eventType + "\n" +
                 "Event Description: " + eventDescription + "\n";
 
@@ -49,7 +51,7 @@ public class LogEntry {
 
 
     //Method to log Date and Time
-    public static void DateTimelog(String deviceID, String eventType, String eventDescription,
+    public static void DateTimelog(String user, String deviceID, String eventType, String eventDescription,
                                   String oldDate, String newDate) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
@@ -60,6 +62,7 @@ public class LogEntry {
         // Construct log entry string
         String logEntryForFile = "Timestamp: " + timestamp + "|" +
                 "Device: " + deviceID + "|" +
+                "Event Triggered by: " + user + "|" +
                 "Event Type: " + eventType + "|" +
                 "Event Description: " + eventDescription + "|" +
                 "Old Date/Time: " + oldDate + "|" +
@@ -75,6 +78,7 @@ public class LogEntry {
         // Log the event with old and new dates
         String logEntryForConsole = timestamp + "\n" +
                 "Device: " + deviceID + "\n" +
+                "Event Triggered by: " + user + "\n" +
                 "Event Type: " + eventType + "\n" +
                 "Event Description: " + eventDescription + "\n" +
                 "Old Date/Time: " + oldDate + "\n" +
@@ -114,6 +118,37 @@ public class LogEntry {
                 "Old Location: " + oldLocation + "\n" +
                 "New Location: " + newLocation + "\n";
 
+        textArea.setText(logEntryForConsole + "\n");
+    }
+
+    public static void Permissionlog(String user, String deviceID, String eventType, String eventDescription) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device: " + deviceID + "|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: " + eventType + "|" +
+                "Event Description: " + eventDescription;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String logEntryForConsole = timestamp + "\n" +
+                "Device: " + deviceID + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: " + eventType + "\n" +
+                "Event Description: " + eventDescription + "\n";
+
+        // Append log entry to the JTextArea
         textArea.setText(logEntryForConsole + "\n");
     }
 

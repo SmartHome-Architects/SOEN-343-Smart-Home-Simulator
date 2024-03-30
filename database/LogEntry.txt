@@ -6,4 +6,3 @@ Timestamp: 2024-03-25 12:56:15|Device: SHS Module|Event Type: Manage Permissions
 Timestamp: 2024-03-25 19:21:49|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:22:06|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:48:52|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
-Timestamp: 2024-03-30 12:10:48|Inhabitant: j|Event Type: Location Change|Old Location: Garage|New Location: Kitchen

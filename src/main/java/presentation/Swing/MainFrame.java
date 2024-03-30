@@ -224,7 +224,7 @@ public class MainFrame {
                 PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHS Module", "Manage Permissions", "Edit User's Permissions");
+                LogEntry.Permissionlog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage Permissions", "Edit User's Permissions");
             }
         });
 
@@ -281,11 +281,14 @@ public class MainFrame {
                     accessibility = "Guest";
                 }
 
+                //Create String for Log Entry
+                String addLog = "Add User Profile: " + username;
+
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Add a User Profile");
+                LogEntry.Profilelog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage User Profile", addLog);
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
             }
@@ -339,37 +342,18 @@ public class MainFrame {
             }
         });
 
-
-
         //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String usernameToDelete = getDeleteUser().getText();
+                String deleteLog = "Delete User Profile: " + usernameToDelete; //Create String for Log Entry
 
                 DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
                 deleteProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Delete a User Profile");
-
-                JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
-            }
-        });
-
-
-
-        //Deletes the user profile to the text file
-        Delete_Profile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String usernameToDelete = getDeleteUser().getText();
-
-                DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, usernameToDelete);
-                deleteProfileCommand.execute();
-
-                LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Delete a User Profile");
+                LogEntry.Profilelog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage User Profile", deleteLog);
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
@@ -392,11 +376,13 @@ public class MainFrame {
                     accessibility = "Guest";
                 }
 
+                String editLog = "Editing User Profile: " + oldUsername; //Create String for Log Entry
+
                 EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, oldUsername, username, email, password, accessibility);
                 editProfileCommand.execute();
 
                 LogEntry.setTextArea(textArea1);
-                LogEntry.Profilelog("SHS Module", "Manage User Profile", "Edit a User Profile");
+                LogEntry.Profilelog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage User Profile", editLog);
 
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Edited Successfully!");
             }
@@ -718,7 +704,7 @@ public class MainFrame {
         date.setText(currentDate.toString());
 
         LogEntry.setTextArea(textArea1);
-        LogEntry.DateTimelog("SHS Module", "Time and Date Settings", "Modification of Date", oldDateStr, newDateStr);
+        LogEntry.DateTimelog(user.getLoggedInUser().getUsername(), "SHS Module", "Time and Date Settings", "Modification of Date", oldDateStr, newDateStr);
 
         JOptionPane.showMessageDialog(WindowContainer, "Date Updated Successfully");
 
@@ -734,7 +720,7 @@ public class MainFrame {
         startIncrementingTime();
 
         LogEntry.setTextArea(textArea1);
-        LogEntry.DateTimelog("SHS Module", "Time and Date Settings", "Modification of Time", oldDateStr, newTimeStr);
+        LogEntry.DateTimelog(user.getLoggedInUser().getUsername(),"SHS Module", "Time and Date Settings", "Modification of Time", oldDateStr, newTimeStr);
 
         JOptionPane.showMessageDialog(WindowContainer, "Time Updated Successfully");
     }
