@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.sensors.*;
 
+// This class loads the layout of a house from a JSON file and constructs Room objects containing various sensors such as doors, windows, lights, etc.
 public class Layout {
 
     // This function loads the json layout file using helper functions and returns a list of room objects.
