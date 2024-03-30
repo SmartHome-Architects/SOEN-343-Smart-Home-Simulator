@@ -79,42 +79,56 @@ public class UserAccountManager {
 
 
     private void removeUserFromUsersFile(String username) {
-        File tempFile = new File(databaseDirectory + "Users.txt");
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (!line.startsWith(username + "|")) {
-                    writer.write(line);
-                    writer.newLine();
+                    updatedLines.add(line);
                 }
             }
         } catch (IOException e) {
             handleFileError("Error removing user from users file", e);
+            return;
         }
 
-        // Replace the original file with the temporary file
-        if (!tempFile.renameTo(usersFile)) {
-            System.err.println("Error updating users file.");
+        // Write the updated content back to the original file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating users file", e);
         }
     }
+
 
     public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
+            boolean userFound = false;
             try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith(oldUsername + "|")) {
                         line = username + "|" + email + "|" + password + "|" + accessibility;
+                        userFound = true;
                     }
                     lines.add(line);
                 }
             } catch (IOException e) {
                 handleFileError("Error editing user", e);
             }
+
+            if (!userFound) {
+                System.err.println("User not found in logged-in user file.");
+                return;
+            }
+
+            // Write the updated content back to the logged-in user's file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(userFile))) {
                 for (String line : lines) {
                     writer.write(line);
@@ -132,24 +146,28 @@ public class UserAccountManager {
     }
 
     private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
-        File tempFile = new File(databaseDirectory + "Users_temp.txt");
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith(oldUsername + "|")) {
                     line = newUsername + "|" + email + "|" + password + "|" + accessibility;
                 }
-                writer.write(line);
-                writer.newLine();
+                updatedLines.add(line);
             }
         } catch (IOException e) {
             handleFileError("Error updating user in users file", e);
+            return;
         }
 
-        // Replace the original file with the temporary file
-        if (!tempFile.renameTo(usersFile)) {
-            System.err.println("Error updating users file.");
+        // Write the updated content back to the original file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating users file", e);
         }
     }
 
