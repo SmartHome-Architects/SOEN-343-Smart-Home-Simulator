@@ -14,6 +14,7 @@ import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
 import domain.house.House;
 
+//This class seems to represent a dialog for editing the inhabitants of a house, allowing users to change the location of a selected inhabitant within the house.
 public class EditHouseInhabitantsDialog extends JDialog {
     private String oldLocation;
     private JLabel locationTag;
