@@ -6,10 +6,3 @@ Timestamp: 2024-03-25 12:56:15|Device: SHS Module|Event Type: Manage Permissions
 Timestamp: 2024-03-25 19:21:49|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:22:06|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:48:52|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
-2024-03-26 22:31:17|Device: DeviceID|Event Type: Location Change|Old Location: Bedroom1|New Location: Living Room|
-
-Timestamp: 2024-03-26 22:31:17|Device: DeviceID|Event Type: SaveButtonClicked|Event Description: Save button clicked.
-Timestamp: 2024-03-26 22:32:12|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
-2024-03-27 05:34:35|Device: DeviceID|Event Type: Location Change|Old Location: Living Room|New Location: Kitchen|
-
-Timestamp: 2024-03-27 05:34:35|Device: DeviceID|Event Type: SaveButtonClicked|Event Description: Save button clicked.
