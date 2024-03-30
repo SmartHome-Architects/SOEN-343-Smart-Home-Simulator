@@ -45,11 +45,14 @@ public class UserAccountManager {
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
+            boolean removeFromLoggedInUser = false; // Flag to determine if user needs to be removed from loggedInUsername.txt
             try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (!line.startsWith(username + "|")) {
                         lines.add(line);
+                    } else {
+                        removeFromLoggedInUser = true; // User found in loggedInUsername.txt, flag for removal
                     }
                 }
             } catch (IOException e) {
@@ -63,8 +66,36 @@ public class UserAccountManager {
             } catch (IOException e) {
                 handleFileError("Error deleting user", e);
             }
+
+            // If the user was found in loggedInUsername.txt, remove them from users.txt as well
+            if (removeFromLoggedInUser) {
+                removeUserFromUsersFile(username);
+            }
         } else {
             System.err.println("No user is logged in.");
+        }
+    }
+
+
+
+    private void removeUserFromUsersFile(String username) {
+        File tempFile = new File(databaseDirectory + "Users.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith(username + "|")) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            handleFileError("Error removing user from users file", e);
+        }
+
+        // Replace the original file with the temporary file
+        if (!tempFile.renameTo(usersFile)) {
+            System.err.println("Error updating users file.");
         }
     }
 
@@ -92,10 +123,36 @@ public class UserAccountManager {
             } catch (IOException e) {
                 handleFileError("Error editing user", e);
             }
+
+            // Update the user entry in Users.txt
+            updateUserInUsersFile(oldUsername, username, email, password, accessibility);
         } else {
             System.err.println("No user is logged in.");
         }
     }
+
+    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
+        File tempFile = new File(databaseDirectory + "Users_temp.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith(oldUsername + "|")) {
+                    line = newUsername + "|" + email + "|" + password + "|" + accessibility;
+                }
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating user in users file", e);
+        }
+
+        // Replace the original file with the temporary file
+        if (!tempFile.renameTo(usersFile)) {
+            System.err.println("Error updating users file.");
+        }
+    }
+
 
     public String getLoggedInUsername() {
         try (BufferedReader reader = new BufferedReader(new FileReader(loggedInUserFile))) {
