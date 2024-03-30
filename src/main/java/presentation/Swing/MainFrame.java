@@ -32,6 +32,8 @@ import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
@@ -451,6 +453,7 @@ public class MainFrame {
                 label.setIcon(lightOff);
             }
             label.setBounds(light.getX(),light.getY(),30,30);
+            light.setLightLabel(label);
             houseImage.add(label);
             lightLabels.put(light, label);
         }
@@ -467,6 +470,7 @@ public class MainFrame {
                 label.setIcon(closed);
             }
             label.setBounds(door.getX(),door.getY(),30,30);
+            door.setDoorLabel(label);
             houseImage.add(label);
             doorLabels.put(door,label);
         }
@@ -483,6 +487,7 @@ public class MainFrame {
                 label.setIcon(closed);
             }
             label.setBounds(window.getX(),window.getY(),30,30);
+            window.setWindowLabel(label);
             houseImage.add(label);
             windowLabels.put(window,label);
         }
@@ -526,7 +531,16 @@ public class MainFrame {
 
         //-------------------------------------------------------------------------------------------------------------
 
-        //work in progress
+        tabbedPane1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedTabIndex = tabbedPane1.getSelectedIndex();
+                int specificTabIndex = 1; // Replace 0 with the index of the specific tab you want
+                if (selectedTabIndex == specificTabIndex) {
+                    comboBox.setSelectedItem("Select Item");
+                }
+            }
+        });
 
         comboBox.addItem("Select Item");
         comboBox.addItem("Doors");
@@ -534,10 +548,11 @@ public class MainFrame {
         comboBox.addItem("Lights");
 
         comboBox.addActionListener(new ActionListener() {
-            SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel);
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
+                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem);
                 if (selectedItem.equals("Doors")) {
                     displayHelper.displayItems(h.getDoors());
                 } else if (selectedItem.equals("Windows")) {

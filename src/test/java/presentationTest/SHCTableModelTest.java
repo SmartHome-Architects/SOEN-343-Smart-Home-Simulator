@@ -1,5 +1,6 @@
 package presentationTest;
 
+import domain.house.House;
 import domain.sensors.Door;
 import org.junit.Test;
 import presentation.Swing.SHC.SHCTableModel;
@@ -19,6 +20,7 @@ public class SHCTableModelTest {
         // Test createTableModel method
         List<Door> doors = new ArrayList<>();
 
+
         TableModel tableModel = SHCTableModel.createTableModel(doors, door -> {
             if (door.isOpen()) {
                 return new Object[]{door.getLocation() + " " + door.getName(), "Open"};
@@ -37,8 +39,10 @@ public class SHCTableModelTest {
     @Test
     public void testCreateTable() {
         // Test createTable method
+        House house = new House();
+        String selectedItem = "Doors";
         DefaultTableModel model = new DefaultTableModel(new Object[][]{{"Living Room Door", "Open"}}, new Object[]{"Room Name", "Open/Close"});
-        JTable table = SHCTableModel.createTable(model);
+        JTable table = SHCTableModel.createTable(model,house,selectedItem);
 
         assertNotNull("Table should not be null", table);
         assertEquals("Table should have correct number of rows", 1, table.getRowCount());

@@ -66,6 +66,10 @@ public class Zone implements Observer {
 
         for (Room room: zoneRooms) {
             double roomTemp = room.getTemperature();
+            if(room.getTemperature() >= 10){
+                roomTemp = Math.floor(room.getTemperature());
+            }
+
             if(!isActive){ // SHH is off. Room temp adjusts itself until temp outside is approximately equal to room temp.
                 if(Math.floor(temp_outside) < Math.floor(roomTemp)){
                     room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));

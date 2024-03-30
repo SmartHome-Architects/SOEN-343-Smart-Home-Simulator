@@ -2,6 +2,9 @@ package domain.sensors;
 
 import domain.house.Coordinate;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Window {
     private String name;
     private String location;
@@ -11,13 +14,24 @@ public class Window {
 
     private Coordinate windowCoordinates;
 
+    private JLabel windowLabel;
+
     public Window(String name, String location, int windowID,Coordinate windowCoordinates ) {
         this.name = name;
         this.location = location;
         this.windowID = windowID;
-        this.isOpen = isOpen;
+        this.isOpen = false;
         this.isBlocked = false;
         this.windowCoordinates = windowCoordinates;
+    }
+
+    public JLabel getWindowLabel() {
+        return windowLabel;
+    }
+
+
+    public void setWindowLabel(JLabel windowLabel) {
+        this.windowLabel = windowLabel;
     }
 
     public String getName() {
@@ -50,6 +64,15 @@ public class Window {
 
     public void setOpen(boolean open) {
         isOpen = open;
+        ImageIcon icon;
+        if (open == false) {
+            icon = new ImageIcon("images/closed.png");
+        } else {
+            icon = new ImageIcon("images/open.png");
+        }
+        Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        icon.setImage(scaledImage);
+        windowLabel.setIcon(icon);
     }
 
     public boolean isBlocked() {

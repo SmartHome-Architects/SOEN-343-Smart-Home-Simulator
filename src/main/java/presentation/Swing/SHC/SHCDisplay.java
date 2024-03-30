@@ -1,5 +1,6 @@
 package presentation.Swing.SHC;
 
+import domain.house.House;
 import domain.sensors.Door;
 import domain.sensors.Light;
 import domain.sensors.Window;
@@ -11,31 +12,37 @@ import java.util.List;
 
 public class SHCDisplay {
     private JPanel checkBoxPanel;
+    private House h;
 
-    public SHCDisplay(JPanel checkBoxPanel) {
+    private String selectedItem;
+
+    public SHCDisplay(JPanel checkBoxPanel, House h, String selectedItem) {
         this.checkBoxPanel = checkBoxPanel;
+        this.h = h;
+        this.selectedItem = selectedItem;
     }
 
     public void displayItems(List<?> devices) {
         clearPanel();
         checkBoxPanel.setLayout(new BorderLayout());
+        int selection;
         DefaultTableModel tableModel = SHCTableModel.createTableModel(
                 devices,
                 device -> {
                     if (device instanceof Door) {
                         Door door = (Door) device;
-                        return new Object[]{door.getLocation() + " " + door.getName(), door.isOpen()};
-                    } else if (device instanceof domain.sensors.Window) {
+                        return new Object[]{door.getLocation(), door.isOpen()};
+                    } else if (device instanceof Window) {
                         domain.sensors.Window window = (Window) device;
-                        return new Object[]{window.getLocation() + " " + window.getName(), window.isOpen()};
+                        return new Object[]{window.getLocation() + " " + window.getWindowID(), window.isOpen()};
                     } else if (device instanceof Light) {
                         Light light = (Light) device;
-                        return new Object[]{light.getLocation() + " " + light.getName(), light.isOpen()};
+                        return new Object[]{light.getLocation() + " " + light.getLightID(), light.isOpen()};
                     }
                     return null;
                 }
         );
-        JTable table = SHCTableModel.createTable(tableModel);
+        JTable table = SHCTableModel.createTable(tableModel,h,selectedItem);
         JScrollPane scrollPane = new JScrollPane(table);
         checkBoxPanel.removeAll();
         checkBoxPanel.add(scrollPane);

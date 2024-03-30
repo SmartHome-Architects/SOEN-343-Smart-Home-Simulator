@@ -2,6 +2,9 @@ package domain.sensors;
 
 import domain.house.Coordinate;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Light {
     private String name;
     private String location;
@@ -9,6 +12,8 @@ public class Light {
     private boolean isOpen; // true for open, false for close
 
     private Coordinate lightCoordinates;
+
+    private JLabel lightLabel;
 
     public Light(String name, String location, int doorID, Coordinate lightCoordinates) {
         this.name = name;
@@ -20,6 +25,10 @@ public class Light {
 
     public String getName() {
         return name;
+    }
+
+    public void setLightLabel(JLabel lightLabel) {
+        this.lightLabel = lightLabel;
     }
 
     public void setName(String name) {
@@ -48,6 +57,15 @@ public class Light {
 
     public void setOpen(boolean open) {
         isOpen = open;
+        ImageIcon icon;
+        if (open == false) {
+            icon = new ImageIcon("images/lightOff.png");
+        } else {
+            icon = new ImageIcon("images/lightOn.png");
+        }
+        Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        icon.setImage(scaledImage);
+        lightLabel.setIcon(icon);
     }
 
     public int getX(){
