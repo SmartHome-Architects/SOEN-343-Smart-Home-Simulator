@@ -3,6 +3,7 @@ package domain.dateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+//The class provides multiple constructors, allowing for flexibility in object initialization based on different input types - current date, individual date components, or a string representation.
 public class Date {
     private int day;
     private int month;
@@ -68,7 +69,8 @@ public class Date {
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
-
+//Private instance variables (day, month, year, dayOfWeek) are used with public getter and setter methods,
+// promoting encapsulation and controlling access to the class fields.
     public String toString() {
         return String.format("%s, %02d/%02d/%04d", dayOfWeek, day, month, year);
     }
