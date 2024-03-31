@@ -110,7 +110,7 @@ public class LogEntry {
             e.printStackTrace();
         }
 
-        // Log the event with old and new dates
+        // Log the event with old and new locations
         String logEntryForConsole = timestamp + "\n" +
                 "Event Triggered by: " + user + "\n" +
                 "Event Type: Location Change" + "\n" +

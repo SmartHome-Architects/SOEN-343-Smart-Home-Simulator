@@ -324,7 +324,7 @@ public class MainFrame {
                         userLabels,
                         user,
                         locationTag,// Pass the locationTag JLabel to the dialog
-                        textArea1 //Output Console
+                        textArea1 //For Output Console
                 );
 
                 // Populate locationComboBox with room names from House instance

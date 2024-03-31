@@ -173,7 +173,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
 
-            // Log the location change
+            // Log the location change in database
             logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant , oldLocation, newLocation);
 
             // Update the location in the user's file
