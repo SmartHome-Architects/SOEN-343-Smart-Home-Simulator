@@ -7,3 +7,4 @@ Timestamp: 2024-03-25 19:21:49|Device: SHS Module|Event Type: Manage Permissions
 Timestamp: 2024-03-25 19:22:06|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:48:52|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-31 09:02:15|Event Triggered by: d|Event Type: Location Change of Inhabitant: d|Old Location: Garage|New Location: Bedroom1
+

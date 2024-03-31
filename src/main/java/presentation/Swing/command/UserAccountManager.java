@@ -45,11 +45,14 @@ public class UserAccountManager {
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
+            boolean removeFromLoggedInUser = false; // Flag to determine if user needs to be removed from loggedInUsername.txt
             try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (!line.startsWith(username + "|")) {
                         lines.add(line);
+                    } else {
+                        removeFromLoggedInUser = true; // User found in loggedInUsername.txt, flag for removal
                     }
                 }
             } catch (IOException e) {
@@ -62,28 +65,70 @@ public class UserAccountManager {
                 }
             } catch (IOException e) {
                 handleFileError("Error deleting user", e);
+            }
+
+            // If the user was found in loggedInUsername.txt, remove them from users.txt as well
+            if (removeFromLoggedInUser) {
+                removeUserFromUsersFile(username);
             }
         } else {
             System.err.println("No user is logged in.");
         }
     }
 
+
+
+    private void removeUserFromUsersFile(String username) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith(username + "|")) {
+                    updatedLines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            handleFileError("Error removing user from users file", e);
+            return;
+        }
+
+        // Write the updated content back to the original file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating users file", e);
+        }
+    }
+
+
     public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
+            boolean userFound = false;
             try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith(oldUsername + "|")) {
                         line = username + "|" + email + "|" + password + "|" + accessibility;
+                        userFound = true;
                     }
                     lines.add(line);
                 }
             } catch (IOException e) {
                 handleFileError("Error editing user", e);
             }
+
+            if (!userFound) {
+                System.err.println("User not found in logged-in user file.");
+                return;
+            }
+
+            // Write the updated content back to the logged-in user's file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(userFile))) {
                 for (String line : lines) {
                     writer.write(line);
@@ -92,10 +137,40 @@ public class UserAccountManager {
             } catch (IOException e) {
                 handleFileError("Error editing user", e);
             }
+
+            // Update the user entry in Users.txt
+            updateUserInUsersFile(oldUsername, username, email, password, accessibility);
         } else {
             System.err.println("No user is logged in.");
         }
     }
+
+    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith(oldUsername + "|")) {
+                    line = newUsername + "|" + email + "|" + password + "|" + accessibility;
+                }
+                updatedLines.add(line);
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating user in users file", e);
+            return;
+        }
+
+        // Write the updated content back to the original file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            handleFileError("Error updating users file", e);
+        }
+    }
+
 
     public String getLoggedInUsername() {
         try (BufferedReader reader = new BufferedReader(new FileReader(loggedInUserFile))) {
