@@ -176,8 +176,8 @@ public class MainFrame {
     private ImageIcon lightOff;
     private ImageIcon opened;
     private ImageIcon closed;
-
     private ImageIcon userIcon;
+    private ImageIcon blocked;
 
     private boolean isFrozen = false;
     LoggedInUser user;
@@ -423,6 +423,11 @@ public class MainFrame {
         userIcon = new ImageIcon("images/UserIcon.png");
         Image userImage = userIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
         userIcon = new ImageIcon(userImage);
+
+        // Load blocked icon to indicate that the action to close a window was blocked by placing an arbitrary object
+        blocked = new ImageIcon("images/blocked.png");
+        Image blockedImage = blocked.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        blocked = new ImageIcon(blockedImage);
 
 
         List<Light> houseLights = h.getLights();
