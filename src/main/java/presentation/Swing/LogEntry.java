@@ -32,7 +32,7 @@ public class LogEntry {
                 "Event Type: " + eventType + "|" +
                 "Event Description: " + eventDescription;
 
-        // Write log entry to the log file
+        // Write log entry to the file
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
             writer.println(logEntryForFile);
         } catch (IOException e) {

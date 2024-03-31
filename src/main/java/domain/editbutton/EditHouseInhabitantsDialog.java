@@ -26,7 +26,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private House houseInstance;
     private String selectedUsername;
     private LogEntry logEntry;
-
     private Map<String,JLabel> userLabels;
 
     private LoggedInUser user;

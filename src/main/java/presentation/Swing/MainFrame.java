@@ -49,7 +49,6 @@ import java.util.Map;
 public class MainFrame {
 
     private boolean SHHisOn;
-
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
