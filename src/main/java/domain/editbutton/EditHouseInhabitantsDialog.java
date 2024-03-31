@@ -14,10 +14,11 @@ import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
 import domain.house.House;
 
-//This class seems to represent a dialog for editing the inhabitants of a house, allowing users to change the location of a selected inhabitant within the house.
 public class EditHouseInhabitantsDialog extends JDialog {
     private String oldLocation;
     private JLabel locationTag;
+
+    private JTextArea textArea1;
 
     private JComboBox<String> inhabitantComboBox;
     private JComboBox<String> locationComboBox;
@@ -25,12 +26,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private House houseInstance;
     private String selectedUsername;
     private LogEntry logEntry;
-
     private Map<String,JLabel> userLabels;
 
     private LoggedInUser user;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user, JLabel locationTag) {
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user, JLabel locationTag, JTextArea textArea1) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
@@ -40,6 +40,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
         this.houseInstance = houseInstance;
         this.userLabels = userLabels;
         this.user = user;
+        this.textArea1 = textArea1;
 
         // Fetch the location of the selected user from the UserAccountManager
         String userLocation = userAccountManager.getUserLocation(username);
@@ -55,9 +56,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
         layoutComponents();
         addListeners();
 
-        // Initialize LogEntry instance
-        logEntry = new LogEntry();
-        logEntry.setTextArea(new JTextArea()); // Set JTextArea reference, replace with actual JTextArea reference if available
+        // Initialize JTextArea for console output (if not already initialized)
+        LogEntry.setTextArea(textArea1);
 
         // Populate the locationComboBox with room names
         populateLocationComboBoxWithRoomNames();
@@ -131,7 +131,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
         saveButton.addActionListener(e -> {
             saveChanges();
             // Example of logging an event
-            logEntry.logEntry("DeviceID", "SaveButtonClicked", "Save button clicked.");
         });
 
         // ActionListener for cancelButton
@@ -139,7 +138,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
         cancelButton.addActionListener(e -> {
             dispose();
             // Example of logging an event
-            logEntry.logEntry("DeviceID", "CancelButtonClicked", "Cancel button clicked.");
         });
 
         // Add save and cancel buttons to the button panel
@@ -173,6 +171,10 @@ public class EditHouseInhabitantsDialog extends JDialog {
             System.out.println("Moving " + inhabitant + " outside the home");
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
+
+            // Log the location change in database
+            logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant , oldLocation, newLocation);
+
             // Update the location in the user's file
             updateUserLocation(inhabitant, newLocation);
             // Update the oldLocation to the new location
@@ -181,8 +183,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
             locationTag.setText(newLocation); // Update the displayed location in locationTag
         }
 
-        // Log the location change
-        logEntry.LocationLog("DeviceID", oldLocation, newLocation);
+
 
         dispose();
     }
