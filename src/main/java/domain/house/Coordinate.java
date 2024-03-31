@@ -1,5 +1,6 @@
 package domain.house;
 
+//This class serves as a basic model for representing coordinates in a two-dimensional space.
 public class Coordinate {
     private int x;
     private int y;

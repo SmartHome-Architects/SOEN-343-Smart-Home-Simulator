@@ -2,6 +2,7 @@ package domain.dateTime;
 
 import java.time.LocalTime;
 
+//the Time class encapsulates the hour, minute, and second components of time, providing getter and setter methods for accessing and modifying these values.
 public class Time {
 
     private int hour;
