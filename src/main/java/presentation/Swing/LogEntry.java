@@ -152,6 +152,38 @@ public class LogEntry {
         textArea.setText(logEntryForConsole + "\n");
     }
 
+    //Method to log SHH ON/OFF button
+    public static void SHHButtonlog(String user, String eventDescription) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device: SHH Module|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: Opening/Closing SHH Module|" +
+                "Event Description: " + eventDescription;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String logEntryForConsole = timestamp + "\n" +
+                "Device: SHH Module" + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: Opening/Closing SHH Module"  + "\n" +
+                "Event Description: " + eventDescription + "\n";
+
+        // Append log entry to the JTextArea
+        textArea.setText(logEntryForConsole + "\n");
+    }
+
 
 
     // Method to get current timestamp
