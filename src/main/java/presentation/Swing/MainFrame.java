@@ -212,7 +212,7 @@ public class MainFrame {
         zoneManagementButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Create an instance of your popup window
-                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh);
+                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh, user.getLoggedInUser().getUsername(), textArea1);
             }
         });
 
@@ -577,10 +577,17 @@ public class MainFrame {
                 if (SHHisOn) {
                     onOffSHHButton.setText("On");
                     shh.setActive(true);
+
+                    LogEntry.setTextArea(textArea1);
+                    LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned on.");
                     System.out.println("Button is turned ON");
+
                 } else {
                     onOffSHHButton.setText("Off");
                     shh.setActive(false);
+
+                    LogEntry.setTextArea(textArea1);
+                    LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned oFF.");
                     System.out.println("Button is turned OFF");
                 }
             }
