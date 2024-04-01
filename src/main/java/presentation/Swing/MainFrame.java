@@ -212,7 +212,7 @@ public class MainFrame {
         zoneManagementButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Create an instance of your popup window
-                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh);
+                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh, user.getLoggedInUser().getUsername(), textArea1);
             }
         });
 
