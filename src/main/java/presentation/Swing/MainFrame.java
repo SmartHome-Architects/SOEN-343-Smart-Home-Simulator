@@ -338,8 +338,51 @@ public class MainFrame {
                 // After making the dialog visible, display the selected username within the dialog
                 JLabel selectedUsernameLabel = new JLabel("Selected Username: " + loggedInUsername);
                 dialog.getContentPane().add(selectedUsernameLabel, BorderLayout.NORTH);
+
+                // Get the new location selected in the dialog
+                String newLocation = dialog.getSelectedLocation();
+
+                // Find the old and new rooms
+                Room oldRoom = null;
+                Room newRoom = null;
+                for (Room r : h.getRooms()) {
+                    if (r.getRoomName().equals(oldLocation)) {
+                        oldRoom = r;
+                    }
+                    if (r.getRoomName().equals(newLocation)) {
+                        newRoom = r;
+                    }
+                }
+
+                // Turn off lights in the old room
+                if (oldRoom != null) {
+                    for (Light light : oldRoom.getLights()) {
+                        light.turnOff(); // Assuming you have a method to turn off the light
+                        // The associated JLabel's icon will be updated automatically
+                    }
+                }
+
+                // Update the user's location in the UserAccountManager
+                userAccountManager.updateUserLocation(loggedInUsername, newLocation);
+
+                // Turn on lights in the new room
+                if (newRoom != null) {
+                    for (Light light : newRoom.getLights()) {
+                        light.turnOn(); // Assuming you have a method to turn on the light
+                        // The associated JLabel's icon will be updated automatically
+                    }
+                }
+
+                // Refresh the display to reflect the changes
+                refreshDisplay(); // Implement this method to refresh the display
+            }
+
+            private void refreshDisplay() {
+                // Implement logic to refresh the display
             }
         });
+
+
 
         //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
@@ -479,24 +522,60 @@ public class MainFrame {
 
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
-        for (Users u: usersList) {
+
+// Keep track of whether any user is in a room
+        boolean userInAnyRoom = false;
+
+// Inside the method or event where user icons are added to the layout
+        for (Users u : usersList) {
             String location = u.getLocation();
+            boolean userInRoom = false;
             for (Room r : rooms) {
-                if(r.getRoomName().equals(location)){
+                if (r.getRoomName().equals(location)) {
+                    // Assuming user location matches room name correctly
                     JLabel label = new JLabel();
                     label.setIcon(userIcon);
-                    if(u.getUsername().equals(user.getLoggedInUser().getUsername())){
+                    if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
                         label.setText(u.getUsername());
                         label.setHorizontalTextPosition(JLabel.CENTER);
                         label.setVerticalTextPosition(JLabel.CENTER);
                     }
-                    label.setBounds(r.getX() + (int)(Math.random() * 10) + 4,r.getY() + (int)(Math.random() * 10) + 2,30,30);
+                    label.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
                     houseImage.add(label);
-                    userLabels.put(u.getUsername(),label);
+                    userLabels.put(u.getUsername(), label);
+
+                    // Mark that the user is in the room
+                    userInRoom = true;
+
+                    // Turn on lights in the room
+                    List<Light> lights = r.getLights();
+                    for (Light light : lights) {
+                        light.turnOn(); // Assuming you have a method to turn on the light
+                        // The associated JLabel's icon will be updated automatically
+                    }
+
+                    // Break the loop once user is found in the room
+                    break;
+                }
+            }
+            // Update the overall status of whether any user is in a room
+            userInAnyRoom |= userInRoom;
+        }
+
+// After processing all users, check if any user is in any room
+        if (!userInAnyRoom) {
+            // If no user is in any room, turn off lights in all rooms
+            for (Room r : rooms) {
+                List<Light> lights = r.getLights();
+                for (Light light : lights) {
+                    light.turnOff(); // Assuming you have a method to turn off the light
+                    // The associated JLabel's icon will be updated automatically
                 }
             }
         }
+
+
 
         for (Room r: rooms) {
             if(!(r.getRoomName().equals("Outside"))){
@@ -587,8 +666,6 @@ public class MainFrame {
         });
 
         //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
-
-
 
 
         buttonOff.addActionListener(new ActionListener() {
@@ -829,6 +906,7 @@ public class MainFrame {
             return this;
         }
     }
+
 
 
     private void updateFile() {

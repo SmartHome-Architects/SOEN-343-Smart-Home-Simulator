@@ -15,16 +15,24 @@ public class Light {
 
     private JLabel lightLabel;
 
-    public Light(String name, String location, int doorID, Coordinate lightCoordinates) {
+    public Light(String name, String location, int lightID, Coordinate lightCoordinates) {
         this.name = name;
         this.location = location;
-        this.lightID = doorID;
+        this.lightID = lightID;
         this.isOpen = false;
         this.lightCoordinates = lightCoordinates;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void turnOn() {
+        setOpen(true);
+    }
+
+    public void turnOff() {
+        setOpen(false);
     }
 
     public void setLightLabel(JLabel lightLabel) {
@@ -47,8 +55,8 @@ public class Light {
         return lightID;
     }
 
-    public void setLightID(int doorID) {
-        this.lightID = doorID;
+    public void setLightID(int lightID) {
+        this.lightID = lightID;
     }
 
     public boolean isOpen() {
@@ -58,15 +66,16 @@ public class Light {
     public void setOpen(boolean open) {
         isOpen = open;
         ImageIcon icon;
-        if (open == false) {
-            icon = new ImageIcon("images/lightOff.png");
-        } else {
+        if (open == true) {
             icon = new ImageIcon("images/lightOn.png");
+        } else {
+            icon = new ImageIcon("images/lightOff.png");
         }
         Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         icon.setImage(scaledImage);
         lightLabel.setIcon(icon);
     }
+
 
     public int getX(){
         return lightCoordinates.getX();
@@ -83,7 +92,7 @@ public class Light {
                 ", location='" + location + '\'' +
                 ", lightID=" + lightID +
                 ", isOpen=" + isOpen +
-                ", lightCoordinates=" + lightCoordinates.getX() + "," + lightCoordinates.getY()+
+                ", lightCoordinates=" + lightCoordinates.getX() + "," + lightCoordinates.getY() +
                 '}';
     }
 }

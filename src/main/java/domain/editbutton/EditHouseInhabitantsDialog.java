@@ -211,6 +211,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
         populateInhabitantComboBox(updatedUsernames, selectedUsername);
     }
 
+    public String getSelectedLocation() {
+        return (String) locationComboBox.getSelectedItem();
+    }
+
+
     private void populateInhabitantComboBox(List<String> usernames, String username) {
         inhabitantComboBox.removeAllItems();
         for (String name : usernames) {

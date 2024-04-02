@@ -1,6 +1,7 @@
 package domain.user;
 
-public class LoggedInUser {
+public class
+LoggedInUser {
 
 
     private Users loggedInUser;
