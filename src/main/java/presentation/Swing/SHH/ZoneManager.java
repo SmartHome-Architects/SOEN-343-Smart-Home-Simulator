@@ -6,6 +6,7 @@ import domain.house.House;
 import domain.house.Room;
 import domain.house.Zone;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
+import presentation.Swing.LogEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +33,12 @@ public class ZoneManager extends JDialog {
 
     SmartHomeHeating shh;
 
-    public ZoneManager(JFrame parent, House h, SmartHomeHeating shh) {
+    private LogEntry logEntry;
+    private JTextArea textArea1;
+
+    private String username;
+
+    public ZoneManager(JFrame parent, House h, SmartHomeHeating shh, String username, JTextArea textArea1) {
 
         // set up popup
         super(parent, "Manage Zones", true);
@@ -42,6 +48,11 @@ public class ZoneManager extends JDialog {
         // initialize house object
         this.house = h;
         this.shh = shh;
+
+
+        // initialize username and console output
+        this.username = username;
+        this.textArea1 = textArea1;
 
         // Table model with a column for room names
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -114,6 +125,9 @@ public class ZoneManager extends JDialog {
         List<Zone> zones = new ArrayList<>();
         zones.add(newZone);
         ZoneSerializer.saveZones(zones);
+
+        // Save changes in Log Entry
+        LogEntry.ZoneCreationlog(username, zoneName, selectedRoomNames, tempInput, textArea1);
     }
 
     private void loadAndDisplayZones() {
@@ -218,8 +232,8 @@ public class ZoneManager extends JDialog {
         }
     }
 
-    public static void show(JFrame parent, House h, SmartHomeHeating shh) {
-        ZoneManager dialog = new ZoneManager(parent,h,shh);
+    public static void show(JFrame parent, House h, SmartHomeHeating shh, String username, JTextArea textArea1) {
+        ZoneManager dialog = new ZoneManager(parent,h,shh, username, textArea1);
         dialog.setVisible(true);
     }
 }
