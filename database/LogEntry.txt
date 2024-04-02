@@ -7,3 +7,5 @@ Timestamp: 2024-03-25 19:21:49|Device: SHS Module|Event Type: Manage Permissions
 Timestamp: 2024-03-25 19:22:06|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-25 19:48:52|Device: SHS Module|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-03-31 22:17:56|Device: SHH Module|Event Triggered by: d|Event Description: Zone Management - Creation of New Zone|Zone Name: bird|Rooms Added: Bathroom, Entrance|Desired Temperature of Zone: 14
+Timestamp: 2024-04-02 09:27:40|Device ID: Thermostat-Garage|Event Type: Room Temperature Modification|Event Description: Temperature Decrease|Old Temperature: 80.0°C|New Temperature: 40.0°C|Cooling Mode: Active|Event Triggered by: d
+

@@ -229,6 +229,58 @@ public class LogEntry {
         textArea1.setText(logEntryForConsole + "\n");
     }
 
+    public static void Temperaturelog(String user, String roomName, double oldTemperature, double newTemperature, JTextArea textArea1) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Determine event description based on temperature change
+        String eventDescription = "";
+        String mode = "";
+        if (newTemperature > oldTemperature) {
+            eventDescription = "Temperature Increase";
+            mode = "Heating Mode: Active";
+        } else if (newTemperature < oldTemperature) {
+            eventDescription = "Temperature Decrease";
+            mode = "Cooling Mode: Active";
+        } else {
+            eventDescription = "Temperature Unchanged";
+            mode = "Mode Unchanged";
+        }
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device ID: Thermostat-" + roomName + "|" +
+                "Event Type: Room Temperature Modification" + "|" +
+                "Event Description: " + eventDescription + "|" +
+                "Old Temperature: " + oldTemperature + "°C" + "|" +
+                "New Temperature: " + newTemperature + "°C" + "|" +
+                mode + "|" +
+                "Event Triggered by: " + user;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Log the event with old and new temperatures
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
+                "Device ID: Thermostat-" + roomName + "\n" +
+                "Event Type: Room Temperature Modification" + "\n" +
+                "Event Description: " + eventDescription + "\n" +
+                "Details: " + "\n" +
+                "Old Temperature: " + oldTemperature + "°C" + "\n" +
+                "New Temperature: " + newTemperature + "°C" + "\n" +
+                 mode + "\n" +
+                "Event Triggered by: " + user;
+
+        // Append log entry to the JTextArea
+        textArea1.setText(logEntryForConsole + "\n");
+    }
 
 
     // Method to get current timestamp

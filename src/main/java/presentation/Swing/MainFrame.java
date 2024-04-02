@@ -202,7 +202,7 @@ public class MainFrame {
         roomTempButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Create an instance of your popup window
-                RoomTemperature.show((JFrame) SwingUtilities.getWindowAncestor(roomTempButton));
+                RoomTemperature.show((JFrame) SwingUtilities.getWindowAncestor(roomTempButton), user.getLoggedInUser().getUsername(), textArea1);
             }
         });
 
