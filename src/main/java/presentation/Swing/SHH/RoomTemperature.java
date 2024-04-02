@@ -1,5 +1,7 @@
 package presentation.Swing.SHH;
 
+import presentation.Swing.LogEntry;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +19,8 @@ import java.util.List;
 // i forgot to create house object to get the rooms but i hardcoded them in json
 
 public class RoomTemperature {
-    public static void show(JFrame parentFrame) {
+    private JTextArea textArea1;
+    public static void show(JFrame parentFrame, JTextArea textArea1) {
 
         // Load room information and desired temp from the JSON file -> RoomSerializer class
         List<RoomSerializer> roomSerializerList = RoomSerializer.loadRoomInfo("database/room_info.json");
@@ -25,6 +29,7 @@ public class RoomTemperature {
         JDialog dialog = new JDialog(parentFrame, "Set Room Temperature", true);
         dialog.setSize(600, 400);
         dialog.setLocationRelativeTo(parentFrame);
+
 
         // Create a table model with two columns: "Room Name" and "Temperature"
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"Room Name", "Desired Temperature"}, 0) {
@@ -68,11 +73,22 @@ public class RoomTemperature {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                List<String> modifiedRooms = new ArrayList<>(); // List to store modified room names
+                List<Double> oldTemperatures = new ArrayList<>(); // List to store old temperatures
+                List<Double> newTemperatures = new ArrayList<>(); // List to store new temperatures
+
                 // Iterate through the table rows to update the desired temperature
                 for (int row = 0; row < tableModel.getRowCount(); row++) {
                     // Get room name and updated temperature from the table model
                     String roomName = (String) tableModel.getValueAt(row, 0);
+                    double oldTemperature = Double.valueOf(tableModel.getValueAt(row, 1).toString());
                     double newTemperature = Double.valueOf(tableModel.getValueAt(row, 1).toString());
+
+                    if (oldTemperature != newTemperature) {
+                        modifiedRooms.add(roomName); // Add modified room to the list
+                        oldTemperatures.add(oldTemperature); // Add old temperature to the list
+                        newTemperatures.add(newTemperature); // Add new temperature to the list
+                    }
 
                     // Update the corresponding RoomInfo object with the new temperature
                     for (RoomSerializer roomSerializer : roomSerializerList) {
@@ -87,6 +103,9 @@ public class RoomTemperature {
                 RoomSerializer.saveRoomInfo(roomSerializerList, "database/room_info.json");
 
                 JOptionPane.showMessageDialog(dialog, "Temperature changes saved successfully.");
+
+                // Log temperature changes
+                LogEntry.Temperaturelog("User", modifiedRooms, oldTemperatures, newTemperatures);
             }
         });
 

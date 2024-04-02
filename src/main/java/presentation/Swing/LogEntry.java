@@ -229,6 +229,61 @@ public class LogEntry {
         textArea1.setText(logEntryForConsole + "\n");
     }
 
+    public static void Temperaturelog(String user, List<String> modifiedRooms, List<Double> oldTemperatures, List<Double> newTemperatures) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string for file
+        StringBuilder logEntryForFileBuilder = new StringBuilder();
+        logEntryForFileBuilder.append("Timestamp: ").append(timestamp).append("|");
+        logEntryForFileBuilder.append("Event Triggered by: ").append(user).append("|");
+        logEntryForFileBuilder.append("Event Description: Room Temperature Modification|");
+
+        // Append modified rooms, old and new temperatures to the log entry for file
+        for (int i = 0; i < modifiedRooms.size(); i++) {
+            String roomName = modifiedRooms.get(i);
+            double oldTemperature = oldTemperatures.get(i);
+            double newTemperature = newTemperatures.get(i);
+
+            logEntryForFileBuilder.append("Room: ").append(roomName).append(", ");
+            logEntryForFileBuilder.append("Old Temperature: ").append(oldTemperature).append(", ");
+            logEntryForFileBuilder.append("New Temperature: ").append(newTemperature).append("|");
+        }
+
+        String logEntryForFile = logEntryForFileBuilder.toString();
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Construct log entry string for console
+        StringBuilder logEntryForConsoleBuilder = new StringBuilder();
+
+        // Append modified rooms, old and new temperatures to the log entry for console
+        for (int i = 0; i < modifiedRooms.size(); i++) {
+            String roomName = modifiedRooms.get(i);
+            double oldTemperature = oldTemperatures.get(i);
+            double newTemperature = newTemperatures.get(i);
+
+            logEntryForConsoleBuilder.append("Room: ").append(roomName).append(", ");
+            logEntryForConsoleBuilder.append("Old Temperature: ").append(oldTemperature).append(", ");
+            logEntryForConsoleBuilder.append("New Temperature: ").append(newTemperature).append("\n");
+        }
+
+        String logEntryForConsole = logEntryForConsoleBuilder.toString();
+
+        // Append log entry to the JTextArea
+        textArea.setText(logEntryForConsole + "\n");
+    }
+
+
+
 
 
     // Method to get current timestamp
