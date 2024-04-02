@@ -60,6 +60,12 @@ public class RoomTemperature {
                     if (newTemperature != null && !newTemperature.isEmpty()) {
                         // Update the temperature in the table
                         tableModel.setValueAt(newTemperature, row, 1);
+
+                        // Log the temperature modification
+                        String roomName = (String) table.getValueAt(row, 0);
+                        double oldTemperature = Double.parseDouble(currentTemperature);
+                        double updatedTemperature = Double.parseDouble(newTemperature);
+                        LogEntry.Temperaturelog("User", roomName, oldTemperature, updatedTemperature, textArea1);
                     }
                 }
             }
@@ -73,22 +79,13 @@ public class RoomTemperature {
         saveChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> modifiedRooms = new ArrayList<>(); // List to store modified room names
-                List<Double> oldTemperatures = new ArrayList<>(); // List to store old temperatures
-                List<Double> newTemperatures = new ArrayList<>(); // List to store new temperatures
 
                 // Iterate through the table rows to update the desired temperature
                 for (int row = 0; row < tableModel.getRowCount(); row++) {
                     // Get room name and updated temperature from the table model
                     String roomName = (String) tableModel.getValueAt(row, 0);
-                    double oldTemperature = Double.valueOf(tableModel.getValueAt(row, 1).toString());
                     double newTemperature = Double.valueOf(tableModel.getValueAt(row, 1).toString());
 
-                    if (oldTemperature != newTemperature) {
-                        modifiedRooms.add(roomName); // Add modified room to the list
-                        oldTemperatures.add(oldTemperature); // Add old temperature to the list
-                        newTemperatures.add(newTemperature); // Add new temperature to the list
-                    }
 
                     // Update the corresponding RoomInfo object with the new temperature
                     for (RoomSerializer roomSerializer : roomSerializerList) {
@@ -103,9 +100,6 @@ public class RoomTemperature {
                 RoomSerializer.saveRoomInfo(roomSerializerList, "database/room_info.json");
 
                 JOptionPane.showMessageDialog(dialog, "Temperature changes saved successfully.");
-
-                // Log temperature changes
-                LogEntry.Temperaturelog("User", modifiedRooms, oldTemperatures, newTemperatures);
             }
         });
 
