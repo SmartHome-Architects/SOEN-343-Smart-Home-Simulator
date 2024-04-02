@@ -20,7 +20,9 @@ import java.util.List;
 
 public class RoomTemperature {
     private JTextArea textArea1;
-    public static void show(JFrame parentFrame, JTextArea textArea1) {
+    private String username;
+
+    public static void show(JFrame parentFrame, String user, JTextArea textArea1) {
 
         // Load room information and desired temp from the JSON file -> RoomSerializer class
         List<RoomSerializer> roomSerializerList = RoomSerializer.loadRoomInfo("database/room_info.json");
@@ -65,7 +67,7 @@ public class RoomTemperature {
                         String roomName = (String) table.getValueAt(row, 0);
                         double oldTemperature = Double.parseDouble(currentTemperature);
                         double updatedTemperature = Double.parseDouble(newTemperature);
-                        LogEntry.Temperaturelog("User", roomName, oldTemperature, updatedTemperature, textArea1);
+                        LogEntry.Temperaturelog(user, roomName, oldTemperature, updatedTemperature, textArea1);
                     }
                 }
             }
