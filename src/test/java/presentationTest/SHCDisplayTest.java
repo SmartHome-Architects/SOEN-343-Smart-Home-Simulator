@@ -1,6 +1,7 @@
 package presentationTest;
 
 import domain.house.Coordinate;
+import domain.house.House;
 import domain.sensors.Door;
 import domain.sensors.Light;
 import org.junit.Before;
@@ -22,8 +23,12 @@ public class SHCDisplayTest {
     @Before
     public void setUp() {
         checkBoxPanel = new JPanel();
-        shcDisplay = new SHCDisplay(checkBoxPanel);
+        // Mock values for House and selectedItem
+        House mockHouse = new House(); // You can create a mock House object according to your test needs
+        String mockSelectedItem = "Selected"; // You can set a mock value for selectedItem
+        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem);
     }
+
 
     @Test
     public void testDisplayItems() {
