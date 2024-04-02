@@ -263,14 +263,38 @@ public class MainFrame {
         EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, "", "", "", "", "");
 
         profileManager = new ProfileManager(addProfileCommand, deleteProfileCommand, editProfileCommand);
+// Create a ButtonGroup for the accessibility radio buttons
+        ButtonGroup accessibilityGroup = new ButtonGroup();
+        accessibilityGroup.add(getParentRadioButton());
+        accessibilityGroup.add(getChildRadioButton());
+        accessibilityGroup.add(getGuestRadioButton());
 
-        //Adds the new user profile to the text file
         Add_Profile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = getNewUsername().getText();
                 String email = getNewEmail().getText();
                 String password = getNewPassword().getText();
+
+                // Check if any of the fields are empty
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(WindowContainer, "Error: Please fill in all the fields.");
+                    return;
+                }
+
+                // Validate email format
+                if (!userAccountManager.isValidEmail(email)) {
+                    JOptionPane.showMessageDialog(WindowContainer, "Error: Invalid email format. Please provide a valid email address.");
+                    return;
+                }
+
+                // Check if the username already exists
+                if (userAccountManager.isUsernameTaken(username)) {
+                    JOptionPane.showMessageDialog(WindowContainer, "Error: Username already exists. Please choose a different username.");
+                    return;
+                }
+
+                // Get the selected accessibility option
                 String accessibility = "";
                 if (getParentRadioButton().isSelected()) {
                     accessibility = "Parent";
@@ -278,20 +302,27 @@ public class MainFrame {
                     accessibility = "Child";
                 } else if (getGuestRadioButton().isSelected()) {
                     accessibility = "Guest";
+                } else {
+                    JOptionPane.showMessageDialog(WindowContainer, "Error: Please select an accessibility option.");
+                    return;
                 }
 
                 //Create String for Log Entry
                 String addLog = "Add User Profile: " + username;
 
+                // Execute the command to add the user profile
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
 
+                // Log the user profile addition
                 LogEntry.setTextArea(textArea1);
                 LogEntry.Profilelog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage User Profile", addLog);
 
+                // Show success message
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
             }
         });
+
 
     // Assuming you have a JLabel locationTag to display the location
         String loggedInUsername = userAccountManager.getLoggedInUsername();
@@ -523,10 +554,10 @@ public class MainFrame {
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
 
-// Keep track of whether any user is in a room
+    // Keep track of whether any user is in a room
         boolean userInAnyRoom = false;
 
-// Inside the method or event where user icons are added to the layout
+    // Inside the method or event where user icons are added to the layout
         for (Users u : usersList) {
             String location = u.getLocation();
             boolean userInRoom = false;
@@ -563,7 +594,7 @@ public class MainFrame {
             userInAnyRoom |= userInRoom;
         }
 
-// After processing all users, check if any user is in any room
+    // After processing all users, check if any user is in any room
         if (!userInAnyRoom) {
             // If no user is in any room, turn off lights in all rooms
             for (Room r : rooms) {
@@ -844,6 +875,8 @@ public class MainFrame {
     public JTextField getNewUsername() {
         return NewUsername;
     }
+
+
 
     public JTextField getNewEmail() {
         return NewEmail;

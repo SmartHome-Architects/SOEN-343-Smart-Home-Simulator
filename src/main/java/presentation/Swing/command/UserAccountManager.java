@@ -18,6 +18,20 @@ public class UserAccountManager {
     }
 
     public void addUser(String username, String email, String password, String accessibility) {
+        // Check if the email is in the correct format
+
+
+        if (!isValidEmail(email)) {
+            System.err.println("Error: Invalid email format. Please provide a valid email address.");
+            return;
+        }
+
+        // Check if the username already exists
+        if (isUsernameTaken(username)) {
+            System.err.println("Error: Username already exists. Please choose a different username.");
+            return;
+        }
+
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
             // Append user to users.txt
@@ -39,6 +53,41 @@ public class UserAccountManager {
             System.err.println("No user is logged in. Cannot add user.");
         }
     }
+
+    // Helper method to validate email format
+    public boolean isValidEmail(String email) {
+        // You can implement your own email validation logic here
+        // This is a simple example, you might want to use a regular expression for more comprehensive validation
+        return email != null && email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
+    }
+    // Helper method to check if the username is already taken
+    public boolean isUsernameTaken(String username) {
+        // Implement logic to check if the username already exists in the system
+        // You might need to read existing user data from a file or a database to perform this check
+        // For demonstration purposes, let's assume a list of existing usernames
+        List<String> existingUsernames = getAllUsernames(); // Implement this method to get existing usernames
+        return existingUsernames.contains(username);
+    }
+
+
+
+    private List<String> getAllUsernames() {
+        List<String> usernames = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 0) {
+                    usernames.add(parts[0]); // Adding the username
+                }
+            }
+        } catch (IOException e) {
+            handleFileError("Error reading user data", e);
+        }
+        return usernames;
+    }
+
+
 
     public void deleteUser(String username) {
         String loggedInUsername = getLoggedInUsername();
