@@ -9,8 +9,13 @@ public class Permission {
     private boolean hasLightPermissionInsideHome;
     private boolean hasHeaterPermissionOutside;
     private boolean hasHeaterPermissionInsideHome;
+    private boolean hasSHPPermissionOutside;
+    private boolean hasSHPPermissionInsideHome;
 
-    public Permission(boolean hasWindowPermissionOutside, boolean hasWindowPermissionInsideHome, boolean hasDoorPermissionOutside, boolean hasDoorPermissionInsideHome, boolean hasLightPermissionOutside, boolean hasLightPermissionInsideHome, boolean hasHeaterPermissionOutside, boolean hasHeaterPermissionInsideHome) {
+
+    public Permission(boolean hasWindowPermissionOutside, boolean hasWindowPermissionInsideHome, boolean hasDoorPermissionOutside, boolean hasDoorPermissionInsideHome,
+                      boolean hasLightPermissionOutside, boolean hasLightPermissionInsideHome, boolean hasHeaterPermissionOutside, boolean hasHeaterPermissionInsideHome,
+                      boolean hasSHPPermissionOutside, boolean hasSHPPermissionInsideHome) {
         this.hasWindowPermissionOutside = hasWindowPermissionOutside;
         this.hasWindowPermissionInsideHome = hasWindowPermissionInsideHome;
         this.hasDoorPermissionOutside = hasDoorPermissionOutside;
@@ -19,6 +24,8 @@ public class Permission {
         this.hasLightPermissionInsideHome = hasLightPermissionInsideHome;
         this.hasHeaterPermissionOutside = hasHeaterPermissionOutside;
         this.hasHeaterPermissionInsideHome = hasHeaterPermissionInsideHome;
+        this.hasSHPPermissionOutside = hasSHPPermissionOutside;
+        this.hasSHPPermissionInsideHome = hasSHPPermissionInsideHome;
     }
 
     public boolean isHasHeaterPermissionOutside() {
@@ -85,6 +92,22 @@ public class Permission {
         this.hasLightPermissionInsideHome = hasLightPermissionInsideHome;
     }
 
+    public boolean isHasSHPPermissionOutside() {
+        return hasSHPPermissionOutside;
+    }
+
+    public void setHasSHPPermissionOutside(boolean hasSHPPermissionOutside) {
+        this.hasSHPPermissionOutside = hasSHPPermissionOutside;
+    }
+
+    public boolean isHasSHPPermissionInsideHome() {
+        return hasSHPPermissionInsideHome;
+    }
+
+    public void setHasSHPPermissionInsideHome(boolean hasSHPPermissionInsideHome) {
+        this.hasSHPPermissionInsideHome = hasSHPPermissionInsideHome;
+    }
+
     @Override
     public String toString() {
         return "Permission{" +
@@ -96,6 +119,8 @@ public class Permission {
                 ", hasLightPermissionInsideHome=" + hasLightPermissionInsideHome +
                 ", hasHeaterPermissionOutside=" + hasHeaterPermissionOutside +
                 ", hasHeaterPermissionInsideHome=" + hasHeaterPermissionInsideHome +
+                ", hasSHPPermissionOutside=" + hasSHPPermissionOutside +
+                ", hasSHPPermissionInsideHome=" + hasSHPPermissionInsideHome +
                 '}';
     }
 }

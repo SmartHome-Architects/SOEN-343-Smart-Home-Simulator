@@ -1,9 +1,16 @@
 package domain.sensors;
 
+import domain.Permission.Permission;
 import domain.house.Coordinate;
+import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
+import domain.user.Users;
+import domain.user.UsersInitializer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Objects;
 
 public class Light {
     private String name;
@@ -14,7 +21,6 @@ public class Light {
     private Coordinate lightCoordinates;
 
     private JLabel lightLabel;
-
     public Light(String name, String location, int lightID, Coordinate lightCoordinates) {
         this.name = name;
         this.location = location;
@@ -64,16 +70,16 @@ public class Light {
     }
 
     public void setOpen(boolean open) {
-        isOpen = open;
-        ImageIcon icon;
-        if (open == true) {
-            icon = new ImageIcon("images/lightOn.png");
-        } else {
-            icon = new ImageIcon("images/lightOff.png");
-        }
-        Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        icon.setImage(scaledImage);
-        lightLabel.setIcon(icon);
+            isOpen = open;
+            ImageIcon icon;
+            if (open == true) {
+                icon = new ImageIcon("images/lightOn.png");
+            } else {
+                icon = new ImageIcon("images/lightOff.png");
+            }
+            Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            icon.setImage(scaledImage);
+            lightLabel.setIcon(icon);
     }
 
 

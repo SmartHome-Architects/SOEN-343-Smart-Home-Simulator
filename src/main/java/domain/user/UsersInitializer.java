@@ -20,7 +20,7 @@ public class UsersInitializer {
                 String userType = userData[3];
                 String location = userData[4];
 
-                Permission permission = UserPermissionInitializer.initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/HeaterPermission.txt", userType);
+                Permission permission = UserPermissionInitializer.initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/SHHPermission.txt","database/SHPPermission.txt", userType);
 
                 Users user = new Users(username, email, password, userType, location, permission);
                 usersList.add(user);

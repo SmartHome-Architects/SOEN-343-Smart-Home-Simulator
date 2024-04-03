@@ -1,5 +1,8 @@
 package presentation.Swing.managePermission;
 
+import domain.user.Users;
+import domain.user.UsersInitializer;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -8,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class PermissionsPopup {
@@ -18,7 +22,7 @@ public class PermissionsPopup {
         dialog.setLocationRelativeTo(parentFrame); // Center the dialog relative to the parent frame
 
         // combobox to select item
-        JComboBox<String> categoryComboBox = new JComboBox<>(new String[]{"Door", "Light", "Window", "Heater"});
+        JComboBox<String> categoryComboBox = new JComboBox<>(new String[]{"Door", "Light", "Window", "SHH", "SHP"});
         dialog.add(categoryComboBox, BorderLayout.NORTH);
 
         // create table model
@@ -95,5 +99,6 @@ public class PermissionsPopup {
             writer.write(userType + "|" + outsidePermission + "|" + insidePermission + "\n");
         }
         writer.close();
+        List<Users> allUsers = UsersInitializer.getAllUsers();
     }
 }
