@@ -1,9 +1,12 @@
 package domain.sensors;
 
 import domain.house.Coordinate;
+import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Window {
     private String name;
@@ -63,16 +66,16 @@ public class Window {
     }
 
     public void setOpen(boolean open) {
-        isOpen = open;
-        ImageIcon icon;
-        if (open == false) {
-            icon = new ImageIcon("images/closed.png");
-        } else {
-            icon = new ImageIcon("images/open.png");
-        }
-        Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        icon.setImage(scaledImage);
-        windowLabel.setIcon(icon);
+            isOpen = open;
+            ImageIcon icon;
+            if (open == false) {
+                icon = new ImageIcon("images/closed.png");
+            } else {
+                icon = new ImageIcon("images/open.png");
+            }
+            Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            icon.setImage(scaledImage);
+            windowLabel.setIcon(icon);
     }
 
     public boolean isBlocked() {

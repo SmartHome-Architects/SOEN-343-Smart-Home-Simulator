@@ -21,7 +21,6 @@ public class Light {
     private Coordinate lightCoordinates;
 
     private JLabel lightLabel;
-    private LoggedInUser user;
     public Light(String name, String location, int lightID, Coordinate lightCoordinates) {
         this.name = name;
         this.location = location;
@@ -71,10 +70,6 @@ public class Light {
     }
 
     public void setOpen(boolean open) {
-        user = UserSingleton.getUser();
-        System.out.println("User location: " + user.getLocation());
-            if((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasLightPermissionInsideHome())) || ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasLightPermissionOutside())){
-                System.out.println("You have permission to open/close the lights");
             isOpen = open;
             ImageIcon icon;
             if (open == true) {
@@ -85,9 +80,6 @@ public class Light {
             Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             icon.setImage(scaledImage);
             lightLabel.setIcon(icon);
-        }else{
-            System.out.println("You do not have permission to open/close lights");
-        }
     }
 
 

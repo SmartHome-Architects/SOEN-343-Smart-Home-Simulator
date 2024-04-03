@@ -91,3 +91,25 @@ Timestamp: 2024-04-03 00:55:34|Device: SHS Module|Event Triggered by: f|Event Ty
 Timestamp: 2024-04-03 00:55:40|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-04-03 00:55:50|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-04-03 00:56:11|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-03 01:07:09|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:07:56|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:08:27|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:12:32|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:16:25|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:16:36|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:23:40|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:26:21|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:26:57|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:30:45|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:31:12|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:31:34|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Outside|New Location: Bedroom2
+Timestamp: 2024-04-03 01:38:08|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:39:12|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:51:09|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:52:45|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:55:24|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 01:58:42|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:01:35|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:01:49|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:02:24|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Outside|New Location: Living Room
+Timestamp: 2024-04-03 02:05:03|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions

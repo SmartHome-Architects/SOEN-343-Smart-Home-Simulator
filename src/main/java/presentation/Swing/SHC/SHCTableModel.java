@@ -5,6 +5,8 @@ import domain.house.Room;
 import domain.sensors.Door;
 import domain.sensors.Light;
 import domain.sensors.Window;
+import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,9 +18,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SHCTableModel<T> {
+    private static LoggedInUser user;
     public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem) {
         List<Object[]> data = getData(items, singleItem);
         return new DefaultTableModel(
@@ -86,47 +90,85 @@ public class SHCTableModel<T> {
 
     static class CheckBoxEditor extends AbstractCellEditor implements TableCellEditor {
         private final JCheckBox checkBox;
+        private final House house;
+        private final String selectedItem;
 
         public CheckBoxEditor(JTable table, House h, String selectedItem) {
-            checkBox = new JCheckBox();
+            this.checkBox = new JCheckBox();
+            this.house = h;
+            this.selectedItem = selectedItem;
             checkBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //stopCellEditing();
                     boolean isChecked = checkBox.isSelected();
                     int column = 0;
                     int row = table.getSelectedRow();
                     String component = (table.getModel().getValueAt(row,column)).toString();
 
-                    if(selectedItem.equals("Windows")){
-                        List<Window> windows = h.getWindows();
-                        for (Window w : windows) {
-                            String window = w.getLocation() + " " + w.getWindowID();
-                            if (window.equals(component)) {
-                                w.setOpen(isChecked);
+                    if (selectedItem.equals("Windows")) {
+                        // Permission check UI
+                        // get logged in users permissions
+                        user = UserSingleton.getUser();
+                        System.out.println("User location: " + user.getLocation());
+                        // check permissions
+                        if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasWindowPermissionInsideHome())) ||
+                                ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasWindowPermissionOutside())) {
+                            System.out.println("You have permission to open/close lights");
+                        List<Window> windows = house.getWindows();
+                            for (Window w : windows) {
+                                String window = w.getLocation() + " " + w.getWindowID();
+                                if (window.equals(component)) {
+                                    // Perform action if user has permission
+                                    w.setOpen(isChecked);
+                                }
                             }
+                         }else{
+                            System.out.println("You do not have permission to open/close windows");
+                            checkBox.setSelected(!isChecked);
                         }
                     }
-                    if(selectedItem.equals("Doors")){
-                        List<Door> doors = h.getDoors();
-                        for (Door d : doors) {
-                            String door = d.getLocation();
-                            if (door.equals(component)) {
-                                d.setOpen(isChecked);
+                    else if (selectedItem.equals("Doors")) {
+                        // Permission check UI
+                        // get logged in users permissions
+                        user = UserSingleton.getUser();
+                        System.out.println("User location: " + user.getLocation());
+                        // check permissions
+                        if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasDoorPermissionInsideHome())) ||
+                                ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasDoorPermissionOutside())) {
+                            System.out.println("You have permission to open/close doors");
+                            List<Door> doors = house.getDoors();
+                            for (Door d : doors) {
+                                String door = d.getLocation();
+                                if (door.equals(component)) {
+                                    d.setOpen(isChecked);
+                                }
                             }
+                        }else {
+                            System.out.println("You do not have permission to open/close doors");
+                            checkBox.setSelected(!isChecked);
                         }
-                    }
 
-                    if(selectedItem.equals("Lights")){
-                        List<Light> lights = h.getLights();
-                        for (Light l : lights) {
-                            String window = l.getLocation() + " " + l.getLightID();
-                            if (window.equals(component)) {
-                                l.setOpen(isChecked);
+                    } else if (selectedItem.equals("Lights")) {
+                        // Permission check UI
+                        // get logged in users permissions
+                        user = UserSingleton.getUser();
+                        System.out.println("User location: " + user.getLocation());
+                        // check permissions
+                        if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasLightPermissionInsideHome())) ||
+                                ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasLightPermissionOutside())) {
+                            System.out.println("You have permission to open/close lights");
+                            List<Light> lights = house.getLights();
+                            for (Light l : lights) {
+                                String window = l.getLocation() + " " + l.getLightID();
+                                if (window.equals(component)) {
+                                    l.setOpen(isChecked);
+                                }
                             }
+                        } else {
+                            System.out.println("You do not have permission to open/close lights");
+                            checkBox.setSelected(!isChecked);
                         }
                     }
-
                 }
             });
         }
@@ -134,6 +176,8 @@ public class SHCTableModel<T> {
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             checkBox.setSelected(value != null && (boolean) value);
+            // Disable checkbox if user doesn't have permission
+            checkBox.setEnabled(checkBox.isSelected() || selectedItem.equals("Lights") || selectedItem.equals("Doors") || selectedItem.equals("Windows"));
             return checkBox;
         }
 
@@ -142,6 +186,7 @@ public class SHCTableModel<T> {
             return checkBox.isSelected();
         }
     }
+
 
 
 
