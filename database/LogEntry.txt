@@ -134,3 +134,12 @@ Timestamp: 2024-04-03 02:35:49|Device: SHS Module|Event Triggered by: f|Event Ty
 Timestamp: 2024-04-03 02:36:07|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-04-03 02:36:20|Device: SHH Module|Event Triggered by: f|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned on.
 Timestamp: 2024-04-03 02:36:21|Device: SHH Module|Event Triggered by: f|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned oFF.
+Timestamp: 2024-04-03 02:50:03|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:51:02|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:51:04|Device: SHH Module|Event Triggered by: f|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned on.
+Timestamp: 2024-04-03 02:51:07|Device: SHH Module|Event Triggered by: f|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned oFF.
+Timestamp: 2024-04-03 02:52:23|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:52:37|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
+Timestamp: 2024-04-03 02:53:53|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Outside|New Location: Garage
+Timestamp: 2024-04-03 02:53:59|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Garage|New Location: Kitchen
+Timestamp: 2024-04-03 02:54:07|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Kitchen|New Location: Bedroom2

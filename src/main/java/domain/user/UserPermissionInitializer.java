@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class UserPermissionInitializer {
-    public static Permission initializePermission(String doorPermissionFile, String lightPermissionFile, String windowPermissionFile, String shhPermissionFile, String userType) {
+    public static Permission initializePermission(String doorPermissionFile, String lightPermissionFile, String windowPermissionFile, String shhPermissionFile, String shpPermissionFile, String userType) {
         boolean hasDoorPermissionOutside = false;
         boolean hasDoorPermissionInsideHome = false;
         boolean hasLightPermissionOutside = false;
@@ -16,12 +16,15 @@ public class UserPermissionInitializer {
         boolean hasWindowPermissionInsideHome = false;
         boolean hasHeaterPermissionOutside = false;
         boolean hasHeaterPermissionInsideHome = false;
+        boolean hasSHPPermissionOutside = false;
+        boolean hasSHPPermissionInsideHome = false;
 
         try {
             Scanner doorScanner = new Scanner(new File(doorPermissionFile));
             Scanner lightScanner = new Scanner(new File(lightPermissionFile));
             Scanner windowScanner = new Scanner(new File(windowPermissionFile));
             Scanner shhScanner = new Scanner(new File(shhPermissionFile));
+            Scanner shpScanner = new Scanner(new File(shpPermissionFile));
 
             while (doorScanner.hasNextLine()) {
                 String line = doorScanner.nextLine();
@@ -63,14 +66,26 @@ public class UserPermissionInitializer {
                 }
             }
 
+            while (shpScanner.hasNextLine()) {
+                String line = shpScanner.nextLine();
+                String[] data = line.split("\\|");
+                if (data[0].equals(userType)) {
+                    hasSHPPermissionOutside = Boolean.parseBoolean(data[1]);
+                    hasSHPPermissionInsideHome = Boolean.parseBoolean(data[2]);
+                    break;
+                }
+            }
+
             doorScanner.close();
             lightScanner.close();
             windowScanner.close();
             shhScanner.close();
+            shpScanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        return new Permission(hasWindowPermissionOutside, hasWindowPermissionInsideHome, hasDoorPermissionOutside, hasDoorPermissionInsideHome, hasLightPermissionOutside, hasLightPermissionInsideHome, hasHeaterPermissionOutside, hasHeaterPermissionInsideHome);
+        return new Permission(hasWindowPermissionOutside, hasWindowPermissionInsideHome, hasDoorPermissionOutside, hasDoorPermissionInsideHome, hasLightPermissionOutside, hasLightPermissionInsideHome, hasHeaterPermissionOutside, hasHeaterPermissionInsideHome,
+                hasSHPPermissionOutside, hasSHPPermissionInsideHome);
     }
 }
