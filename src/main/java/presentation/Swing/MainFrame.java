@@ -255,7 +255,6 @@ public class MainFrame {
 
         //--------------------------Account Management-----------------------------------------------------------------
 
-
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
         AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
