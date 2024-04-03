@@ -17,6 +17,7 @@ import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
 
+import domain.user.UserSingleton;
 import domain.user.Users;
 import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
@@ -188,6 +189,7 @@ public class MainFrame {
 
     public MainFrame(LoggedInUser user) {
         this.user = user;
+        UserSingleton.setUser(user);
         House h = new House();
         SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels);
 
