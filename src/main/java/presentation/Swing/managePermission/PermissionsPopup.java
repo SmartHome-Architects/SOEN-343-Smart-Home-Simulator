@@ -22,7 +22,7 @@ public class PermissionsPopup {
         dialog.setLocationRelativeTo(parentFrame); // Center the dialog relative to the parent frame
 
         // combobox to select item
-        JComboBox<String> categoryComboBox = new JComboBox<>(new String[]{"Door", "Light", "Window", "Heater"});
+        JComboBox<String> categoryComboBox = new JComboBox<>(new String[]{"Door", "Light", "Window", "SHH"});
         dialog.add(categoryComboBox, BorderLayout.NORTH);
 
         // create table model
