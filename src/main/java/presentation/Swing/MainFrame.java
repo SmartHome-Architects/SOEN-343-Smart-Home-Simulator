@@ -16,6 +16,7 @@ import domain.sensors.Light;
 import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
 
 import domain.user.UserSingleton;
 import domain.user.Users;
@@ -46,6 +47,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainFrame {
 
@@ -172,7 +174,7 @@ public class MainFrame {
     private Time currentTime;
     private Thread timeIncrementer;
     private ProfileManager profileManager;
-
+    private static LoggedInUser user1;
     private ImageIcon lightOn;
     private ImageIcon lightOff;
     private ImageIcon opened;
@@ -213,10 +215,18 @@ public class MainFrame {
 
         zoneManagementButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Create an instance of your popup window
-                ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton),h,shh, user.getLoggedInUser().getUsername(), textArea1);
+                user1 = UserSingleton.getUser();
+                // permission check
+                if ((!Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasHeaterPermissionInsideHome()) ||
+                        (Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasHeaterPermissionOutside())) {
+                    System.out.println("You have zone management permission");
+                    ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton), h, shh, user.getLoggedInUser().getUsername(), textArea1);
+                } else {
+                    System.out.println("You do not have zone management permission");
+                }
             }
         });
+
 
 
         //----------------------PermissionPopup----------------------------------------------------------
@@ -679,28 +689,36 @@ public class MainFrame {
 
         //-------------------------------------------------------------------------------------------------------------
 
-        // ON/OFF SHH button
+// ON/OFF SHH button
         SHHisOn = false;
         onOffSHHButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // toggle the state
-                SHHisOn = !SHHisOn;
-                if (SHHisOn) {
-                    onOffSHHButton.setText("On");
-                    shh.setActive(true);
+                user1 = UserSingleton.getUser();
+                // Perform permission check
+                if ((!Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasHeaterPermissionInsideHome()) ||
+                        (Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasHeaterPermissionOutside())) {
+                    System.out.println("You have ON/OFF SHH permission");
+                    // toggle the state
+                    SHHisOn = !SHHisOn;
+                    if (SHHisOn) {
+                        onOffSHHButton.setText("On");
+                        shh.setActive(true);
 
-                    LogEntry.setTextArea(textArea1);
-                    LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned on.");
-                    System.out.println("Button is turned ON");
+                        LogEntry.setTextArea(textArea1);
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned on.");
+                        System.out.println("Button is turned ON");
 
+                    } else {
+                        onOffSHHButton.setText("Off");
+                        shh.setActive(false);
+
+                        LogEntry.setTextArea(textArea1);
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned oFF.");
+                        System.out.println("Button is turned OFF");
+                    }
                 } else {
-                    onOffSHHButton.setText("Off");
-                    shh.setActive(false);
-
-                    LogEntry.setTextArea(textArea1);
-                    LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned oFF.");
-                    System.out.println("Button is turned OFF");
+                    System.out.println("You do not have ON/OFF SHH permission");
                 }
             }
         });
