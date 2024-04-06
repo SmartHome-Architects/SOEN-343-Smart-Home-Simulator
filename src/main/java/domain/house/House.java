@@ -1,9 +1,7 @@
 package domain.house;
 
 
-import domain.sensors.Door;
-import domain.sensors.Light;
-import domain.sensors.Window;
+import domain.sensors.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +64,15 @@ public class House {
             }
         }
         return lights;
+    }
+
+    public List<TempControlUnit> getUnits(){
+        List<TempControlUnit> tempUnits = new ArrayList<>();
+        for(Room room:rooms){
+            tempUnits.add(room.getAcUnit());
+            tempUnits.add(room.getHeater());
+        }
+        return tempUnits;
     }
 
     public List<Zone> getSavedZones() {

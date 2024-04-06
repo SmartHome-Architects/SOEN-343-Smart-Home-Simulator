@@ -27,8 +27,11 @@ public class Layout {
             int id = 1;
             for (JsonNode roomNode : roomsNode) {
                 String roomName = roomNode.path("name").asText();
-                AC acUnit = new AC(id);
-                Heater heater = new Heater(id);
+
+                Coordinate tempCoords = createCoordinates(roomNode.path("unitCoordinates"));
+                AC acUnit = new AC(id,tempCoords);
+                Heater heater = new Heater(id,tempCoords);
+
                 double temperature = 20.0;
 
                 Coordinate roomCoordinates = createCoordinates(roomNode.path("coordinates"));
