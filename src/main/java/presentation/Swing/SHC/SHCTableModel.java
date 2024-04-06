@@ -109,7 +109,7 @@ public class SHCTableModel<T> {
                     String component = (table.getModel().getValueAt(row,column)).toString();
 
                     //For log entry
-                    String eventType = isChecked ? "Opened" : "Closed";
+                    String state = isChecked ? "Opened" : "Closed";
 
                     if (selectedItem.equals("Windows")) {
                         // Permission check UI
@@ -144,7 +144,7 @@ public class SHCTableModel<T> {
                             System.out.println("You have permission to open/close doors");
 
                             //Log entry for textfile
-                            LogEntry.Doorlog("User", "Window", eventType, component, textArea1);
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Door", component, state, "Door State Change", textArea1);
 
                             List<Door> doors = house.getDoors();
                             for (Door d : doors) {
