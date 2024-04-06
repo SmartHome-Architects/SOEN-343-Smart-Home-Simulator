@@ -706,7 +706,7 @@ public class MainFrame {
                         shh.setActive(true);
 
                         LogEntry.setTextArea(textArea1);
-                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned on.");
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned ON.");
                         System.out.println("Button is turned ON");
 
                     } else {
@@ -714,7 +714,7 @@ public class MainFrame {
                         shh.setActive(false);
 
                         LogEntry.setTextArea(textArea1);
-                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned oFF.");
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned OFF.");
                         System.out.println("Button is turned OFF");
                     }
                 } else {
