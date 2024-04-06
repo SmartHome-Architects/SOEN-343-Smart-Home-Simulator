@@ -16,3 +16,7 @@ Timestamp: 2024-04-06 11:31:16|Device: Window|Event Triggered by: User|Event Typ
 Timestamp: 2024-04-06 11:31:36|Device: Window|Event Triggered by: User|Event Type: Closed|Event Description: Living Room
 Timestamp: 2024-04-06 15:52:39|Device ID: Door-Garage|Event Triggered by: d|Event Type: Door State Change|Event Description: Door has been Opened
 Timestamp: 2024-04-06 15:53:01|Device ID: Door-Garage|Event Triggered by: d|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-06 16:18:52|Device ID: Window-Living Room 2|Event Triggered by: d|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-06 16:18:59|Device ID: Window-Living Room 2|Event Triggered by: d|Event Type: Window State Change|Event Description: Window has been Closed
+Timestamp: 2024-04-06 16:19:03|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-06 16:19:15|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Closed

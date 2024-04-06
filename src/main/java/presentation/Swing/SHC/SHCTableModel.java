@@ -120,6 +120,10 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasWindowPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasWindowPermissionOutside())) {
                             System.out.println("You have permission to open/close lights");
+
+                            //Log entry for textfile
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Window", component, state, "Window State Change", textArea1);
+
                         List<Window> windows = house.getWindows();
                             for (Window w : windows) {
                                 String window = w.getLocation() + " " + w.getWindowID();
@@ -167,6 +171,10 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasLightPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasLightPermissionOutside())) {
                             System.out.println("You have permission to open/close lights");
+
+                            //Log entry for textfile
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Light", component, state, "Light State Change", textArea1);
+
                             List<Light> lights = house.getLights();
                             for (Light l : lights) {
                                 String window = l.getLocation() + " " + l.getLightID();
