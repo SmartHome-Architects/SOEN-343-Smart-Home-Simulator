@@ -20,6 +20,3 @@ Timestamp: 2024-04-06 16:18:52|Device ID: Window-Living Room 2|Event Triggered b
 Timestamp: 2024-04-06 16:18:59|Device ID: Window-Living Room 2|Event Triggered by: d|Event Type: Window State Change|Event Description: Window has been Closed
 Timestamp: 2024-04-06 16:19:03|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Opened
 Timestamp: 2024-04-06 16:19:15|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Closed
-Timestamp: 2024-04-06 18:04:32|Device: Permission Management Interface|Event Triggered by: [User's Name]|Event Type: Permission Revoked for Door Module - Parent|Event Description: User Type: Parent, Outside Permission: false, Inside Permission: true
-Timestamp: 2024-04-06 18:04:46|Device: Permission Management Interface|Event Triggered by: [User's Name]|Event Type: Permission Granted for Door Module - Parent|Event Description: User Type: Parent, Outside Permission: true, Inside Permission: true
-Timestamp: 2024-04-06 18:04:49|Device: Permission Management Interface|Event Triggered by: [User's Name]|Event Type: Permission Revoked for Door Module - Guest|Event Description: User Type: Guest, Outside Permission: false, Inside Permission: true

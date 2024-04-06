@@ -232,7 +232,7 @@ public class MainFrame {
         //----------------------PermissionPopup----------------------------------------------------------
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton), textArea1);
+                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton), user.getLoggedInUser().getUsername(), textArea1);
             }
         });
 
