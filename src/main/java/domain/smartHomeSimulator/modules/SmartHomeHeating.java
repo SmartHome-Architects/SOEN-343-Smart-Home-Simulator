@@ -35,9 +35,13 @@ public class SmartHomeHeating implements Observable{
     public void setOutsideTemp(double outsideTemp) {
         this.outsideTemp = outsideTemp;
     }
-
     private void startTimer() {
-            timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000); // update every 15 seconds
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000); //update every second if simulation speed set to default
+            }
+        }, 2000);
     }
 
     public void attach(Zone zone){

@@ -3,6 +3,7 @@
       {
         "name": "Garage",
         "coordinates": {"x": 140, "y": 313},
+        "unitCoordinates": {"x": 140, "y": 380},
         "door": [
           {"coordinates": {"x": 180, "y": 270}}
         ],
@@ -16,6 +17,7 @@
       {
         "name": "Kitchen",
         "coordinates": {"x": 155, "y": 105},
+        "unitCoordinates": {"x": 155, "y": 80},
         "windows": [
           {"coordinates": {"x": 80, "y": 80}},
 	      {"coordinates": {"x": 150, "y": 10}}
@@ -27,6 +29,7 @@
       {
         "name": "Living Room",
         "coordinates": {"x": 365, "y": 90},
+        "unitCoordinates": {"x": 365, "y": 70},
         "door": [
           {"coordinates": {"x": 270, "y": 10}}
         ],
@@ -41,6 +44,7 @@
       {
         "name": "Bedroom1",
         "coordinates": {"x": 365, "y": 310},
+        "unitCoordinates": {"x": 365, "y": 280},
         "door": [
           {"coordinates": {"x": 300, "y": 260}}
         ],
@@ -55,6 +59,7 @@
       {
         "name": "Bedroom2",
         "coordinates": {"x": 365, "y": 200},
+        "unitCoordinates": {"x": 330, "y": 185},
         "door": [
           {"coordinates": {"x": 300, "y": 215}}
         ],
@@ -68,6 +73,7 @@
       {
         "name": "Bathroom",
         "coordinates": {"x": 145, "y": 220},
+        "unitCoordinates": {"x": 105, "y": 220},
         "door": [
           {"coordinates": {"x": 180, "y": 220}}
         ],
@@ -81,6 +87,7 @@
       {
         "name": "Entrance",
         "coordinates": {"x": 260, "y": 350},
+        "unitCoordinates": {"x": 215, "y": 345},
         "door": [
           {"coordinates": {"x": 235, "y": 370}}
         ]
@@ -96,6 +103,7 @@
       {
         "name": "Hallway",
         "coordinates" : {"x": 240, "y": 275},
+        "unitCoordinates" : {"x": 215, "y": 265},
         "lights": [
           {"coordinates": {"x": 240, "y": 205}}
         ]

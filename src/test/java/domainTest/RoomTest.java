@@ -23,8 +23,8 @@ public class RoomTest {
         Door door = new Door("Main Door", "Living Room", 1, new Coordinate(1, 1));
         List<Light> lights = new ArrayList<>();
         List<Window> windows = new ArrayList<>();
-        AC acUnit = new AC(1);
-        Heater heater = new Heater(1);
+        AC acUnit = new AC(1,new Coordinate(1,1));
+        Heater heater = new Heater(1,new Coordinate(1,1));
         double temperature = 20.0;
         Coordinate roomCoordinates = new Coordinate(10, 10);
 
