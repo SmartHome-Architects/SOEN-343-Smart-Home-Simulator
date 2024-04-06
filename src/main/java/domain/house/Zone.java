@@ -66,16 +66,15 @@ public class Zone implements Observer {
 
         for (Room room: zoneRooms) {
             double roomTemp = room.getTemperature();
-            if(room.getTemperature() >= 10){
-                roomTemp = Math.floor(room.getTemperature());
-            }
 
             if(!isActive){ // SHH is off. Room temp adjusts itself until temp outside is approximately equal to room temp.
-                if(Math.floor(temp_outside) < Math.floor(roomTemp)){
-                    room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
+                room.getAcUnit().turnOff();
+                room.getHeater().turnOff();
+                if(temp_outside < roomTemp){
+                    room.setTemperature(roomTemp - tempRate);
                 }
-                else if(Math.floor(temp_outside) > Math.floor(roomTemp)){
-                    room.setTemperature(Math.floor(roomTemp + (roomTemp * tempRate)));
+                else if(temp_outside > roomTemp){
+                   room.setTemperature(roomTemp + tempRate);
                 }
             }
             else{ // SHH is on.
@@ -88,38 +87,65 @@ public class Zone implements Observer {
                     }
                     room.getAcUnit().turnOff();
                     room.getHeater().turnOff();
+
                     room.setTemperature(desiredZoneTemperature);
                 }
-                else if(roomTemp <= desiredZoneTemperature){ // turn heating on until
-                    room.getHeater().turnOn();
-                    double temp = roomTemp + (roomTemp * tempRate);
-                    if(Math.floor(temp) > desiredZoneTemperature){
-                        temp = temp - 1;
+
+                else if(roomTemp < desiredZoneTemperature){
+                    if(temp_outside < desiredZoneTemperature){
+                        room.turnHeatingOn();
+                        for(Window w: room.getWindows()){
+                            w.setOpen(false);
+                        }
                     }
+                    else if(temp_outside >= desiredZoneTemperature){
+                        room.getHeater().turnOff();
+                        for(Window w: room.getWindows()) {
+                            w.setOpen(true);
+                        }
+                    }
+                    double temp = roomTemp + tempRate;
                     room.setTemperature(temp);
                 }
 
-//                else if(temp_outside < roomTemp && temp_outside < desiredZoneTemperature){
-//                    room.getAcUnit().turnOff();
-//                    for (Window w : room.getWindows()) {
-//                        if(!w.isBlocked()){
-//                            w.setOpen(true);
-//                        }
-//                        else{
-//                            System.out.println("Window is blocked. Unable to close: " + w.getLocation() + w.getName() + w.getWindowID());
-//                        }
-//                    }
-//                    room.setTemperature(roomTemp - (roomTemp * tempRate));
-//                }
-                else if(temp_outside > roomTemp && roomTemp > desiredZoneTemperature){
-                    room.getAcUnit().turnOn();
-                    room.setTemperature(Math.floor(roomTemp - (roomTemp * tempRate)));
+                else if(roomTemp > desiredZoneTemperature){
+                    if(temp_outside >= desiredZoneTemperature){
+                        room.turnACOn();
+                        for(Window w: room.getWindows()){
+                            w.setOpen(false);
+                        }
+                    }
+                    else if(temp_outside < desiredZoneTemperature){
+                        room.getAcUnit().turnOff();
+                        for(Window w: room.getWindows()) {
+                            w.setOpen(true);
+                        }
+                    }
+                    double temp = roomTemp - tempRate;
+                    room.setTemperature(temp);
                 }
             }
             DecimalFormat df = new DecimalFormat("#.#");
             JLabel label = temperatureLabels.get(room);
             Double rTemp = room.getTemperature();
-            String room_temp = df.format(Math.floor(rTemp));
+            String room_temp;
+
+            double roundedTemp = Double.parseDouble(df.format(rTemp));
+            int intVal = (int) roundedTemp;
+            double decimalValue = roundedTemp - intVal;
+
+            if(decimalValue < 0.25){
+                roundedTemp = intVal;
+            }
+            else if(decimalValue < 0.75){
+                roundedTemp = intVal + 0.5;
+            }
+            else{
+                roundedTemp = intVal + 1;
+            }
+
+            room_temp = String.valueOf(roundedTemp);
+
             String labelText = room_temp + "°";
             label.setText(labelText);
         }

@@ -88,6 +88,19 @@ public class Room {
         return roomCoordinates.getY();
     }
 
+    public void turnACOn(){
+        if(!this.getHeater().isOn()){
+            this.getAcUnit().turnOn();
+        }
+    }
+
+    public void turnHeatingOn(){
+        if(!this.getAcUnit().isOn()){
+            this.getHeater().turnOn();
+        }
+    }
+
+
     @Override
     public String toString() {
         return "Room{" +

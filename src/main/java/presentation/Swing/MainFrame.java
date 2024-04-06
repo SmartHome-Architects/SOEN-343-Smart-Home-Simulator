@@ -11,8 +11,7 @@ import domain.house.House;
 
 import domain.house.Room;
 import domain.house.Zone;
-import domain.sensors.Door;
-import domain.sensors.Light;
+import domain.sensors.*;
 import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
@@ -182,10 +181,15 @@ public class MainFrame {
 
     private ImageIcon userIcon;
 
+    private ImageIcon acUnitIcon;
+    private ImageIcon heatUnitIcon;
+
     private boolean isFrozen = false;
     LoggedInUser user;
     Map<String,JLabel> userLabels = new HashMap<>();
     Map<Room,JLabel> temperatureLabels = new HashMap<>();
+
+    Map<TempControlUnit,JLabel> tempUnitLabels = new HashMap<>();
     // Windows needed
 
 
@@ -510,6 +514,14 @@ public class MainFrame {
         Image userImage = userIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
         userIcon = new ImageIcon(userImage);
 
+        acUnitIcon = new ImageIcon("images/ac.png");
+        Image acUnitImage = acUnitIcon.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        acUnitIcon = new ImageIcon(acUnitImage);
+
+        heatUnitIcon = new ImageIcon("images/heating.png");
+        Image heatingUnitImage = heatUnitIcon.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        heatUnitIcon = new ImageIcon(heatingUnitImage);
+
 
         List<Light> houseLights = h.getLights();
         Map<Light, JLabel> lightLabels = new HashMap<>();
@@ -545,10 +557,9 @@ public class MainFrame {
             doorLabels.put(door,label);
         }
 
-        List<Window> houseWindows = h.getWindows();
         Map<Window,JLabel> windowLabels = new HashMap<>();
 
-        for(Window window: houseWindows){
+        for(Window window: h.getWindows()){
             JLabel label = new JLabel();
             if(window.isOpen()){
                 label.setIcon(opened);
@@ -560,6 +571,19 @@ public class MainFrame {
             window.setWindowLabel(label);
             houseImage.add(label);
             windowLabels.put(window,label);
+        }
+
+        for (Room r: h.getRooms()) {
+            if(!(r.getRoomName().equals("Outside"))){
+                JLabel label = new JLabel();
+                label.setIcon(null);
+                label.setBounds(r.getAcUnit().getX(),r.getAcUnit().getY() - 30,35,35);
+                houseImage.add(label);
+                r.getHeater().setTempUnitLabel(label);
+                r.getAcUnit().setTempUnitLabel(label);
+                tempUnitLabels.put(r.getAcUnit(),label);
+                tempUnitLabels.put(r.getHeater(),label);
+            }
         }
 
 
@@ -631,6 +655,8 @@ public class MainFrame {
                 temperatureLabels.put(r,label);
             }
         }
+
+
 
         houseLayoutLabel.setBounds(0, -60, 550, 500);
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
