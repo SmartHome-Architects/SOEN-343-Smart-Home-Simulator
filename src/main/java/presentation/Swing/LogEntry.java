@@ -40,7 +40,7 @@ public class LogEntry {
             e.printStackTrace();
         }
 
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
                 "Device: " + deviceID + "\n" +
                 "Event Triggered by: " + user + "\n" +
                 "Event Type: " + eventType + "\n" +
@@ -77,7 +77,7 @@ public class LogEntry {
         }
 
         // Log the event with old and new dates
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
                 "Device: " + deviceID + "\n" +
                 "Event Triggered by: " + user + "\n" +
                 "Event Type: " + eventType + "\n" +
@@ -112,7 +112,7 @@ public class LogEntry {
         }
 
         // Log the event with old and new locations
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
                 "Event Triggered by: " + user + "\n" +
                 "Event Type: Location Change" + "\n" +
                 "Event Description: Moving Inhabitant " + inhabitant + " to a new location" + "\n" +
@@ -122,7 +122,7 @@ public class LogEntry {
         textArea.setText(logEntryForConsole + "\n");
     }
 
-    public static void Permissionlog(String user, String deviceID, String eventType, String eventDescription) {
+    public static void Permissionlog(String user, String eventDescription, String eventSpecification, String category, String userType, JTextArea textArea1) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
 
@@ -131,10 +131,14 @@ public class LogEntry {
 
         // Construct log entry string
         String logEntryForFile = "Timestamp: " + timestamp + "|" +
-                "Device: " + deviceID + "|" +
-                "Event Triggered by: " + user + "|" +
-                "Event Type: " + eventType + "|" +
-                "Event Description: " + eventDescription;
+                "Executed through: SHS Module" + "|" +
+                "Event Type: Management of Permissions" + "|" +
+                "Event Description: " + eventDescription +  "|" +
+                "Permission Category: " + category + "|" +
+                "User Type: " + userType + "|" +
+                "Updated Permissions: " + eventSpecification + "|" +
+                "Event Triggered by: " + user;
+
 
         // Write log entry to the log file
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
@@ -143,14 +147,18 @@ public class LogEntry {
             e.printStackTrace();
         }
 
-        String logEntryForConsole = timestamp + "\n" +
-                "Device: " + deviceID + "\n" +
-                "Event Triggered by: " + user + "\n" +
-                "Event Type: " + eventType + "\n" +
-                "Event Description: " + eventDescription + "\n";
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
+                "Executed through: SHS Module" + "\n" +
+                "Event Type: Management of Permissions" + "\n" +
+                "Event Description: " + eventDescription +  "\n" +
+                "Details: " + "\n" +
+                "Permission Category: " + category + "\n" +
+                "User Type: " + userType + "\n" +
+                "Updated Permissions: " + eventSpecification + "\n" +
+                "Event Triggered by: " + user + "\n";
 
         // Append log entry to the JTextArea
-        textArea.setText(logEntryForConsole + "\n");
+        textArea1.setText(logEntryForConsole + "\n");
     }
 
     //Method to log SHH ON/OFF button
@@ -175,7 +183,7 @@ public class LogEntry {
             e.printStackTrace();
         }
 
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
                 "Device: SHH Module" + "\n" +
                 "Event Triggered by: " + user + "\n" +
                 "Event Type: Opening/Closing SHH Module"  + "\n" +
@@ -304,7 +312,7 @@ public class LogEntry {
             e.printStackTrace();
         }
 
-        String logEntryForConsole = timestamp + "\n" +
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
                 "Executed through: SHC Module" + "\n" +
                 "Device ID: " + component + "-" + deviceID + "\n" +
                 "Event Triggered by: " + user + "\n" +

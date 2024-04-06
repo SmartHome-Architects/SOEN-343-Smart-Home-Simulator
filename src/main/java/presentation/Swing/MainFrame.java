@@ -236,10 +236,7 @@ public class MainFrame {
         //----------------------PermissionPopup----------------------------------------------------------
         permissionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton));
-
-                LogEntry.setTextArea(textArea1);
-                LogEntry.Permissionlog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage Permissions", "Edit User's Permissions");
+                PermissionsPopup.show((JFrame) SwingUtilities.getWindowAncestor(permissionsButton), user.getLoggedInUser().getUsername(), textArea1);
             }
         });
 

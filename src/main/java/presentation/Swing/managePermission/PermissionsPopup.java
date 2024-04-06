@@ -2,6 +2,7 @@ package presentation.Swing.managePermission;
 
 import domain.user.Users;
 import domain.user.UsersInitializer;
+import presentation.Swing.LogEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +16,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PermissionsPopup {
-    public static void show(JFrame parentFrame) {
+
+    private JTextArea textArea1;
+    private String user;
+
+    public static void show(JFrame parentFrame, String user, JTextArea textArea1) {
         // popup size
         JDialog dialog = new JDialog(parentFrame, "Manage Permissions", true); // Use parentFrame as the parent window
         dialog.setSize(600, 400);
@@ -59,13 +64,13 @@ public class PermissionsPopup {
         dialog.add(saveButton, BorderLayout.SOUTH);
 
         // update table after being saved
-        updateTableModel((String) categoryComboBox.getSelectedItem(), model);
+        updateTableModel((String) categoryComboBox.getSelectedItem(), model, user, textArea1);
 
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedCategory = (String) categoryComboBox.getSelectedItem();
-                updateTableModel(selectedCategory, model);
+                updateTableModel(selectedCategory, model, user, textArea1);
             }
         });
 
@@ -74,7 +79,7 @@ public class PermissionsPopup {
     }
 
     // update table from item selected from combobox
-    private static void updateTableModel(String category, DefaultTableModel model) {
+    private static void updateTableModel(String category, DefaultTableModel model, String user, JTextArea textArea1) {
         model.setRowCount(0); // Clear existing rows
         try (Scanner scanner = new Scanner(new File("database/" + category + "Permission.txt"))) {
             while (scanner.hasNextLine()) {
@@ -86,6 +91,26 @@ public class PermissionsPopup {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        model.addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            String userType = (String) model.getValueAt(row, 0);
+            boolean outsidePermission = (boolean) model.getValueAt(row, 1);
+            boolean insidePermission = (boolean) model.getValueAt(row, 2);
+            String eventSpecification = "Outside Permission: " + outsidePermission + "and Inside Permission: " + insidePermission;
+
+            String eventDescription;
+            if (column == 1) {
+                eventDescription = (outsidePermission ? "Outside Permission Granted" : "Outside Permission Revoked");
+            } else if (column == 2) {
+                eventDescription = (insidePermission ? "Inside Permission Granted" : "Inside Permission Revoked");
+            } else {
+                eventDescription = "Unknown Event Type";
+            }
+
+            LogEntry.Permissionlog(user, eventDescription, eventSpecification, category, userType, textArea1);
+        });
     }
 
     // save permissions to appropriate files
