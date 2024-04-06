@@ -14,3 +14,4 @@ Timestamp: 2024-04-02 14:12:57|Event Triggered by: f|Event Type: Location Change
 Timestamp: 2024-04-02 14:13:40|Device: SHS Module|Event Triggered by: f|Event Type: Manage Permissions|Event Description: Edit User's Permissions
 Timestamp: 2024-04-06 11:31:16|Device: Window|Event Triggered by: User|Event Type: Opened|Event Description: Living Room
 Timestamp: 2024-04-06 11:31:36|Device: Window|Event Triggered by: User|Event Type: Closed|Event Description: Living Room
+

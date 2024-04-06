@@ -283,7 +283,7 @@ public class LogEntry {
     }
 
     //Method to log opening/closing of Doors
-    public static void Doorlog (String user, String deviceID, String eventType, String eventDescription) {
+    public static void Doorlog (String user, String deviceID, String eventType, String eventDescription, JTextArea textArea1) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
 
@@ -303,6 +303,15 @@ public class LogEntry {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String logEntryForConsole = timestamp + "\n" +
+                "Device: " + deviceID + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: " + eventType + "\n" +
+                "Event Description: " + eventDescription + "\n";
+
+        // Append log entry to the JTextArea
+        textArea1.setText(logEntryForConsole + "\n");
 
     }
 

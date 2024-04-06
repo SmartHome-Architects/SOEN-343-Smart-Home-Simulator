@@ -26,7 +26,7 @@ public class SHCTableModel<T> {
     private static LoggedInUser user;
     private LogEntry logEntry;
 
-    public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem) {
+    public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem, JTextArea textArea1) {
         List<Object[]> data = getData(items, singleItem);
         return new DefaultTableModel(
                 data.toArray(new Object[0][0]),
@@ -54,7 +54,7 @@ public class SHCTableModel<T> {
         return data;
     }
 
-    public static JTable createTable(DefaultTableModel model, House h, String selectedItem) {
+    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1) {
         return new JTable(model) {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
@@ -67,7 +67,7 @@ public class SHCTableModel<T> {
             @Override
             public TableCellEditor getCellEditor(int row, int column) {
                 if (column == 1) {
-                    return new CheckBoxEditor(this,h,selectedItem);
+                    return new CheckBoxEditor(this,h,selectedItem, textArea1);
                 }
                 return super.getCellEditor(row, column);
             }
@@ -96,7 +96,7 @@ public class SHCTableModel<T> {
         private final House house;
         private final String selectedItem;
 
-        public CheckBoxEditor(JTable table, House h, String selectedItem) {
+        public CheckBoxEditor(JTable table, House h, String selectedItem, JTextArea textArea1) {
             this.checkBox = new JCheckBox();
             this.house = h;
             this.selectedItem = selectedItem;
@@ -143,7 +143,8 @@ public class SHCTableModel<T> {
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasDoorPermissionOutside())) {
                             System.out.println("You have permission to open/close doors");
 
-                            LogEntry.Doorlog("User", "Window", eventType, component);
+                            //Log entry for textfile
+                            LogEntry.Doorlog("User", "Window", eventType, component, textArea1);
 
                             List<Door> doors = house.getDoors();
                             for (Door d : doors) {

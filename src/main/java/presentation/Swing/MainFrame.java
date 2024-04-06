@@ -658,7 +658,7 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
-                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem);
+                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1);
                 if (selectedItem.equals("Doors")) {
                     displayHelper.displayItems(h.getDoors());
                 } else if (selectedItem.equals("Windows")) {
@@ -670,6 +670,7 @@ public class MainFrame {
                 }
             }
         });
+
 // Inside the constructor or initialization method of MainFrame
         buttonLogOut.addActionListener(new ActionListener() {
             @Override

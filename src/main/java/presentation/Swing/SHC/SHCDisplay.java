@@ -13,13 +13,14 @@ import java.util.List;
 public class SHCDisplay {
     private JPanel checkBoxPanel;
     private House h;
-
     private String selectedItem;
+    private JTextArea textArea1;
 
-    public SHCDisplay(JPanel checkBoxPanel, House h, String selectedItem) {
+    public SHCDisplay(JPanel checkBoxPanel, House h, String selectedItem, JTextArea textArea1) {
         this.checkBoxPanel = checkBoxPanel;
         this.h = h;
         this.selectedItem = selectedItem;
+        this.textArea1 = textArea1;
     }
 
     public void displayItems(List<?> devices) {
@@ -40,9 +41,9 @@ public class SHCDisplay {
                         return new Object[]{light.getLocation() + " " + light.getLightID(), light.isOpen()};
                     }
                     return null;
-                }
+                }, textArea1
         );
-        JTable table = SHCTableModel.createTable(tableModel,h,selectedItem);
+        JTable table = SHCTableModel.createTable(tableModel,h,selectedItem, textArea1);
         JScrollPane scrollPane = new JScrollPane(table);
         checkBoxPanel.removeAll();
         checkBoxPanel.add(scrollPane);
