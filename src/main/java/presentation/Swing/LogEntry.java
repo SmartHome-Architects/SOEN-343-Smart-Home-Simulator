@@ -122,7 +122,7 @@ public class LogEntry {
         textArea.setText(logEntryForConsole + "\n");
     }
 
-    public static void Permissionlog(String user, String deviceID, String eventType, String eventDescription) {
+    public static void Permissionlog(String user, String deviceID, String eventType, String eventDescription, JTextArea textArea1) {
         // File path for the log file
         String logFilePath = "database/LogEntry.txt";
 
@@ -150,7 +150,7 @@ public class LogEntry {
                 "Event Description: " + eventDescription + "\n";
 
         // Append log entry to the JTextArea
-        textArea.setText(logEntryForConsole + "\n");
+        textArea1.setText(logEntryForConsole + "\n");
     }
 
     //Method to log SHH ON/OFF button

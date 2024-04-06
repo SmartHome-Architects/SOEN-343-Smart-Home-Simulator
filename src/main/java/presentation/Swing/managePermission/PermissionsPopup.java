@@ -2,6 +2,7 @@ package presentation.Swing.managePermission;
 
 import domain.user.Users;
 import domain.user.UsersInitializer;
+import presentation.Swing.LogEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +16,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PermissionsPopup {
-    public static void show(JFrame parentFrame) {
+
+    private JTextArea textArea1;
+
+    public static void show(JFrame parentFrame, JTextArea textArea1) {
         // popup size
         JDialog dialog = new JDialog(parentFrame, "Manage Permissions", true); // Use parentFrame as the parent window
         dialog.setSize(600, 400);
@@ -59,13 +63,13 @@ public class PermissionsPopup {
         dialog.add(saveButton, BorderLayout.SOUTH);
 
         // update table after being saved
-        updateTableModel((String) categoryComboBox.getSelectedItem(), model);
+        updateTableModel((String) categoryComboBox.getSelectedItem(), model, textArea1);
 
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedCategory = (String) categoryComboBox.getSelectedItem();
-                updateTableModel(selectedCategory, model);
+                updateTableModel(selectedCategory, model, textArea1);
             }
         });
 
@@ -74,7 +78,7 @@ public class PermissionsPopup {
     }
 
     // update table from item selected from combobox
-    private static void updateTableModel(String category, DefaultTableModel model) {
+    private static void updateTableModel(String category, DefaultTableModel model, JTextArea textArea1) {
         model.setRowCount(0); // Clear existing rows
         try (Scanner scanner = new Scanner(new File("database/" + category + "Permission.txt"))) {
             while (scanner.hasNextLine()) {
@@ -86,6 +90,19 @@ public class PermissionsPopup {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        model.addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            String userType = (String) model.getValueAt(row, 0);
+            boolean outsidePermission = (boolean) model.getValueAt(row, 1);
+            boolean insidePermission = (boolean) model.getValueAt(row, 2);
+            String eventDescription = "User Type: " + userType + ", Outside Permission: " + outsidePermission + ", Inside Permission: " + insidePermission;
+            String user = "[User's Name]"; // You need to specify the actual user's name here
+            String deviceID = "Permission Management Interface"; // You can set an appropriate device ID
+            String eventType = (outsidePermission ? "Permission Granted" : "Permission Revoked") + " for " + category + " Module - " + userType;
+            LogEntry.Permissionlog(user, deviceID, eventType, eventDescription, textArea1);
+        });
     }
 
     // save permissions to appropriate files
