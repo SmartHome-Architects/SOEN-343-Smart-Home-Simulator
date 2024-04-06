@@ -9,7 +9,7 @@ public class PermissionTest {
 
     @Test
     public void testConstructorAndGetters() {
-        Permission permission = new Permission(true, false, true, false, true, false, true, false);
+        Permission permission = new Permission(true, false, true, false, true, false, true, false, false, false);
 
         assertTrue(permission.isHasWindowPermissionOutside());
         assertFalse(permission.isHasWindowPermissionInsideHome());
@@ -19,11 +19,13 @@ public class PermissionTest {
         assertFalse(permission.isHasLightPermissionInsideHome());
         assertTrue(permission.isHasHeaterPermissionOutside());
         assertFalse(permission.isHasHeaterPermissionInsideHome());
+        assertFalse(permission.isHasSHPPermissionOutside());
+        assertFalse(permission.isHasSHPPermissionInsideHome());
     }
 
     @Test
     public void testSettersAndGetters() {
-        Permission permission = new Permission(false, true, false, true, false, true, false, true);
+        Permission permission = new Permission(false, true, false, true, false, true, false, true, true, true);
 
         permission.setHasWindowPermissionOutside(true);
         assertTrue(permission.isHasWindowPermissionOutside());
@@ -48,11 +50,17 @@ public class PermissionTest {
 
         permission.setHasHeaterPermissionInsideHome(false);
         assertFalse(permission.isHasHeaterPermissionInsideHome());
+
+        permission.setHasSHPPermissionOutside(true);
+        assertTrue(permission.isHasSHPPermissionOutside());
+
+        permission.setHasSHPPermissionInsideHome(false);
+        assertFalse(permission.isHasSHPPermissionInsideHome());
     }
 
     @Test
     public void testToString() {
-        Permission permission = new Permission(true, true, true, true, true, true, true, true);
+        Permission permission = new Permission(true, true, true, true, true, true, true, true, true, true);
         String expectedToString = "Permission{" +
                 "hasWindowPermissionOutside=true, " +
                 "hasWindowPermissionInsideHome=true, " +
@@ -62,6 +70,8 @@ public class PermissionTest {
                 "hasLightPermissionInsideHome=true, " +
                 "hasHeaterPermissionOutside=true, " +
                 "hasHeaterPermissionInsideHome=true" +
+                "hasSHPPermissionOutside=true, " +
+                "hasSHPPermissionInsideHome=true" +
                 "}";
 
         assertEquals(expectedToString, permission.toString());

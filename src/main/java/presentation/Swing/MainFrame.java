@@ -658,7 +658,7 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
-                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem);
+                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1);
                 if (selectedItem.equals("Doors")) {
                     displayHelper.displayItems(h.getDoors());
                 } else if (selectedItem.equals("Windows")) {
@@ -670,6 +670,7 @@ public class MainFrame {
                 }
             }
         });
+
 // Inside the constructor or initialization method of MainFrame
         buttonLogOut.addActionListener(new ActionListener() {
             @Override
@@ -684,7 +685,6 @@ public class MainFrame {
                 // Show the login page
                 loginPage.setVisible(true);            }
         });
-
 
 
         //-------------------------------------------------------------------------------------------------------------
@@ -706,7 +706,7 @@ public class MainFrame {
                         shh.setActive(true);
 
                         LogEntry.setTextArea(textArea1);
-                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned on.");
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned ON.");
                         System.out.println("Button is turned ON");
 
                     } else {
@@ -714,7 +714,7 @@ public class MainFrame {
                         shh.setActive(false);
 
                         LogEntry.setTextArea(textArea1);
-                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned oFF.");
+                        LogEntry.SHHButtonlog(user.getLoggedInUser().getUsername(), "Smart Home Heating is turned OFF.");
                         System.out.println("Button is turned OFF");
                     }
                 } else {

@@ -7,6 +7,7 @@ import domain.sensors.Light;
 import domain.sensors.Window;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
+import presentation.Swing.LogEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +24,9 @@ import java.util.Objects;
 
 public class SHCTableModel<T> {
     private static LoggedInUser user;
-    public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem) {
+    private LogEntry logEntry;
+
+    public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem, JTextArea textArea1) {
         List<Object[]> data = getData(items, singleItem);
         return new DefaultTableModel(
                 data.toArray(new Object[0][0]),
@@ -51,7 +54,7 @@ public class SHCTableModel<T> {
         return data;
     }
 
-    public static JTable createTable(DefaultTableModel model, House h, String selectedItem) {
+    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1) {
         return new JTable(model) {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
@@ -64,7 +67,7 @@ public class SHCTableModel<T> {
             @Override
             public TableCellEditor getCellEditor(int row, int column) {
                 if (column == 1) {
-                    return new CheckBoxEditor(this,h,selectedItem);
+                    return new CheckBoxEditor(this,h,selectedItem, textArea1);
                 }
                 return super.getCellEditor(row, column);
             }
@@ -93,7 +96,7 @@ public class SHCTableModel<T> {
         private final House house;
         private final String selectedItem;
 
-        public CheckBoxEditor(JTable table, House h, String selectedItem) {
+        public CheckBoxEditor(JTable table, House h, String selectedItem, JTextArea textArea1) {
             this.checkBox = new JCheckBox();
             this.house = h;
             this.selectedItem = selectedItem;
@@ -105,6 +108,9 @@ public class SHCTableModel<T> {
                     int row = table.getSelectedRow();
                     String component = (table.getModel().getValueAt(row,column)).toString();
 
+                    //For log entry
+                    String state = isChecked ? "Opened" : "Closed";
+
                     if (selectedItem.equals("Windows")) {
                         // Permission check UI
                         // get logged in users permissions
@@ -114,6 +120,10 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasWindowPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasWindowPermissionOutside())) {
                             System.out.println("You have permission to open/close lights");
+
+                            //Log entry for textfile
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Window", component, state, "Window State Change", textArea1);
+
                         List<Window> windows = house.getWindows();
                             for (Window w : windows) {
                                 String window = w.getLocation() + " " + w.getWindowID();
@@ -136,6 +146,10 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasDoorPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasDoorPermissionOutside())) {
                             System.out.println("You have permission to open/close doors");
+
+                            //Log entry for textfile
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Door", component, state, "Door State Change", textArea1);
+
                             List<Door> doors = house.getDoors();
                             for (Door d : doors) {
                                 String door = d.getLocation();
@@ -157,6 +171,10 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasLightPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasLightPermissionOutside())) {
                             System.out.println("You have permission to open/close lights");
+
+                            //Log entry for textfile
+                            LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Light", component, state, "Light State Change", textArea1);
+
                             List<Light> lights = house.getLights();
                             for (Light l : lights) {
                                 String window = l.getLocation() + " " + l.getLightID();

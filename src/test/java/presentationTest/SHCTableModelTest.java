@@ -27,7 +27,7 @@ public class SHCTableModelTest {
             } else {
                 return new Object[]{door.getLocation() + " " + door.getName(), "Close"};
             }
-        });
+        }, new JTextArea());
 
         assertNotNull("TableModel should not be null", tableModel);
         assertEquals("TableModel should have correct number of rows", 0, tableModel.getRowCount());
@@ -41,8 +41,9 @@ public class SHCTableModelTest {
         // Test createTable method
         House house = new House();
         String selectedItem = "Doors";
+        JTextArea textArea1 = new JTextArea();
         DefaultTableModel model = new DefaultTableModel(new Object[][]{{"Living Room Door", "Open"}}, new Object[]{"Room Name", "Open/Close"});
-        JTable table = SHCTableModel.createTable(model,house,selectedItem);
+        JTable table = SHCTableModel.createTable(model,house,selectedItem, textArea1);
 
         assertNotNull("Table should not be null", table);
         assertEquals("Table should have correct number of rows", 1, table.getRowCount());

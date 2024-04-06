@@ -282,6 +282,40 @@ public class LogEntry {
         textArea1.setText(logEntryForConsole + "\n");
     }
 
+    //Method to log opening/closing of Doors
+    public static void SHClog (String user, String component, String deviceID, String eventDescription, String eventType, JTextArea textArea1) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device ID: " + component + "-" + deviceID + "|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: " + eventType + "|" +
+                "Event Description: " + component + " has been " + eventDescription;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String logEntryForConsole = timestamp + "\n" +
+                "Executed through: SHC Module" + "\n" +
+                "Device ID: " + component + "-" + deviceID + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: " + eventType + "\n" +
+                "Event Description: " + component + " has been " + eventDescription + "\n";
+
+        // Append log entry to the JTextArea
+        textArea1.setText(logEntryForConsole + "\n");
+
+    }
+
 
     // Method to get current timestamp
     private static String getCurrentTimestamp() {

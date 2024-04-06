@@ -35,7 +35,7 @@ public class EditHouseInhabitantsDialogTest {
     @Before
     public void setUp() {
         // Create a mock Permission object (if needed)
-        Permission permission = new Permission(true, true, true, true, true, true, true, true);
+        Permission permission = new Permission(true, true, true, true, true, true, true, true, true, true);
 
         // Pass the mock Permission object to the Users constructor
         Users testUser = new Users("username", "password", "firstName", "lastName", "email", permission);

@@ -20,13 +20,15 @@ public class SHCDisplayTest {
     private JPanel checkBoxPanel;
     private SHCDisplay shcDisplay;
 
+    private JTextArea textArea1;
+
     @Before
     public void setUp() {
         checkBoxPanel = new JPanel();
         // Mock values for House and selectedItem
         House mockHouse = new House(); // You can create a mock House object according to your test needs
         String mockSelectedItem = "Selected"; // You can set a mock value for selectedItem
-        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem);
+        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem, textArea1);
     }
 
 

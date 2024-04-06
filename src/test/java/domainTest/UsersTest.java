@@ -16,7 +16,7 @@ public class UsersTest {
         String password = "password123";
         String type = "Parent";
         String location = "Living Room";
-        Permission permissions = new Permission(true, true, true, true, true, true, true, true);
+        Permission permissions = new Permission(true, true, true, true, true, true, true, true, true, true);
 
         Users user = new Users(username, email, password, type, location, permissions);
 
@@ -38,7 +38,7 @@ public class UsersTest {
         user.setPassword("newpassword123");
         user.setType("Child");
         user.setLocation("Bedroom");
-        Permission permissions = new Permission(false, false, false, false, false, false, false, false);
+        Permission permissions = new Permission(false, false, false, false, false, false, false, false, false, false);
         user.setPermissions(permissions);
 
         assertEquals("newUsername", user.getUsername());
