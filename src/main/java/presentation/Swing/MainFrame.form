@@ -682,7 +682,7 @@
                           </grid>
                         </children>
                       </grid>
-                      <grid id="848b3" binding="SHP" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                      <grid id="848b3" binding="SHP" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="0" left="0" bottom="0" right="0"/>
                         <constraints>
                           <tabbedpane title="  SHP  "/>
@@ -690,107 +690,30 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="a7833" binding="comboBox4" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
+                          <component id="7246a" class="javax.swing.JButton" binding="onOffAwayModeButton">
                             <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Off"/>
+                            </properties>
+                          </component>
+                          <component id="6cfb2" class="javax.swing.JLabel" binding="onOffAwayModeLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Away Mode On/Off"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="62bb0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
-                            <border type="none" title="Items"/>
-                            <children>
-                              <component id="6160e" class="javax.swing.JComboBox" default-binding="true">
-                                <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties>
-                                  <model>
-                                    <item value="Select Item"/>
-                                    <item value="Windows"/>
-                                    <item value="Lights"/>
-                                    <item value="Doors"/>
-                                  </model>
-                                </properties>
-                              </component>
-                              <vspacer id="a899f">
-                                <constraints>
-                                  <grid row="3" column="1" row-span="4" col-span="1" vsize-policy="6" hsize-policy="1" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                              </vspacer>
-                              <grid id="27018" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                <margin top="0" left="0" bottom="0" right="0"/>
-                                <constraints>
-                                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties/>
-                                <border type="none"/>
-                                <children>
-                                  <vspacer id="b63b2">
-                                    <constraints>
-                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                                        <minimum-size width="-1" height="25"/>
-                                      </grid>
-                                    </constraints>
-                                  </vspacer>
-                                  <component id="32f46" class="javax.swing.JLabel">
-                                    <constraints>
-                                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text value="Open/Close"/>
-                                    </properties>
-                                  </component>
-                                </children>
-                              </grid>
-                              <grid id="7756" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                <margin top="0" left="0" bottom="0" right="0"/>
-                                <constraints>
-                                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
-                                    <minimum-size width="350" height="200"/>
-                                    <preferred-size width="350" height="200"/>
-                                    <maximum-size width="350" height="200"/>
-                                  </grid>
-                                </constraints>
-                                <properties/>
-                                <border type="line">
-                                  <color color="-13957365"/>
-                                </border>
-                                <children>
-                                  <component id="6ea82" class="javax.swing.JCheckBox" default-binding="true">
-                                    <constraints>
-                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text value="Backyard"/>
-                                    </properties>
-                                  </component>
-                                  <component id="682d2" class="javax.swing.JCheckBox" default-binding="true">
-                                    <constraints>
-                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text value="Garage"/>
-                                    </properties>
-                                  </component>
-                                  <component id="510ca" class="javax.swing.JCheckBox" default-binding="true">
-                                    <constraints>
-                                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text value="Main"/>
-                                    </properties>
-                                  </component>
-                                  <component id="5592f" class="javax.swing.JCheckBox" default-binding="true">
-                                    <constraints>
-                                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                                    </constraints>
-                                    <properties>
-                                      <text value="Balcony"/>
-                                    </properties>
-                                  </component>
-                                </children>
-                              </grid>
-                            </children>
-                          </grid>
+                            <border type="none"/>
+                            <children/>
+                          </scrollpane>
                         </children>
                       </grid>
                       <grid id="2a54a" binding="SHH" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

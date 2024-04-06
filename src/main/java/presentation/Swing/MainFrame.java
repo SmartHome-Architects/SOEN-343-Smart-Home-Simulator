@@ -18,7 +18,6 @@ import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
 
-import domain.user.UserSingleton;
 import domain.user.Users;
 import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
@@ -64,7 +63,6 @@ public class MainFrame {
     private JPanel SHC;
     private JPanel SHP;
     private JPanel SHH;
-    private JPanel comboBox4;
     private JPanel SHCPanel2;
     private JTextArea textArea1;
     private JButton buttonOff;
@@ -168,6 +166,8 @@ public class MainFrame {
     private JPanel zoneManagement;
     private JButton zoneManagementButton;
     private JButton roomTempButton;
+    private JButton onOffAwayModeButton;
+    private JLabel onOffAwayModeLabel;
 
 
     private Date currentDate;
