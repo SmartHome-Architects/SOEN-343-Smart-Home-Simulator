@@ -282,6 +282,30 @@ public class LogEntry {
         textArea1.setText(logEntryForConsole + "\n");
     }
 
+    //Method to log opening/closing of Doors
+    public static void Doorlog (String user, String deviceID, String eventType, String eventDescription) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device: " + deviceID + "|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: " + eventType + "|" +
+                "Event Description: " + eventDescription;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     // Method to get current timestamp
     private static String getCurrentTimestamp() {

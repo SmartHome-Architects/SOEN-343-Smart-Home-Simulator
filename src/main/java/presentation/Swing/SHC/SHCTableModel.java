@@ -7,6 +7,7 @@ import domain.sensors.Light;
 import domain.sensors.Window;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
+import presentation.Swing.LogEntry;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,8 @@ import java.util.Objects;
 
 public class SHCTableModel<T> {
     private static LoggedInUser user;
+    private LogEntry logEntry;
+
     public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem) {
         List<Object[]> data = getData(items, singleItem);
         return new DefaultTableModel(
@@ -105,6 +108,9 @@ public class SHCTableModel<T> {
                     int row = table.getSelectedRow();
                     String component = (table.getModel().getValueAt(row,column)).toString();
 
+                    //For log entry
+                    String eventType = isChecked ? "Opened" : "Closed";
+
                     if (selectedItem.equals("Windows")) {
                         // Permission check UI
                         // get logged in users permissions
@@ -136,6 +142,9 @@ public class SHCTableModel<T> {
                         if ((!Objects.equals(user.getLocation(), "Outside") && (user.getPermissions().isHasDoorPermissionInsideHome())) ||
                                 ((Objects.equals(user.getLocation(), "Outside")) && user.getPermissions().isHasDoorPermissionOutside())) {
                             System.out.println("You have permission to open/close doors");
+
+                            LogEntry.Doorlog("User", "Window", eventType, component);
+
                             List<Door> doors = house.getDoors();
                             for (Door d : doors) {
                                 String door = d.getLocation();
