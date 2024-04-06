@@ -15,9 +15,10 @@ public class UserPermissionInitializerTest {
         String lightPermissionFile = "light_permissions.txt";
         String windowPermissionFile = "window_permissions.txt";
         String shhPermissionFile = "shh_permissions.txt";
+        String shpPermissionFile = "shp_permissions.txt";
         String userType = "admin"; // or any user type you want to test
 
-        Permission permission = UserPermissionInitializer.initializePermission(doorPermissionFile, lightPermissionFile, windowPermissionFile, shhPermissionFile, userType);
+        Permission permission = UserPermissionInitializer.initializePermission(doorPermissionFile, lightPermissionFile, windowPermissionFile, shhPermissionFile,shpPermissionFile, userType);
 
         assertNotNull(permission);
         // Add more assertions as needed to test the initialized Permission object
