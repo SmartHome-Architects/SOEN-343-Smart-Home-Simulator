@@ -34,9 +34,12 @@ public class UserAccountManager {
 
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
+
+            String defaultLocation = "Entrance"; // Set default location to "Entrance"
+
             // Append user to users.txt
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + "Users.txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
@@ -44,7 +47,7 @@ public class UserAccountManager {
 
             // Append user to the file named after the logged-in user
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + loggedInUsername + ".txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
