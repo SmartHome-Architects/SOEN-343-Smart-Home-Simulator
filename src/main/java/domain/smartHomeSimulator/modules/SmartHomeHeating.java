@@ -1,10 +1,15 @@
 package domain.smartHomeSimulator.modules;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.house.House;
 import domain.house.Room;
 import domain.house.Zone;
 import domain.user.Users;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.Timer;
 
@@ -106,5 +111,27 @@ public class SmartHomeHeating implements Observable{
 
     public List<Zone> getZones() {
         return zones;
+    }
+
+    public void loadZones(House h) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String file = "database/zones.json";
+        List<Map<String, Object>> zoneList = mapper.readValue(new File(file), new TypeReference<List<Map<String, Object>>>() {});
+        for (Map<String, Object> zoneMap : zoneList) {
+            String zoneName = (String) zoneMap.get("zoneName");
+            double desiredTemperature = (double) zoneMap.get("desiredTemperature");
+            Zone zone = new Zone(zoneName,desiredTemperature);
+            List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
+            for (Map<String, Object> roomMap : roomList) {
+                String roomName = roomMap.get("roomName").toString();
+                List<Room> rooms = h.getRooms();
+                for (Room r:rooms) {
+                    if(r.getRoomName().equals(roomName)){
+                        zone.addRoomToZone(r);
+                    }
+                }
+            }
+            this.attach(zone);
+        }
     }
 }

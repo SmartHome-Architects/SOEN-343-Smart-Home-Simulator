@@ -1,10 +1,7 @@
 package presentation.Swing.SHC;
 
 import domain.house.House;
-import domain.house.Room;
-import domain.sensors.Door;
-import domain.sensors.Light;
-import domain.sensors.Window;
+import domain.smartHomeSimulator.modules.SmartHomeCore;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
 import presentation.Swing.LogEntry;
@@ -103,6 +100,7 @@ public class SHCTableModel<T> {
             checkBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SmartHomeCore shc = new SmartHomeCore();
                     boolean isChecked = checkBox.isSelected();
                     int column = 0;
                     int row = table.getSelectedRow();
@@ -123,15 +121,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Window", component, state, "Window State Change", textArea1);
-
-                        List<Window> windows = house.getWindows();
-                            for (Window w : windows) {
-                                String window = w.getLocation() + " " + w.getWindowID();
-                                if (window.equals(component)) {
-                                    // Perform action if user has permission
-                                    w.setOpen(isChecked);
-                                }
-                            }
+                            shc.windowAction(house,component,isChecked);
                          }else{
                             System.out.println("You do not have permission to open/close windows");
                             checkBox.setSelected(!isChecked);
@@ -149,14 +139,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Door", component, state, "Door State Change", textArea1);
-
-                            List<Door> doors = house.getDoors();
-                            for (Door d : doors) {
-                                String door = d.getLocation();
-                                if (door.equals(component)) {
-                                    d.setOpen(isChecked);
-                                }
-                            }
+                            shc.doorAction(house,component,isChecked);
                         }else {
                             System.out.println("You do not have permission to open/close doors");
                             checkBox.setSelected(!isChecked);
@@ -174,14 +157,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Light", component, state, "Light State Change", textArea1);
-
-                            List<Light> lights = house.getLights();
-                            for (Light l : lights) {
-                                String window = l.getLocation() + " " + l.getLightID();
-                                if (window.equals(component)) {
-                                    l.setOpen(isChecked);
-                                }
-                            }
+                            shc.lightAction(house,component,isChecked);
                         } else {
                             System.out.println("You do not have permission to open/close lights");
                             checkBox.setSelected(!isChecked);
@@ -204,9 +180,6 @@ public class SHCTableModel<T> {
             return checkBox.isSelected();
         }
     }
-
-
-
 
     public interface SingleItem<T> {
         Object[] extractData(T item);
