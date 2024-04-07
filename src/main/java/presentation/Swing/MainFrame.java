@@ -427,7 +427,6 @@ public class MainFrame {
         });
 
 
-
         //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
             @Override

@@ -158,6 +158,8 @@ public class UserAccountManager {
 
     public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         String loggedInUsername = getLoggedInUsername();
+        String currentLocation = "";
+
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
@@ -166,7 +168,12 @@ public class UserAccountManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith(oldUsername + "|")) {
-                        line = username + "|" + email + "|" + password + "|" + accessibility;
+
+                        // Preserve the location information
+                        String[] parts = line.split("\\|");
+                        currentLocation = parts.length >= 5 ? parts[4] : ""; // Get the location
+                        line = username + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
+
                         userFound = true;
                     }
                     lines.add(line);
@@ -191,19 +198,19 @@ public class UserAccountManager {
             }
 
             // Update the user entry in Users.txt
-            updateUserInUsersFile(oldUsername, username, email, password, accessibility);
+            updateUserInUsersFile(oldUsername, username, email, password, accessibility, currentLocation);
         } else {
             System.err.println("No user is logged in.");
         }
     }
 
-    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
+    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility, String currentLocation) {
         List<String> updatedLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith(oldUsername + "|")) {
-                    line = newUsername + "|" + email + "|" + password + "|" + accessibility;
+                    line = newUsername + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
                 }
                 updatedLines.add(line);
             }
