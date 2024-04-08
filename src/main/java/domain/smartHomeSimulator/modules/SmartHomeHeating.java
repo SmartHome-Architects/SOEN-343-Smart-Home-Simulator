@@ -23,6 +23,8 @@ public class SmartHomeHeating implements Observable{
     private boolean isActive;
     private Timer timer;
 
+    private boolean paused = true;
+
     private double tempRate = 0.05;
 
     public SmartHomeHeating(Map<Room,JLabel> temperatureLabels){
@@ -30,7 +32,6 @@ public class SmartHomeHeating implements Observable{
         this.isActive = false;
         this.timer = new Timer();
         this.temperatureLabels = temperatureLabels;
-        startTimer(); //start HVAC update timer
     }
 
     public double getOutsideTemp() {
@@ -40,13 +41,28 @@ public class SmartHomeHeating implements Observable{
     public void setOutsideTemp(double outsideTemp) {
         this.outsideTemp = outsideTemp;
     }
-    private void startTimer() {
+    public void startTimer(int speed){
+        timer.cancel();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000); //update every second if simulation speed set to default
+                    timer.scheduleAtFixedRate(new TemperatureUpdateTask(), 0, 1000/speed); //update every second if simulation speed set to default
             }
         }, 2000);
+    }
+
+    public void pauseTimer(){
+        paused = true;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void resumeTimer(int speedMultiplier){
+        paused = false;
+        startTimer(speedMultiplier);
     }
 
     public void attach(Zone zone){
@@ -85,7 +101,7 @@ public class SmartHomeHeating implements Observable{
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(boolean active){
         isActive = active;
         if(isActive()){
             this.tempRate = 0.1; // temp rate when SHH active.
@@ -104,28 +120,30 @@ public class SmartHomeHeating implements Observable{
 
     private class TemperatureUpdateTask extends TimerTask{
         @Override
-        public void run() {
-            notifyObservers();
+        public void run(){
+            if(!paused){
+                notifyObservers();
+            }
         }
     }
 
-    public List<Zone> getZones() {
+    public List<Zone> getZones(){
         return zones;
     }
 
-    public void loadZones(House h) throws IOException {
+    public void loadZones(House h) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         String file = "database/zones.json";
         List<Map<String, Object>> zoneList = mapper.readValue(new File(file), new TypeReference<List<Map<String, Object>>>() {});
-        for (Map<String, Object> zoneMap : zoneList) {
+        for (Map<String, Object> zoneMap : zoneList){
             String zoneName = (String) zoneMap.get("zoneName");
             double desiredTemperature = (double) zoneMap.get("desiredTemperature");
             Zone zone = new Zone(zoneName,desiredTemperature);
             List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
-            for (Map<String, Object> roomMap : roomList) {
+            for (Map<String, Object> roomMap : roomList){
                 String roomName = roomMap.get("roomName").toString();
                 List<Room> rooms = h.getRooms();
-                for (Room r:rooms) {
+                for (Room r:rooms){
                     if(r.getRoomName().equals(roomName)){
                         zone.addRoomToZone(r);
                     }

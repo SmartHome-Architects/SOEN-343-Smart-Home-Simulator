@@ -46,6 +46,13 @@ LoggedInUser {
         return null;
     }
 
+    public String getUserType(){
+        if(loggedInUser != null){
+            return loggedInUser.getType();
+        }
+        return null;
+    }
+
 
     @Override
     public String toString() {
