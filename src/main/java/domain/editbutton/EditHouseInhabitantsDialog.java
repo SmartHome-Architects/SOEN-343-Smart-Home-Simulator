@@ -164,14 +164,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
             }
         }
 
-        JLabel jLabel = userLabels.get(inhabitant);
-
-        if (jLabel != null) { // Check if the label exists
-            jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
-        } else {
-            System.err.println("Label not found for inhabitant: " + inhabitant);
-            return; // Exit the method if the label is not found
-        }
+        JLabel jLabel = userLabels.get(user.getLoggedInUser().getUsername());
+        jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10),new_y_bound,30,30);
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");
@@ -195,14 +189,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
     private void updateUserLocation(String username, String newLocation) {
-//        // Get the instance of UserAccountManager
+        // Get the instance of UserAccountManager
+        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
-//
-//        // Update the location in the user's file
-
-
-        UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
-        userAccountManager1.updateUserLocation(username, newLocation);
+        // Update the location in the user's file
+        userAccountManager.updateUserLocation(username, newLocation);
     }
 
 

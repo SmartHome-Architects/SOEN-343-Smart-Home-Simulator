@@ -335,12 +335,9 @@ public class SignUp extends javax.swing.JFrame {
             return; // Exit the method
         }
 
-        // Assign default location "Entrance"
-        String defaultLocation = "Entrance";
-
         // Write user information to text file
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.println(username + "|" + email + "|" + password + "|" + userType + "|" + defaultLocation);
+            writer.println(username + "|" + email + "|" + password + "|" + userType);
             JOptionPane.showMessageDialog(this, "Registration Successful!");
             this.setVisible(false);
 

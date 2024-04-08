@@ -357,6 +357,9 @@ public class MainFrame {
                     }
                 }
 
+                // Update the user's location in the UserAccountManager
+                userAccountManager.updateUserLocation(loggedInUsername, newLocation);
+
                 // Turn on lights in the new room
                 if (newRoom != null) {
                     for (Light light : newRoom.getLights()) {
@@ -373,6 +376,7 @@ public class MainFrame {
                 // Implement logic to refresh the display
             }
         });
+
 
 
         //Deletes the user profile to the text file
@@ -444,7 +448,7 @@ public class MainFrame {
         shs.loadTempUnitIcons(h,houseImage,tempUnitLabels);
 
 
-        List<Users> usersList = UserSingleton.getAllUser();
+        List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
 
     // Keep track of whether any user is in a room
@@ -460,11 +464,12 @@ public class MainFrame {
                     JLabel label = new JLabel();
                     label.setName("house");
                     label.setIcon(userIcon);
+                    if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
                         label.setText(u.getUsername());
                         label.setHorizontalTextPosition(JLabel.CENTER);
                         label.setVerticalTextPosition(JLabel.CENTER);
-
+                    }
                     label.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
                     houseImage.add(label);
                     userLabels.put(u.getUsername(), label);

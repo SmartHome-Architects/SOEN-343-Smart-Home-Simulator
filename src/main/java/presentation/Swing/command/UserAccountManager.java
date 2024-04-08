@@ -34,12 +34,9 @@ public class UserAccountManager {
 
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
-
-            String defaultLocation = "Entrance"; // Set default location to "Entrance"
-
             // Append user to users.txt
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + "Users.txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
@@ -47,7 +44,7 @@ public class UserAccountManager {
 
             // Append user to the file named after the logged-in user
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + loggedInUsername + ".txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
@@ -71,6 +68,7 @@ public class UserAccountManager {
         List<String> existingUsernames = getAllUsernames(); // Implement this method to get existing usernames
         return existingUsernames.contains(username);
     }
+
 
 
     private List<String> getAllUsernames() {
@@ -157,8 +155,6 @@ public class UserAccountManager {
 
     public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         String loggedInUsername = getLoggedInUsername();
-        String currentLocation = "";
-
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
@@ -167,12 +163,7 @@ public class UserAccountManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith(oldUsername + "|")) {
-
-                        // Preserve the location information
-                        String[] parts = line.split("\\|");
-                        currentLocation = parts.length >= 5 ? parts[4] : ""; // Get the location
-                        line = username + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
-
+                        line = username + "|" + email + "|" + password + "|" + accessibility;
                         userFound = true;
                     }
                     lines.add(line);
@@ -197,19 +188,19 @@ public class UserAccountManager {
             }
 
             // Update the user entry in Users.txt
-            updateUserInUsersFile(oldUsername, username, email, password, accessibility, currentLocation);
+            updateUserInUsersFile(oldUsername, username, email, password, accessibility);
         } else {
             System.err.println("No user is logged in.");
         }
     }
 
-    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility, String currentLocation) {
+    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
         List<String> updatedLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith(oldUsername + "|")) {
-                    line = newUsername + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
+                    line = newUsername + "|" + email + "|" + password + "|" + accessibility;
                 }
                 updatedLines.add(line);
             }
