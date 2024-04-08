@@ -1,4 +1,2 @@
-rana|rana@gmail.com|rana|Parent|Entrance
-d|d|d|Parent|Garage
-gigi|gigi@gmail.com|gigi|Children|Living Room
-f|f|f|Parent|Outside
+j|j@gmail.com|j|Children|Outside
+s|s@gmail.com|s|Parent|Outside

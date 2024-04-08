@@ -486,11 +486,13 @@ public class MainFrame {
                     // Mark that the user is in the room
                     userInRoom = true;
 
-                    // Turn on lights in the room
-                    List<Light> lights = r.getLights();
-                    for (Light light : lights) {
-                        light.turnOn(); // Assuming you have a method to turn on the light
-                        // The associated JLabel's icon will be updated automatically
+                    if(!r.getRoomName().equals("Outside")) {
+                        // Turn on lights in the room
+                        List<Light> lights = r.getLights();
+                        for (Light light : lights) {
+                            light.turnOn(); // Assuming you have a method to turn on the light
+                            // The associated JLabel's icon will be updated automatically
+                        }
                     }
 
                     // Break the loop once user is found in the room
