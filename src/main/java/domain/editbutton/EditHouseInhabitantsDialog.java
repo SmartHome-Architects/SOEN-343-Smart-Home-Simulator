@@ -29,11 +29,11 @@ public class EditHouseInhabitantsDialog extends JDialog {
     private House houseInstance;
     private String selectedUsername;
     private LogEntry logEntry;
-    private Map<String,JLabel> userLabels;
+    private Map<String, JLabel> userLabels;
 
     private LoggedInUser user;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user, JLabel locationTag, JTextArea textArea1) {
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String, JLabel> userLabels, LoggedInUser user, JLabel locationTag, JTextArea textArea1) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
@@ -101,7 +101,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
 
-        public void populateLocationComboBoxWithRoomNames() {
+    public void populateLocationComboBoxWithRoomNames() {
         List<String> roomNames = houseInstance.getRoomNames();
         locationComboBox.removeAllItems();
         for (String roomName : roomNames) {
@@ -160,8 +160,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         int new_x_bound = 0;
         int new_y_bound = 0;
-        for (Room r: rooms) {
-            if(r.getRoomName().equals(newLocation)){
+        for (Room r : rooms) {
+            if (r.getRoomName().equals(newLocation)) {
                 new_x_bound = r.getX();
                 new_y_bound = r.getY();
             }
@@ -170,29 +170,23 @@ public class EditHouseInhabitantsDialog extends JDialog {
         JLabel jLabel = userLabels.get(inhabitant);
 
         if (jLabel != null) { // Check if the label exists
-            jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
+            jLabel.setBounds(new_x_bound + (int) (Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
         } else {
             System.err.println("Label not found for inhabitant: " + inhabitant);
             return; // Exit the method if the label is not found
         }
 
-        if (newLocation.equals("Outside")) {
-            System.out.println("Moving " + inhabitant + " outside the home");
-        } else {
-            System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
+        System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
 
-            // Log the location change in database
-            logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant , oldLocation, newLocation);
+        // Log the location change in database
+        logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant, oldLocation, newLocation);
 
-            // Update the location in the user's file
-            updateUserLocation(inhabitant, newLocation);
-            // Update the oldLocation to the new location
-            oldLocation = newLocation;
-            // Assuming you have a JLabel locationTag to display the location
-            locationTag.setText(newLocation); // Update the displayed location in locationTag
-        }
-
-
+        // Update the location in the user's file
+        updateUserLocation(inhabitant, newLocation);
+        // Update the oldLocation to the new location
+        oldLocation = newLocation;
+        // Assuming you have a JLabel locationTag to display the location
+        locationTag.setText(newLocation); // Update the displayed location in locationTag
 
         dispose();
     }

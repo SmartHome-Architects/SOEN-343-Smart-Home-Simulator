@@ -308,25 +308,24 @@ public class UserAccountManager {
     }
 
     public void updateUserLocation(String username, String newLocation) {
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length >= 5 && parts[0].equals(username)) {
-                    parts[4] = newLocation; // Update the location
+        try {
+            File tempFile = new File(usersFile.getAbsolutePath() + ".tmp");
+            try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length >= 5 && parts[0].equals(username)) {
+                        parts[4] = newLocation; // Update the location
+                        line = String.join("|", parts); // Reconstruct the line with updated location
+                    }
+                    writer.write(line);
+                    writer.newLine();
                 }
-                lines.add(String.join("|", parts)); // Reconstruct the line
             }
-        } catch (IOException e) {
-            handleFileError("Error updating user location", e);
-            return;
-        }
-        // Write the updated content back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
+            // Replace the original file with the temporary file
+            if (!tempFile.renameTo(usersFile)) {
+                throw new IOException("Could not rename temporary file to the original file.");
             }
         } catch (IOException e) {
             handleFileError("Error updating user location", e);

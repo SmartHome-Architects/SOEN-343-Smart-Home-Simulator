@@ -865,11 +865,6 @@ public class MainFrame {
         houseImage.repaint();
     }
 
-
-
-
-
-
     private void freezeComponents() {
         // Disable all components
         setComponentEnabled(WindowContainer, false);
