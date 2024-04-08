@@ -73,7 +73,7 @@ public class SmartHomeSimulator {
         }
     }
 
-    public void loadWindowIcons(House h, JPanel houseImage, Map<Window, JLabel> windowLabels){
+    public void loadWindowIcons(House h, JPanel houseImage, Map<Window, JLabel> windowLabels, SmartHomeSecurity securitySystem){
         ImageIcon opened = loadImageIcon("images/open.png");
         ImageIcon closed = loadImageIcon("images/closed.png");
 
@@ -90,11 +90,26 @@ public class SmartHomeSimulator {
             houseImage.add(label);
             windowLabels.put(window,label);
         }
+
+        // After loading window icons, set windows and labels in SmartHomeSecurity
+        securitySystem.setWindowsAndLabels(h.getWindows(), windowLabels);
     }
+
 
     private ImageIcon loadImageIcon(String path) {
         ImageIcon icon = new ImageIcon(path);
         Image image = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
+    }
+
+    public void initSlider(JSlider slider1){
+        slider1.setMinimum(1);
+        slider1.setMaximum(3);
+        slider1.setValue(1);
+        slider1.setMajorTickSpacing(1);
+        slider1.setMinorTickSpacing(0);
+        slider1.setPaintTicks(true);
+        slider1.setPaintLabels(true);
+        slider1.setBackground(Color.WHITE);
     }
 }
