@@ -3,6 +3,9 @@ package domain.editbutton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,13 +204,28 @@ public class EditHouseInhabitantsDialog extends JDialog {
             userAccountManager.updateUserLocation(username, newLocation);
 
         } else {
+
+            try (BufferedReader br = new BufferedReader(new FileReader("database/Users.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length > 0 && parts[0].equals(username)) {
+                        // Username found in Users.txt, update location directly
+                        UserAccountManager userAccountManager2 = new UserAccountManager("database/Users.txt");
+                        userAccountManager2.updateUserLocation(username, newLocation);
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
             userAccountManager1.updateUserLocation(username, newLocation);
+
         }
+
     }
-
-
-
 
     private void displayLoggedInUserContent(List<String> loggedInUserContent) {
         // Display the content of the logged-in user's file
