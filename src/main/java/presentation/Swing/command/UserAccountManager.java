@@ -73,7 +73,6 @@ public class UserAccountManager {
     }
 
 
-
     private List<String> getAllUsernames() {
         List<String> usernames = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {

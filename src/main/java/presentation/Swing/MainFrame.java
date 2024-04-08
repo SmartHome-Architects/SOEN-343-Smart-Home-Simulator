@@ -406,9 +406,6 @@ public class MainFrame {
                     }
                 }
 
-                // Update the user's location in the UserAccountManager
-                userAccountManager.updateUserLocation(loggedInUsername, newLocation);
-
                 // Turn on lights in the new room
                 if (newRoom != null) {
                     for (Light light : newRoom.getLights()) {
