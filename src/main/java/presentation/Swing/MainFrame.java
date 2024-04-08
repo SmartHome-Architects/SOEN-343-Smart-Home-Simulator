@@ -803,6 +803,8 @@ public class MainFrame {
     }
 
     public void regenerateUserIcons(List<Users> usersList, List<Room> rooms) {
+        boolean userInAnyRoom = false;
+
         // Remove old user icons from the layout
         for (JLabel label : userLabels.values()) {
             houseImage.remove(label);
@@ -811,6 +813,8 @@ public class MainFrame {
 
         // Iterate through all rooms
         for (Room r : rooms) {
+            boolean userInRoom = false;
+
             // Add user icons
             for (Users newUser : usersList) {
                 if (newUser.getLocation().equals(r.getRoomName())) {
@@ -823,6 +827,32 @@ public class MainFrame {
                     userLabel.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
                     houseImage.add(userLabel);
                     userLabels.put(newUser.getUsername(), userLabel);
+
+                    // Mark that the user is in the room
+                    userInRoom = true;
+                }
+            }
+
+            // Turn on lights in the room if user is present
+            if (userInRoom) {
+                List<Light> lights = r.getLights();
+                for (Light light : lights) {
+                    light.turnOn(); // Assuming you have a method to turn on the light
+                    // The associated JLabel's icon will be updated automatically
+                }
+            }
+
+            // Update the overall status of whether any user is in a room
+            userInAnyRoom |= userInRoom;
+        }
+
+        // If no user is in any room, turn off lights in all rooms
+        if (!userInAnyRoom) {
+            for (Room r : rooms) {
+                List<Light> lights = r.getLights();
+                for (Light light : lights) {
+                    light.turnOff(); // Assuming you have a method to turn off the light
+                    // The associated JLabel's icon will be updated automatically
                 }
             }
         }
