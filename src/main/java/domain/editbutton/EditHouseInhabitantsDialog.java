@@ -194,6 +194,9 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         // Update the location in the user's file
         userAccountManager.updateUserLocation(username, newLocation);
+
+        UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
+        userAccountManager1.updateUserLocation(username, newLocation);
     }
 
 
