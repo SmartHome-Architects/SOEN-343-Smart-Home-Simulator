@@ -224,7 +224,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
             userAccountManager1.updateUserLocation(username, newLocation);
 
         }
-
     }
 
     private void displayLoggedInUserContent(List<String> loggedInUserContent) {
