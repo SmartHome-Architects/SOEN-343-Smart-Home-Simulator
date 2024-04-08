@@ -155,6 +155,8 @@ public class MainFrame {
             System.out.println(e);
         }
 
+        shs.initSlider(slider1);
+
         //---------------------individual room temp --------------------------
         roomTempButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

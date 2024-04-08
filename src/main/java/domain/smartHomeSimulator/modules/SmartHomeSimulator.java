@@ -97,4 +97,15 @@ public class SmartHomeSimulator {
         Image image = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
+
+    public void initSlider(JSlider slider1){
+        slider1.setMinimum(1);
+        slider1.setMaximum(3);
+        slider1.setValue(1);
+        slider1.setMajorTickSpacing(1);
+        slider1.setMinorTickSpacing(0);
+        slider1.setPaintTicks(true);
+        slider1.setPaintLabels(true);
+        slider1.setBackground(Color.WHITE);
+    }
 }
