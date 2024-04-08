@@ -164,8 +164,14 @@ public class EditHouseInhabitantsDialog extends JDialog {
             }
         }
 
-        JLabel jLabel = userLabels.get(user.getLoggedInUser().getUsername());
-        jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10),new_y_bound,30,30);
+        JLabel jLabel = userLabels.get(inhabitant);
+
+        if (jLabel != null) { // Check if the label exists
+            jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
+        } else {
+            System.err.println("Label not found for inhabitant: " + inhabitant);
+            return; // Exit the method if the label is not found
+        }
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");

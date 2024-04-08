@@ -583,7 +583,7 @@ public class MainFrame {
         }
 
 
-        List<Users> usersList = UsersInitializer.getAllUsers();
+        List<Users> usersList = UserSingleton.getAllUser();
         List<Room> rooms = h.getRooms();
 
     // Keep track of whether any user is in a room
@@ -598,12 +598,11 @@ public class MainFrame {
                     // Assuming user location matches room name correctly
                     JLabel label = new JLabel();
                     label.setIcon(userIcon);
-                    if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
                         label.setText(u.getUsername());
                         label.setHorizontalTextPosition(JLabel.CENTER);
                         label.setVerticalTextPosition(JLabel.CENTER);
-                    }
+
                     label.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
                     houseImage.add(label);
                     userLabels.put(u.getUsername(), label);
