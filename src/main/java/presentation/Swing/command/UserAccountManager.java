@@ -1,5 +1,9 @@
 package presentation.Swing.command;
 
+import domain.Permission.Permission;
+import domain.user.UserPermissionInitializer;
+import domain.user.Users;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +14,8 @@ public class UserAccountManager {
     private final File loggedInUserFile;
     private final File usersFile;
     private final String databaseDirectory;
+
+    private Users lastAddedUser;
 
     public UserAccountManager(String usersFilePath) {
         this.loggedInUserFile = new File("database/userNameLoggedIn.txt");
@@ -52,6 +58,11 @@ public class UserAccountManager {
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
             }
+
+            Permission permission = UserPermissionInitializer.initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/SHHPermission.txt","database/SHPPermission.txt", accessibility);
+            // Set the last added user
+            lastAddedUser = new Users(username, email, password, accessibility, defaultLocation, permission);
+
         } else {
             System.err.println("No user is logged in. Cannot add user.");
         }
@@ -320,6 +331,10 @@ public class UserAccountManager {
         } catch (IOException e) {
             handleFileError("Error updating user location", e);
         }
+    }
+
+    public Users getLastAddedUser() {
+        return lastAddedUser;
     }
 
 }

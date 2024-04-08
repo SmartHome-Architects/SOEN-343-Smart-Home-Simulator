@@ -12,6 +12,7 @@ import static domain.user.UsersInitializer.initializeUsers;
 
 public class UserSingleton {
     private static LoggedInUser userInstance;
+    private static Users lastAddedUser;
 
     public static void setUser(LoggedInUser user) {
         userInstance = user;
@@ -56,17 +57,46 @@ public class UserSingleton {
 
                 Users user = new Users(username, email, password, userType, location, permission);
                 usersList.add(user);
+                lastAddedUser = user; // Update the last added user
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+
+        Users loginUser = userInstance.getLoggedInUser();
+        if (loginUser != null) {
+            usersList.add(loginUser);
         }
 
         return usersList;
     }
 
     public static List<Users> getAllUser() {
-        // initial all users and get them
-        return initializeUsers("database/" + userInstance.getLoggedInUser().getUsername() + ".txt");
+        String filename = "database/" + userInstance.getLoggedInUser().getUsername() + ".txt";
+
+        // Initialize the list of users
+        List<Users> userList = new ArrayList<>();
+
+        // Check if the file exists
+        File file = new File(filename);
+        if (!file.exists()) {
+            System.out.println("User file does not exist: " + filename);
+
+            // Add the logged-in user to the list
+            Users loginUser = userInstance.getLoggedInUser();
+            if (loginUser != null) {
+                userList.add(loginUser);
+            }
+
+            return userList;
+        }
+
+        // If the file exists, initialize and return the list of users
+        return initializeUsers(filename);
+    }
+
+    public static Users getLastAddedUser() {
+        return lastAddedUser;
     }
 
 
