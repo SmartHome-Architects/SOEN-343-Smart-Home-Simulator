@@ -477,6 +477,9 @@ public class MainFrame {
                         label.setVerticalTextPosition(JLabel.CENTER);
                     }
                     label.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
+                    if(u.getLocation().equals("Outside")){
+                        label.hide();
+                    }
                     houseImage.add(label);
                     userLabels.put(u.getUsername(), label);
 
