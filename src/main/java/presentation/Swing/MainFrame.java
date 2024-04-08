@@ -283,17 +283,20 @@ public class MainFrame {
                 AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, username, email, password, accessibility);
                 addProfileCommand.execute();
 
+                // Retrieve the newly added user
+                regenerateUserIcons(UserSingleton.getAllUser(), h.getRooms());
+
                 // Log the user profile addition
                 LogEntry.setTextArea(textArea1);
                 LogEntry.Profilelog(user.getLoggedInUser().getUsername(),"SHS Module", "Manage User Profile", addLog);
 
                 // Show success message
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Added Successfully!");
+
             }
         });
 
-
-    // Assuming you have a JLabel locationTag to display the location
+        // Assuming you have a JLabel locationTag to display the location
         String loggedInUsername = userAccountManager.getLoggedInUsername();
         String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
         locationTag.setText(oldLocation);
@@ -529,6 +532,8 @@ public class MainFrame {
         houseLayoutLabel.setBounds(0, -60, 550, 500);
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
 
+
+
         //-------------------------------------------------------------------------------------------------------------
 
         tabbedPane1.addChangeListener(new ChangeListener() {
@@ -700,8 +705,71 @@ public class MainFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
+    public void regenerateUserIcons(List<Users> usersList, List<Room> rooms) {
+        boolean userInAnyRoom = false;
+
+        // Remove old user icons from the layout
+        for (JLabel label : userLabels.values()) {
+            houseImage.remove(label);
+        }
+        userLabels.clear(); // Clear the userLabels map
+
+        // Iterate through all rooms
+        for (Room r : rooms) {
+            boolean userInRoom = false;
+
+            // Add user icons
+            for (Users newUser : usersList) {
+                if (newUser.getLocation().equals(r.getRoomName())) {
+                    JLabel userLabel = new JLabel();
+                    userLabel.setIcon(userIcon);
+                    userLabel.setForeground(Color.red);
+                    userLabel.setText(newUser.getUsername());
+                    userLabel.setHorizontalTextPosition(JLabel.CENTER);
+                    userLabel.setVerticalTextPosition(JLabel.CENTER);
+                    userLabel.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
+                    houseImage.add(userLabel);
+                    userLabels.put(newUser.getUsername(), userLabel);
+
+                    // Mark that the user is in the room
+                    userInRoom = true;
+                }
+            }
+
+            // Turn on lights in the room if user is present
+            if (userInRoom) {
+                List<Light> lights = r.getLights();
+                for (Light light : lights) {
+                    light.turnOn(); // Assuming you have a method to turn on the light
+                    // The associated JLabel's icon will be updated automatically
+                }
+            }
+
+            // Update the overall status of whether any user is in a room
+            userInAnyRoom |= userInRoom;
+        }
+
+        // If no user is in any room, turn off lights in all rooms
+        if (!userInAnyRoom) {
+            for (Room r : rooms) {
+                List<Light> lights = r.getLights();
+                for (Light light : lights) {
+                    light.turnOff(); // Assuming you have a method to turn off the light
+                    // The associated JLabel's icon will be updated automatically
+                }
+            }
+        }
+
+        houseLayoutLabel.setBounds(0, -60, 550, 500);
+        houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
+
+        // Repaint the house layout to reflect the changes
+        houseImage.revalidate();
+        houseImage.repaint();
+    }
 
     private void freezeComponents() {
         // Disable all components

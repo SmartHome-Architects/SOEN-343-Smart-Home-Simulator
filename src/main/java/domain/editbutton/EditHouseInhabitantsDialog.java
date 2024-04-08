@@ -115,45 +115,35 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         JButton saveButton = new JButton("Save");
         JButton cancelButton = new JButton("Cancel");
-        JButton moveUsersButton = new JButton("Move User"); // Creating the "bb" button
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
-        buttonPanel.add(moveUsersButton); // Adding the "MoveUser" button
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
-
     private void addListeners() {
         // ActionListener for saveButton
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
             saveChanges();
-
-        });
-
-
-        JButton moveUsersButton = new JButton("Move All User");
-        moveUsersButton.addActionListener(e -> {
-            //add the action
+            // Example of logging an event
         });
 
         // ActionListener for cancelButton
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> {
             dispose();
-
+            // Example of logging an event
         });
 
         // Add save and cancel buttons to the button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
-        buttonPanel.add(moveUsersButton);
 
         // Add the button panel to the dialog
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -174,12 +164,17 @@ public class EditHouseInhabitantsDialog extends JDialog {
             }
         }
 
-        JLabel jLabel = userLabels.get(user.getLoggedInUser().getUsername());
-        jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10),new_y_bound,30,30);
+        JLabel jLabel = userLabels.get(inhabitant);
+
+        if (jLabel != null) { // Check if the label exists
+            jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
+        } else {
+            System.err.println("Label not found for inhabitant: " + inhabitant);
+            return; // Exit the method if the label is not found
+        }
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");
-            jLabel.hide();
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
 
@@ -192,7 +187,6 @@ public class EditHouseInhabitantsDialog extends JDialog {
             oldLocation = newLocation;
             // Assuming you have a JLabel locationTag to display the location
             locationTag.setText(newLocation); // Update the displayed location in locationTag
-            jLabel.show();
         }
 
 
@@ -201,11 +195,14 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
     private void updateUserLocation(String username, String newLocation) {
-        // Get the instance of UserAccountManager
-        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+//        // Get the instance of UserAccountManager
 
-        // Update the location in the user's file
-        userAccountManager.updateUserLocation(username, newLocation);
+//
+//        // Update the location in the user's file
+
+
+        UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
+        userAccountManager1.updateUserLocation(username, newLocation);
     }
 
 
