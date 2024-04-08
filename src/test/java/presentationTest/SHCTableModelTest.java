@@ -2,8 +2,10 @@ package presentationTest;
 
 import domain.house.House;
 import domain.sensors.Door;
+import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import org.junit.Test;
 import presentation.Swing.SHC.SHCTableModel;
+import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -43,7 +45,7 @@ public class SHCTableModelTest {
         String selectedItem = "Doors";
         JTextArea textArea1 = new JTextArea();
         DefaultTableModel model = new DefaultTableModel(new Object[][]{{"Living Room Door", "Open"}}, new Object[]{"Room Name", "Open/Close"});
-        JTable table = SHCTableModel.createTable(model,house,selectedItem, textArea1);
+        JTable table = SHCTableModel.createTable(model,house,selectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("a.txt")));
 
         assertNotNull("Table should not be null", table);
         assertEquals("Table should have correct number of rows", 1, table.getRowCount());

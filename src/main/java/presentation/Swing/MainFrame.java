@@ -151,9 +151,11 @@ public class MainFrame {
 
         SmartHomeSimulator shs = new SmartHomeSimulator();
 
-        SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels);
+        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
+        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager); // Create an instance
 
+        SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels,smartHomeSecurity);
 
         try {
             shh.loadZones(h);
@@ -225,10 +227,6 @@ public class MainFrame {
 
         //--------------------------Account Management-----------------------------------------------------------------
 
-
-        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
-
-        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager); // Create an instance
         AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
         DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, "");
         EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, "", "", "", "", "");
@@ -551,7 +549,7 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
-                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1);
+                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1,smartHomeSecurity);
                 if (selectedItem.equals("Doors")) {
                     displayHelper.displayItems(h.getDoors());
                 } else if (selectedItem.equals("Windows")) {

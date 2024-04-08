@@ -27,11 +27,14 @@ public class SmartHomeHeating implements Observable{
 
     private double tempRate = 0.05;
 
-    public SmartHomeHeating(Map<Room,JLabel> temperatureLabels){
+    private SmartHomeSecurity shp;
+
+    public SmartHomeHeating(Map<Room,JLabel> temperatureLabels, SmartHomeSecurity shp){
         //this.user = user;
         this.isActive = false;
         this.timer = new Timer();
         this.temperatureLabels = temperatureLabels;
+        this.shp = shp;
     }
 
     public double getOutsideTemp() {
@@ -114,7 +117,7 @@ public class SmartHomeHeating implements Observable{
 
     public void notifyObservers(){
         for (Zone z: zones) {
-            z.update(tempRate,isActive(),outsideTemp,temperatureLabels);
+            z.update(tempRate,isActive(),outsideTemp,temperatureLabels,shp.isAwayModeActive());
         }
     }
 

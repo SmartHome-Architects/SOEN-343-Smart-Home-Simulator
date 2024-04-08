@@ -2,6 +2,7 @@ package presentation.Swing.SHC;
 
 import domain.house.House;
 import domain.smartHomeSimulator.modules.SmartHomeCore;
+import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
 import presentation.Swing.LogEntry;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class SHCTableModel<T> {
     private static LoggedInUser user;
     private LogEntry logEntry;
+    private  static SmartHomeSecurity shp;
 
     public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem, JTextArea textArea1) {
         List<Object[]> data = getData(items, singleItem);
@@ -51,7 +53,8 @@ public class SHCTableModel<T> {
         return data;
     }
 
-    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1) {
+    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1, SmartHomeSecurity security) {
+        shp = security;
         return new JTable(model) {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
@@ -76,13 +79,13 @@ public class SHCTableModel<T> {
         };
     }
 
-    static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
-        public CheckBoxRenderer() {
+    static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer{
+        public CheckBoxRenderer(){
             setHorizontalAlignment(SwingConstants.LEFT);
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
             setSelected(value != null && (boolean) value);
             return this;
         }
@@ -168,20 +171,25 @@ public class SHCTableModel<T> {
         }
 
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            checkBox.setSelected(value != null && (boolean) value);
-            // Disable checkbox if user doesn't have permission
-            checkBox.setEnabled(checkBox.isSelected() || selectedItem.equals("Lights") || selectedItem.equals("Doors") || selectedItem.equals("Windows"));
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column){
+            if(shp.isAwayModeActive()){
+                checkBox.setEnabled(false);
+                return null;
+            }
+            else{
+                checkBox.setSelected(value != null && (boolean) value);
+                checkBox.setEnabled(checkBox.isSelected() || selectedItem.equals("Lights") || selectedItem.equals("Doors") || selectedItem.equals("Windows"));
+            }
             return checkBox;
         }
 
         @Override
-        public Object getCellEditorValue() {
+        public Object getCellEditorValue(){
             return checkBox.isSelected();
         }
     }
 
-    public interface SingleItem<T> {
+    public interface SingleItem<T>{
         Object[] extractData(T item);
     }
 }
