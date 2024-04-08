@@ -462,6 +462,7 @@ public class MainFrame {
                 if (r.getRoomName().equals(location)) {
                     // Assuming user location matches room name correctly
                     JLabel label = new JLabel();
+                    label.setName("house");
                     label.setIcon(userIcon);
                     if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
@@ -506,6 +507,7 @@ public class MainFrame {
         for (Room r: rooms) {
             if(!(r.getRoomName().equals("Outside"))){
                 JLabel label = new JLabel();
+                label.setName("house");
                 String temp = Double.toString(r.getTemperature());
                 label.setForeground(Color.blue);
                 label.setText(temp + "°");
@@ -615,10 +617,12 @@ public class MainFrame {
                     // Freeze all components except the off button
                     freezeComponents();
                     buttonOff.setText("ON");
+                    shh.resumeTimer(shs.getSimSpeed());
                 } else {
                     // Unfreeze all components
                     unfreezeComponents();
                     buttonOff.setText("Off");
+                    shh.pauseTimer();
                 }
                 // Toggle freeze state
                 isFrozen = !isFrozen;
@@ -653,6 +657,7 @@ public class MainFrame {
                 double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
                 temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
                 shh.setOutsideTemp(temperature1);
+                shs.simulateWeather(temperature1,temperature,shh);
             } else {
                 temperature.setText("Temperature data not found for the current time.");
             }
@@ -668,6 +673,8 @@ public class MainFrame {
         time.setVisible(false);
         // Enable the off button
         buttonOff.setEnabled(true);
+        houseImage.setEnabled(true);
+        houseLayoutLabel.setEnabled(true);
     }
 
     // Method to unfreeze all components
@@ -677,6 +684,8 @@ public class MainFrame {
         time.setVisible(true);
         // Enable the off button
         buttonOff.setEnabled(true);
+        houseImage.setEnabled(true);
+        houseLayoutLabel.setEnabled(true);
     }
 
     // Recursive method to set component enabled state
@@ -687,8 +696,9 @@ public class MainFrame {
                 setComponentEnabled(comp, enabled);
             }
         }
-        component.setEnabled(enabled);
-
+        if(component.getName() != "house"){
+            component.setEnabled(enabled);
+        }
     }
 
 
