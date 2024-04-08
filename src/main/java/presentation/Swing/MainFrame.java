@@ -12,6 +12,7 @@ import domain.house.Room;
 import domain.sensors.*;
 import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
+import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import domain.smartHomeSimulator.modules.SmartHomeSimulator;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
@@ -49,6 +50,7 @@ import java.util.Objects;
 public class MainFrame {
 
     private boolean SHHisOn;
+    private boolean AwayModeOn;
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
@@ -146,9 +148,13 @@ public class MainFrame {
         userTag.setText(user.getUserType());
         House h = new House();
 
+
         SmartHomeSimulator shs = new SmartHomeSimulator();
 
         SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels);
+
+
+
         try {
             shh.loadZones(h);
         }catch (IOException e){
@@ -222,6 +228,7 @@ public class MainFrame {
 
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
+        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager); // Create an instance
         AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
         DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, "");
         EditProfileCommand editProfileCommand = new EditProfileCommand(userAccountManager, "", "", "", "", "");
@@ -396,6 +403,7 @@ public class MainFrame {
             }
         });
 
+
         //Edits the user profile in the text file
         Edit_Profile.addActionListener(new ActionListener() {
             @Override
@@ -443,8 +451,8 @@ public class MainFrame {
         userIcon = new ImageIcon(userImage);
 
         shs.loadLightIcons(h,houseImage,lightLabels);
-        shs.loadDoorIcons(h,houseImage,doorLabels);
-        shs.loadWindowIcons(h,houseImage,windowLabels);
+        shs.loadDoorIcons(h,houseImage,doorLabels,smartHomeSecurity);
+        shs.loadWindowIcons(h, houseImage, windowLabels, smartHomeSecurity);
         shs.loadTempUnitIcons(h,houseImage,tempUnitLabels);
 
 
@@ -571,10 +579,10 @@ public class MainFrame {
                 loginPage.setVisible(true);            }
         });
 
-
         //-------------------------------------------------------------------------------------------------------------
 
-// ON/OFF SHH button
+
+     // ON/OFF SHH button
         SHHisOn = false;
         onOffSHHButton.addActionListener(new ActionListener() {
             @Override
@@ -608,8 +616,35 @@ public class MainFrame {
             }
         });
 
-        //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
+//away mode
+        onOffAwayModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if the user is outside before toggling away mode
+                String loggedInUsername = userAccountManager.getLoggedInUsername();
+                if (loggedInUsername != null && "Outside".equals(userAccountManager.getUserLocation(loggedInUsername))) {
+                    // Toggle the away mode when the button is clicked
+                    smartHomeSecurity.toggleAwayMode();
 
+                    // Set the button text to "On" when away mode is activated
+                    if (smartHomeSecurity.isAwayModeActive()) {
+                        onOffAwayModeButton.setText("On");
+                    } else {
+                        onOffAwayModeButton.setText("Off");
+                    }
+
+                    // If away mode is activated, close all windows and doors
+                    if (smartHomeSecurity.isAwayModeActive()) {
+                        smartHomeSecurity.closeAllWindowsAndDoors(); // Close all windows and doors
+                    }
+                } else {
+                    // Display a popup message indicating that the user is inside
+                    JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
 
         buttonOff.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

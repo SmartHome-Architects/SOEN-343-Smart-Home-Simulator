@@ -69,11 +69,12 @@ public class SmartHomeSimulator {
         }
     }
 
-    public void loadDoorIcons(House h, JPanel houseImage, Map<Door, JLabel> doorLabels){
+    public void loadDoorIcons(House h, JPanel houseImage, Map<Door, JLabel> doorLabels, SmartHomeSecurity securitySystem){
         ImageIcon opened = loadImageIcon("images/open.png");
         ImageIcon closed = loadImageIcon("images/closed.png");
 
         for(Door door: h.getDoors()){
+
             JLabel label= new JLabel();
             label.setName("house");
             if(door.isOpen()){
@@ -82,14 +83,18 @@ public class SmartHomeSimulator {
             else{
                 label.setIcon(closed);
             }
-            label.setBounds(door.getX(),door.getY(),30,30);
+            label.setBounds(door.getX(), door.getY(), 30, 30);
             door.setDoorLabel(label);
             houseImage.add(label);
-            doorLabels.put(door,label);
+            doorLabels.put(door, label);
         }
+
+        // After loading door icons, set doors and labels in SmartHomeSecurity
+        securitySystem.setDoorsAndLabels(h.getDoors(), doorLabels);
     }
 
-    public void loadWindowIcons(House h, JPanel houseImage, Map<Window, JLabel> windowLabels){
+
+    public void loadWindowIcons(House h, JPanel houseImage, Map<Window, JLabel> windowLabels, SmartHomeSecurity securitySystem){
         ImageIcon opened = loadImageIcon("images/open.png");
         ImageIcon closed = loadImageIcon("images/closed.png");
 
@@ -107,7 +112,11 @@ public class SmartHomeSimulator {
             houseImage.add(label);
             windowLabels.put(window,label);
         }
+
+        // After loading window icons, set windows and labels in SmartHomeSecurity
+        securitySystem.setWindowsAndLabels(h.getWindows(), windowLabels);
     }
+
 
     private ImageIcon loadImageIcon(String path) {
         ImageIcon icon = new ImageIcon(path);

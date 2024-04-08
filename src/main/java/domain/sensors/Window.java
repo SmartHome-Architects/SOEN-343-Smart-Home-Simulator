@@ -1,7 +1,6 @@
 package domain.sensors;
 
 import domain.house.Coordinate;
-import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
 
 import javax.swing.*;
@@ -13,13 +12,15 @@ public class Window {
     private String location;
     private int windowID;
     private boolean isOpen; // true for open, false for close
-    private boolean isBlocked; //true for blocked, false for not blocked
+    private boolean isBlocked; // true for blocked, false for not blocked
 
     private Coordinate windowCoordinates;
 
-    private JLabel windowLabel;
+    private JLabel windowLabels;
 
-    public Window(String name, String location, int windowID,Coordinate windowCoordinates ) {
+    private boolean awayModeActive; // Track if away mode is active
+
+    public Window(String name, String location, int windowID, Coordinate windowCoordinates) {
         this.name = name;
         this.location = location;
         this.windowID = windowID;
@@ -29,12 +30,11 @@ public class Window {
     }
 
     public JLabel getWindowLabel() {
-        return windowLabel;
+        return windowLabels;
     }
 
-
     public void setWindowLabel(JLabel windowLabel) {
-        this.windowLabel = windowLabel;
+        this.windowLabels = windowLabel;
     }
 
     public String getName() {
@@ -66,16 +66,8 @@ public class Window {
     }
 
     public void setOpen(boolean open) {
-            isOpen = open;
-            ImageIcon icon;
-            if (open == false) {
-                icon = new ImageIcon("images/closed.png");
-            } else {
-                icon = new ImageIcon("images/open.png");
-            }
-            Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-            icon.setImage(scaledImage);
-            windowLabel.setIcon(icon);
+        isOpen = open;
+        updateWindowIcon(); // Update window icon when the open/close state changes
     }
 
     public boolean isBlocked() {
@@ -86,12 +78,31 @@ public class Window {
         isBlocked = blocked;
     }
 
-    public int getX(){
+    public int getX() {
         return windowCoordinates.getX();
     }
 
-    public int getY(){
+    public int getY() {
         return windowCoordinates.getY();
+    }
+
+    public void setAwayModeActive(boolean awayModeActive) {
+        this.awayModeActive = awayModeActive;
+        updateWindowIcon(); // Update window icon when away mode state changes
+    }
+
+    private void updateWindowIcon() {
+        ImageIcon icon;
+        if (awayModeActive) {
+            // Show closed window icon when away mode is active
+            icon = new ImageIcon("images/closed.png");
+        } else {
+            // Show open or closed window icon based on the current state
+            icon = new ImageIcon(isOpen ? "images/open.png" : "images/closed.png");
+        }
+        Image scaledImage = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        icon.setImage(scaledImage);
+        windowLabels.setIcon(icon);
     }
 
     @Override
@@ -102,7 +113,7 @@ public class Window {
                 ", windowID=" + windowID +
                 ", isOpen=" + isOpen +
                 ", isBlocked=" + isBlocked +
-                ", windowCoordinates=" + windowCoordinates.getX() + "," + windowCoordinates.getY()+
+                ", windowCoordinates=" + windowCoordinates.getX() + "," + windowCoordinates.getY() +
                 '}';
     }
 }
