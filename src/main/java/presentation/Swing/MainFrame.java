@@ -121,8 +121,9 @@ public class MainFrame {
     private JButton onOffAwayModeButton;
     private JLabel onOffAwayModeLabel;
     private JSlider slider1;
+    private JButton button1;
 
-
+    private JButton moveUsersButton;
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
