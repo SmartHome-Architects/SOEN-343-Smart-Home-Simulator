@@ -4,9 +4,11 @@ import domain.house.Coordinate;
 import domain.house.House;
 import domain.sensors.Door;
 import domain.sensors.Light;
+import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import org.junit.Before;
 import org.junit.Test;
 import presentation.Swing.SHC.SHCDisplay;
+import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +30,7 @@ public class SHCDisplayTest {
         // Mock values for House and selectedItem
         House mockHouse = new House(); // You can create a mock House object according to your test needs
         String mockSelectedItem = "Selected"; // You can set a mock value for selectedItem
-        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem, textArea1);
+        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("f.txt")));
     }
 
 
