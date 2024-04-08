@@ -447,7 +447,7 @@ public class MainFrame {
         userIcon = new ImageIcon(userImage);
 
         shs.loadLightIcons(h,houseImage,lightLabels);
-        shs.loadDoorIcons(h,houseImage,doorLabels);
+        shs.loadDoorIcons(h,houseImage,doorLabels,smartHomeSecurity);
         shs.loadWindowIcons(h, houseImage, windowLabels, smartHomeSecurity);
         shs.loadTempUnitIcons(h,houseImage,tempUnitLabels);
 
@@ -610,8 +610,7 @@ public class MainFrame {
             }
         });
 
-
-//        //away mode
+//away mode
         onOffAwayModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -628,9 +627,9 @@ public class MainFrame {
                         onOffAwayModeButton.setText("Off");
                     }
 
-                    // If away mode is activated, close all windows
+                    // If away mode is activated, close all windows and doors
                     if (smartHomeSecurity.isAwayModeActive()) {
-                        smartHomeSecurity.closeAllWindows(); // Close all windows
+                        smartHomeSecurity.closeAllWindowsAndDoors(); // Close all windows and doors
                     }
                 } else {
                     // Display a popup message indicating that the user is inside
