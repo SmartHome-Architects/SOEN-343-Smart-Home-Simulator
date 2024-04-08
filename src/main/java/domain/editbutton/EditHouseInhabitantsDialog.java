@@ -115,35 +115,45 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         JButton saveButton = new JButton("Save");
         JButton cancelButton = new JButton("Cancel");
+        JButton moveUsersButton = new JButton("Move User"); // Creating the "bb" button
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
+        buttonPanel.add(moveUsersButton); // Adding the "MoveUser" button
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
+
     private void addListeners() {
         // ActionListener for saveButton
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
             saveChanges();
-            // Example of logging an event
+
+        });
+
+
+        JButton moveUsersButton = new JButton("Move All User");
+        moveUsersButton.addActionListener(e -> {
+            //add the action
         });
 
         // ActionListener for cancelButton
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> {
             dispose();
-            // Example of logging an event
+
         });
 
         // Add save and cancel buttons to the button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
+        buttonPanel.add(moveUsersButton);
 
         // Add the button panel to the dialog
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
