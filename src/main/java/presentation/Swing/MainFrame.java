@@ -118,6 +118,7 @@ public class MainFrame {
     private JButton roomTempButton;
     private JButton onOffAwayModeButton;
     private JLabel onOffAwayModeLabel;
+    private JSlider slider1;
 
 
     private Date currentDate;
@@ -142,6 +143,7 @@ public class MainFrame {
     public MainFrame(LoggedInUser user) {
         this.user = user;
         UserSingleton.setUser(user);
+        userTag.setText(user.getUserType());
         House h = new House();
 
         SmartHomeSimulator shs = new SmartHomeSimulator();
@@ -692,7 +694,7 @@ public class MainFrame {
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1250, 700);
+        frame.setSize(1250, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
