@@ -98,7 +98,7 @@ public class PermissionsPopup {
             String userType = (String) model.getValueAt(row, 0);
             boolean outsidePermission = (boolean) model.getValueAt(row, 1);
             boolean insidePermission = (boolean) model.getValueAt(row, 2);
-            String eventSpecification = "Outside Permission: " + outsidePermission + "and Inside Permission: " + insidePermission;
+            String eventSpecification = "Outside Permission: " + outsidePermission + " and Inside Permission: " + insidePermission;
 
             String eventDescription;
             if (column == 1) {

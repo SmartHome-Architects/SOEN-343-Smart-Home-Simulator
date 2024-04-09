@@ -324,6 +324,38 @@ public class LogEntry {
 
     }
 
+    public static void AwayModelog(String user, String eventDescription, JTextArea textArea1) {
+        // File path for the log file
+        String logFilePath = "database/LogEntry.txt";
+
+        // Get current timestamp
+        String timestamp = getCurrentTimestamp();
+
+        // Construct log entry string
+        String logEntryForFile = "Timestamp: " + timestamp + "|" +
+                "Device: SHP Module|" +
+                "Event Triggered by: " + user + "|" +
+                "Event Type: Opening/Closing of Away Mode|" +
+                "Event Description: " + eventDescription;
+
+        // Write log entry to the log file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println(logEntryForFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String logEntryForConsole = "Timestamp: " + timestamp + "\n" +
+                "Device: SHP Module" + "\n" +
+                "Event Triggered by: " + user + "\n" +
+                "Event Type: Opening/Closing of Away Mode"  + "\n" +
+                "Event Description: " + eventDescription + "\n";
+
+        // Append log entry to the JTextArea
+        textArea1.setText(logEntryForConsole + "\n");
+    }
+
+
 
     // Method to get current timestamp
     private static String getCurrentTimestamp() {
