@@ -623,26 +623,35 @@ public class MainFrame {
         onOffAwayModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Check if the user is outside before toggling away mode
-                String loggedInUsername = userAccountManager.getLoggedInUsername();
-                if (loggedInUsername != null && "Outside".equals(userAccountManager.getUserLocation(loggedInUsername))) {
-                    // Toggle the away mode when the button is clicked
-                    smartHomeSecurity.toggleAwayMode();
+                user1 = UserSingleton.getUser();
+                if ((!Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasSHPPermissionInsideHome()) ||
+                        (Objects.equals(user1.getLocation(), "Outside") && user1.getPermissions().isHasSHPPermissionOutside())) {
+                    System.out.println("You have SHP permission");
 
-                    // Set the button text to "On" when away mode is activated
-                    if (smartHomeSecurity.isAwayModeActive()) {
-                        onOffAwayModeButton.setText("On");
+                    // Check if the user is outside before toggling away mode
+                    String loggedInUsername = userAccountManager.getLoggedInUsername();
+                    if (loggedInUsername != null && "Outside".equals(userAccountManager.getUserLocation(loggedInUsername))) {
+                        // Toggle the away mode when the button is clicked
+                        smartHomeSecurity.toggleAwayMode();
+
+                        // Set the button text to "On" when away mode is activated
+                        if (smartHomeSecurity.isAwayModeActive()) {
+                            onOffAwayModeButton.setText("On");
+                        } else {
+                            onOffAwayModeButton.setText("Off");
+                        }
+
+                        // If away mode is activated, close all windows and doors
+                        if (smartHomeSecurity.isAwayModeActive()) {
+                            smartHomeSecurity.closeAllWindowsAndDoors(); // Close all windows and doors
+                        }
                     } else {
-                        onOffAwayModeButton.setText("Off");
+                        // Display a popup message indicating that the user is inside
+                        JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-
-                    // If away mode is activated, close all windows and doors
-                    if (smartHomeSecurity.isAwayModeActive()) {
-                        smartHomeSecurity.closeAllWindowsAndDoors(); // Close all windows and doors
-                    }
-                } else {
-                    // Display a popup message indicating that the user is inside
-                    JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    System.out.println("You do not have SHP permission");
+                    textArea1.setText("You do not have SHP permission");
                 }
             }
         });
