@@ -18,7 +18,7 @@ public class House {
     public void addRoom(Room room) {
         rooms.add(room);
     }
-
+//It contains private fields to store saved zones and a list of rooms.
     public List<Room> getRooms() {
         return rooms;
     }
