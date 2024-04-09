@@ -125,6 +125,7 @@ public class MainFrame {
     private JButton moveUsersButton;
     private JButton MotionDetectorButton;
     private JLabel MotionDetectorLabel;
+    private JPasswordField passwordField1;
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
