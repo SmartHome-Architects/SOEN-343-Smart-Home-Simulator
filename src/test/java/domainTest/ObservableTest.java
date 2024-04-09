@@ -1,6 +1,7 @@
 package domainTest;
 
 import domain.house.Zone;
+import domain.smartHomeSimulator.modules.Observable;
 import org.junit.Before;
 import org.junit.Test;
 

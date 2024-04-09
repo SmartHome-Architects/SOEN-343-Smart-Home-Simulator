@@ -1,6 +1,7 @@
 package domainTest;
 
 import org.junit.Test;
+import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

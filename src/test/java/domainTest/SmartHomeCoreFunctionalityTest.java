@@ -1,5 +1,6 @@
 package domainTest;
 
+import domain.smartHomeSimulator.modules.SmartHomeCoreFunctionality;
 import org.junit.Test;
 
 public class SmartHomeCoreFunctionalityTest {
@@ -7,7 +8,7 @@ public class SmartHomeCoreFunctionalityTest {
     @Test
     public void testSmartHomeCoreFunctionality() {
         // Create an instance of SmartHomeCoreFunctionality
-        SmartHomeCore smartHomeCore = new SmartHomeCore();
+        SmartHomeCoreFunctionality smartHomeCore = new SmartHomeCoreFunctionality();
 
 
 
