@@ -35,7 +35,7 @@ public class Room {
         this.id = id;
         this.roomName = roomName;
     }
-
+//This class, Room, represents a room in a house. It contains various sensors such as doors, windows, lights, AC units, and heaters.
     public double getDesiredRoomTemperature() {
         return desiredRoomTemperature;
     }
