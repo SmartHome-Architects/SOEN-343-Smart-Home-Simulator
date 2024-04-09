@@ -123,6 +123,8 @@ public class MainFrame {
     private JSlider slider1;
 
     private JButton moveUsersButton;
+    private JButton MotionDetectorButton;
+    private JLabel MotionDetectorLabel;
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
