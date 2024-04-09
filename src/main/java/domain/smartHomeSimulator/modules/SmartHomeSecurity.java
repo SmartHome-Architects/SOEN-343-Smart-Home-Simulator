@@ -2,6 +2,7 @@ package domain.smartHomeSimulator.modules;
 
 import domain.sensors.Door;
 import domain.sensors.Window;
+import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
@@ -17,9 +18,15 @@ public class SmartHomeSecurity {
     private Map<Window, JLabel> windowLabels; // Mapping of Window objects to their JLabel components
     private Map<Door, JLabel> doorLabels; // Mapping of Door objects to their JLabel components
 
-    public SmartHomeSecurity(UserAccountManager userAccountManager) {
+    private JTextArea textArea1;
+
+    private String user;
+
+    public SmartHomeSecurity(UserAccountManager userAccountManager, String user, JTextArea textArea1) {
         this.userAccountManager = userAccountManager;
         this.awayModeActive = false;
+        this.user = user;
+        this.textArea1 = textArea1;
     }
 
     // Method to set the windows and their labels
@@ -41,8 +48,10 @@ public class SmartHomeSecurity {
             awayModeActive = !awayModeActive;
             if (awayModeActive) {
                 closeAllWindowsAndDoors(); // Close all windows and doors when away mode is activated
+                LogEntry.AwayModelog(user, "Away Mode is turned ON.", textArea1);
                 System.out.println("Away mode is activated.");
             } else {
+                LogEntry.AwayModelog(user, "Away Mode is turned OFF.", textArea1);
                 System.out.println("Away mode is deactivated.");
                 updateWindowAndDoorIcons(); // Update window and door icons after deactivating away mode
             }

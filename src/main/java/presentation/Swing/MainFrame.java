@@ -153,7 +153,7 @@ public class MainFrame {
 
         UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
-        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager); // Create an instance
+        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager, user.getLoggedInUser().getUsername(), textArea1); // Create an instance
 
         SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels,smartHomeSecurity);
 
@@ -185,7 +185,7 @@ public class MainFrame {
                     System.out.println("You have zone management permission");
                     ZoneManager.show((JFrame) SwingUtilities.getWindowAncestor(zoneManagementButton), h, shh, user.getLoggedInUser().getUsername(), textArea1);
                 } else {
-                    System.out.println("You do not have zone management permission");
+                    textArea1.setText("You do not have Zone Management Permission");
                 }
             }
         });
@@ -614,7 +614,7 @@ public class MainFrame {
                         System.out.println("Button is turned OFF");
                     }
                 } else {
-                    System.out.println("You do not have ON/OFF SHH permission");
+                    textArea1.setText("You do not have ON/OFF SHH permission");
                 }
             }
         });
