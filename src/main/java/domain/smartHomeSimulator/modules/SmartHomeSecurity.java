@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class SmartHomeSecurity {
     private boolean awayModeActive;
+    private boolean motionDetectorActive;
     private final UserAccountManager userAccountManager;
     private List<Window> windows; // List of Window objects
     private List<Door> doors; // List of Door objects
@@ -20,6 +21,7 @@ public class SmartHomeSecurity {
     public SmartHomeSecurity(UserAccountManager userAccountManager) {
         this.userAccountManager = userAccountManager;
         this.awayModeActive = false;
+        this.motionDetectorActive = false;
     }
 
     // Method to set the windows and their labels
@@ -41,10 +43,12 @@ public class SmartHomeSecurity {
             awayModeActive = !awayModeActive;
             if (awayModeActive) {
                 closeAllWindowsAndDoors(); // Close all windows and doors when away mode is activated
+                activateMotionDetector(); // Activate motion detector when away mode is activated
                 System.out.println("Away mode is activated.");
             } else {
                 System.out.println("Away mode is deactivated.");
                 updateWindowAndDoorIcons(); // Update window and door icons after deactivating away mode
+                deactivateMotionDetector(); // Deactivate motion detector when away mode is deactivated
             }
         } else {
             System.out.println("Cannot activate away mode. User must be outside.");
@@ -54,6 +58,28 @@ public class SmartHomeSecurity {
     // Method to check if away mode is active
     public boolean isAwayModeActive() {
         return awayModeActive;
+    }
+
+    // Method to check if motion detector is active
+    public boolean isMotionDetectorActive() {
+        return motionDetectorActive;
+    }
+
+    // Method to toggle motion detector state
+    public void toggleMotionDetector() {
+        motionDetectorActive = !motionDetectorActive;
+    }
+
+    // Method to handle motion detector activation
+    private void activateMotionDetector() {
+        motionDetectorActive = true;
+        System.out.println("Motion detector is activated.");
+    }
+
+    // Method to handle motion detector deactivation
+    private void deactivateMotionDetector() {
+        motionDetectorActive = false;
+        System.out.println("Motion detector is deactivated.");
     }
 
     // Method to close all windows and doors
@@ -106,26 +132,9 @@ public class SmartHomeSecurity {
         }
     }
 
-
     // Method to update window and door icons
     private void updateWindowAndDoorIcons() {
         updateWindowIcons();
         updateDoorIcons();
-    }
-
-    // Method to handle notifications about open windows
-    public void handleOpenWindow(Window window) {
-        if (awayModeActive) {
-            closeAllWindows(); // Close all windows when away mode is activated and a window is open
-        }
-        // Additional logic can be added here if needed
-    }
-
-    // Method to handle notifications about open doors
-    public void handleOpenDoor(Door door) {
-        if (awayModeActive) {
-            closeAllDoors(); // Close all doors when away mode is activated and a door is open
-        }
-        // Additional logic can be added here if needed
     }
 }

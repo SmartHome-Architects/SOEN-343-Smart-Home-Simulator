@@ -125,7 +125,6 @@ public class MainFrame {
     private JButton moveUsersButton;
     private JButton MotionDetectorButton;
     private JLabel MotionDetectorLabel;
-    private JPasswordField passwordField1;
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
@@ -621,8 +620,26 @@ public class MainFrame {
                 }
             }
         });
+// Motion detector button action listener
+        MotionDetectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if away mode is active before toggling motion detector
+                if (smartHomeSecurity.isAwayModeActive()) {
+                    // Toggle motion detector state in SmartHomeSecurity
+                    smartHomeSecurity.toggleMotionDetector();
 
-//away mode
+                    // Update text of motion detector button based on its state
+                    if (smartHomeSecurity.isMotionDetectorActive()) {
+                        MotionDetectorButton.setText("On");
+                    } else {
+                        MotionDetectorButton.setText("Off");
+                    }
+                }
+            }
+        });
+
+// Away mode button action listener
         onOffAwayModeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -635,8 +652,10 @@ public class MainFrame {
                     // Set the button text to "On" when away mode is activated
                     if (smartHomeSecurity.isAwayModeActive()) {
                         onOffAwayModeButton.setText("On");
+                        MotionDetectorButton.setEnabled(true); // Enable motion detector button when away mode is activated
                     } else {
                         onOffAwayModeButton.setText("Off");
+                        MotionDetectorButton.setEnabled(false); // Disable motion detector button when away mode is deactivated
                     }
 
                     // If away mode is activated, close all windows and doors
@@ -649,6 +668,9 @@ public class MainFrame {
                 }
             }
         });
+
+
+
 
         //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
 
