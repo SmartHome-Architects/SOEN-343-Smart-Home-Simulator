@@ -4,7 +4,6 @@ import domain.house.House;
 import domain.sensors.Door;
 import domain.sensors.Light;
 import domain.sensors.Window;
-import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,14 +16,11 @@ public class SHCDisplay {
     private String selectedItem;
     private JTextArea textArea1;
 
-    private SmartHomeSecurity shp;
-
-    public SHCDisplay(JPanel checkBoxPanel, House h, String selectedItem, JTextArea textArea1, SmartHomeSecurity shp) {
+    public SHCDisplay(JPanel checkBoxPanel, House h, String selectedItem, JTextArea textArea1) {
         this.checkBoxPanel = checkBoxPanel;
         this.h = h;
         this.selectedItem = selectedItem;
         this.textArea1 = textArea1;
-        this.shp = shp;
     }
 
     public void displayItems(List<?> devices) {
@@ -38,7 +34,7 @@ public class SHCDisplay {
                         Door door = (Door) device;
                         return new Object[]{door.getLocation(), door.isOpen()};
                     } else if (device instanceof Window) {
-                        domain.sensors.Window window = (Window) device;
+                        Window window = (Window) device;
                         return new Object[]{window.getLocation() + " " + window.getWindowID(), window.isOpen()};
                     } else if (device instanceof Light) {
                         Light light = (Light) device;
@@ -47,7 +43,7 @@ public class SHCDisplay {
                     return null;
                 }, textArea1
         );
-        JTable table = SHCTableModel.createTable(tableModel,h,selectedItem, textArea1, shp);
+        JTable table = SHCTableModel.createTable(tableModel,h,selectedItem, textArea1);
         JScrollPane scrollPane = new JScrollPane(table);
         checkBoxPanel.removeAll();
         checkBoxPanel.add(scrollPane);

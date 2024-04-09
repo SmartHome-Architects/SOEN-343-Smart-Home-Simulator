@@ -1,7 +1,6 @@
 package domainTest;
 
 import org.junit.Test;
-import domain.smartHomeSimulator.modules.SmartHomeCore;
 
 public class SmartHomeCoreFunctionalityTest {
 

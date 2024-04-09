@@ -1,4 +1,5 @@
 package domain.smartHomeSimulator.modules;
 
-public class SmartHomeSecurity {
+public class SmartHomeCoreFunctionality {
+
 }

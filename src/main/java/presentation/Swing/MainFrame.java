@@ -1,56 +1,50 @@
 package presentation.Swing;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
-
 import domain.house.Room;
-import domain.sensors.*;
+import domain.house.Zone;
+import domain.sensors.Door;
+import domain.sensors.Light;
+import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
-import domain.smartHomeSimulator.modules.SmartHomeSecurity;
-import domain.smartHomeSimulator.modules.SmartHomeSimulator;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
-
 import domain.user.Users;
-import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
-import presentation.Swing.SHH.ZoneManager;
 import presentation.Swing.SHH.RoomTemperature;
-import presentation.Swing.command.AddProfileCommand;
-import presentation.Swing.command.DeleteProfileCommand;
-import presentation.Swing.command.EditProfileCommand;
-import presentation.Swing.command.ProfileManager;
-import presentation.Swing.command.UserAccountManager;
+import presentation.Swing.SHH.ZoneManager;
+import presentation.Swing.command.*;
 import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class MainFrame {
 
     private boolean SHHisOn;
-    private boolean AwayModeOn;
     private JPanel WindowContainer;
     private JPanel titleContainer;
     private JLabel title;
@@ -100,6 +94,24 @@ public class MainFrame {
     private JLabel houseLayoutLabel;
 
     private ImageIcon houseLayout;
+    private JPanel kitchenLightPanel;
+    private JPanel livingRoomLightPanel;
+    private JPanel bedroom2LightPanel;
+    private JPanel bathroomLightPanel;
+    private JPanel garageLightPanel;
+    private JPanel bedroom1LightPanel;
+    private JPanel hallwayLightPanel;
+    private JPanel backLightPanel;
+    private JPanel frontLightPanel;
+    private JLabel livingLightLabel;
+    private JLabel bedroom2LightLabel;
+    private JLabel bedroom1LightLabel;
+    private JLabel hallwayLightLabel;
+    private JLabel backLightLabel;
+    private JLabel bathroomLightLabel;
+    private JLabel garageLightLabel;
+    private JLabel frontLightLabel;
+    private JLabel kitchenLightLabel;
 
     private JButton editButton;
 
@@ -112,6 +124,36 @@ public class MainFrame {
     private JComboBox comboBox;
     private JPanel screen;
     private JButton permissionsButton;
+    private JPanel backDoorPanel;
+    private JLabel backDoorLabel;
+    private JPanel kitchenWindow1Panel;
+    private JLabel kitchenWindow1Label;
+    private JPanel kitchenWindow2Panel;
+    private JLabel kitchenWindow2Label;
+    private JPanel livingWindow1Panel;
+    private JLabel livingWindow1Label;
+    private JPanel livingWindow2Panel;
+    private JLabel livingWindow2Label;
+    private JPanel bathroomWindowPanel;
+    private JLabel bathroomWindowLabel;
+    private JPanel bathroomDoorPanel;
+    private JLabel bathroomDoorLabel;
+    private JPanel garageInDoorPanel;
+    private JPanel garageOutDoorPanel;
+    private JLabel garageInDoorLabel;
+    private JLabel garageOutDoorLabel;
+    private JPanel frontDoorPanel;
+    private JLabel frontDoorLabel;
+    private JPanel bedroom1Window1Panel;
+    private JLabel bedroom1Window1Label;
+    private JPanel bedroom1Window2Panel;
+    private JLabel bedroom1Window2Label;
+    private JPanel bedroom1DoorPanel;
+    private JLabel bedroom1DoorLabel;
+    private JPanel bedroom2DoorPanel;
+    private JLabel bedroom2DoorLabel;
+    private JPanel bedroom2WindowPanel;
+    private JLabel bedroom2WindowLabel;
     private JLabel onOffSHHLabel;
     private JButton onOffSHHButton;
     private JLabel zoneManagementLabel;
@@ -120,50 +162,44 @@ public class MainFrame {
     private JButton roomTempButton;
     private JButton onOffAwayModeButton;
     private JLabel onOffAwayModeLabel;
-    private JSlider slider1;
 
-    private JButton moveUsersButton;
+
     private Date currentDate;
     private Time currentTime;
     private Thread timeIncrementer;
     private ProfileManager profileManager;
     private static LoggedInUser user1;
+    private ImageIcon lightOn;
+    private ImageIcon lightOff;
+    private ImageIcon opened;
+    private ImageIcon closed;
 
     private ImageIcon userIcon;
 
+    private ImageIcon acUnitIcon;
+    private ImageIcon heatUnitIcon;
+
     private boolean isFrozen = false;
     LoggedInUser user;
-
-    Map<Light, JLabel> lightLabels = new HashMap<>();
-    Map<Door,JLabel> doorLabels = new HashMap<>();
-    Map<Window,JLabel> windowLabels = new HashMap<>();
     Map<String,JLabel> userLabels = new HashMap<>();
     Map<Room,JLabel> temperatureLabels = new HashMap<>();
+
     Map<TempControlUnit,JLabel> tempUnitLabels = new HashMap<>();
+    // Windows needed
 
 
     public MainFrame(LoggedInUser user) {
         this.user = user;
         UserSingleton.setUser(user);
-        userTag.setText(user.getUserType());
         House h = new House();
+        SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels);
 
 
-        SmartHomeSimulator shs = new SmartHomeSimulator();
-
-        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
-
-        SmartHomeSecurity smartHomeSecurity = new SmartHomeSecurity(userAccountManager); // Create an instance
-
-        SmartHomeHeating shh = new SmartHomeHeating(temperatureLabels,smartHomeSecurity);
-
-        try {
-            shh.loadZones(h);
+        try{
+            loadZones(h,shh);
         }catch (IOException e){
             System.out.println(e);
         }
-
-        shs.initSlider(slider1);
 
         //---------------------individual room temp --------------------------
         roomTempButton.addActionListener(new ActionListener() {
@@ -226,6 +262,9 @@ public class MainFrame {
         });
 
         //--------------------------Account Management-----------------------------------------------------------------
+
+
+        UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
 
         AddProfileCommand addProfileCommand = new AddProfileCommand(userAccountManager, "", "", "", "");
         DeleteProfileCommand deleteProfileCommand = new DeleteProfileCommand(userAccountManager, "");
@@ -365,9 +404,6 @@ public class MainFrame {
                     }
                 }
 
-                // Update the user's location in the UserAccountManager
-                userAccountManager.updateUserLocation(loggedInUsername, newLocation);
-
                 // Turn on lights in the new room
                 if (newRoom != null) {
                     for (Light light : newRoom.getLights()) {
@@ -386,7 +422,6 @@ public class MainFrame {
         });
 
 
-
         //Deletes the user profile to the text file
         Delete_Profile.addActionListener(new ActionListener() {
             @Override
@@ -403,7 +438,6 @@ public class MainFrame {
                 JOptionPane.showMessageDialog(WindowContainer, "User Profile Deleted Successfully!");
             }
         });
-
 
         //Edits the user profile in the text file
         Edit_Profile.addActionListener(new ActionListener() {
@@ -442,22 +476,109 @@ public class MainFrame {
 
         //-----------------------------------2D House Layout--------------------------------------------------------------------------
 
+        // Load house layout image
+        houseLayout = new ImageIcon("images/houseLayout.png");
+        Image image = houseLayout.getImage().getScaledInstance(700, 473, Image.SCALE_SMOOTH);
+        houseLayoutLabel.setIcon(new ImageIcon(image));
+        houseLayoutLabel.setText("house layout image");
 
-        shs.loadHouseLayoutImage("images/houseLayout.png", houseLayoutLabel,houseImage);
+        houseImage.setLayout(null); // Set null layout for absolute positioning
 
+        // Load light icon for each room
+        lightOff = new ImageIcon("images/lightOff.png");
+        Image lightOffImage = lightOff.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        lightOff = new ImageIcon(lightOffImage);
+        lightOn = new ImageIcon("images/lightOn.png");
+        Image lightOnImage = lightOn.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        lightOn = new ImageIcon(lightOnImage);
+
+        //Load open/closed icon
+        opened = new ImageIcon("images/open.png");
+        Image openImage = opened.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        opened = new ImageIcon(openImage);
+        closed = new ImageIcon("images/closed.png");
+        Image closedImage = closed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        closed = new ImageIcon(closedImage);
 
         // Load user icon.
         userIcon = new ImageIcon("images/UserIcon.png");
         Image userImage = userIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
         userIcon = new ImageIcon(userImage);
 
-        shs.loadLightIcons(h,houseImage,lightLabels);
-        shs.loadDoorIcons(h,houseImage,doorLabels,smartHomeSecurity);
-        shs.loadWindowIcons(h, houseImage, windowLabels, smartHomeSecurity);
-        shs.loadTempUnitIcons(h,houseImage,tempUnitLabels);
+        acUnitIcon = new ImageIcon("images/ac.png");
+        Image acUnitImage = acUnitIcon.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        acUnitIcon = new ImageIcon(acUnitImage);
+
+        heatUnitIcon = new ImageIcon("images/heating.png");
+        Image heatingUnitImage = heatUnitIcon.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        heatUnitIcon = new ImageIcon(heatingUnitImage);
 
 
-        List<Users> usersList = UsersInitializer.getAllUsers();
+        List<Light> houseLights = h.getLights();
+        Map<Light, JLabel> lightLabels = new HashMap<>();
+
+        for (Light light: houseLights) {
+            JLabel label = new JLabel();
+            if(light.isOpen()){
+                label.setIcon(lightOn);
+            }
+            else{
+                label.setIcon(lightOff);
+            }
+            label.setBounds(light.getX(),light.getY(),30,30);
+            light.setLightLabel(label);
+            houseImage.add(label);
+            lightLabels.put(light, label);
+        }
+
+        List<Door> houseDoors = h.getDoors();
+        Map<Door,JLabel> doorLabels = new HashMap<>();
+
+        for(Door door: houseDoors){
+            JLabel label= new JLabel();
+            if(door.isOpen()){
+                label.setIcon(opened);
+            }
+            else{
+                label.setIcon(closed);
+            }
+            label.setBounds(door.getX(),door.getY(),30,30);
+            door.setDoorLabel(label);
+            houseImage.add(label);
+            doorLabels.put(door,label);
+        }
+
+        Map<Window,JLabel> windowLabels = new HashMap<>();
+
+        for(Window window: h.getWindows()){
+            JLabel label = new JLabel();
+            if(window.isOpen()){
+                label.setIcon(opened);
+            }
+            else{
+                label.setIcon(closed);
+            }
+            label.setBounds(window.getX(),window.getY(),30,30);
+            window.setWindowLabel(label);
+            houseImage.add(label);
+            windowLabels.put(window,label);
+        }
+
+        for (Room r: h.getRooms()) {
+            if(!(r.getRoomName().equals("Outside"))){
+                JLabel label = new JLabel();
+                label.setIcon(null);
+                label.setBounds(r.getAcUnit().getX(),r.getAcUnit().getY() - 30,35,35);
+                houseImage.add(label);
+                r.getHeater().setTempUnitLabel(label);
+                r.getAcUnit().setTempUnitLabel(label);
+                tempUnitLabels.put(r.getAcUnit(),label);
+                tempUnitLabels.put(r.getHeater(),label);
+            }
+        }
+
+
+        List<Users> usersList = UserSingleton.getAllUser();
         List<Room> rooms = h.getRooms();
 
     // Keep track of whether any user is in a room
@@ -471,18 +592,13 @@ public class MainFrame {
                 if (r.getRoomName().equals(location)) {
                     // Assuming user location matches room name correctly
                     JLabel label = new JLabel();
-                    label.setName("house");
                     label.setIcon(userIcon);
-                    if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
                         label.setText(u.getUsername());
                         label.setHorizontalTextPosition(JLabel.CENTER);
                         label.setVerticalTextPosition(JLabel.CENTER);
-                    }
+
                     label.setBounds(r.getX() + (int) (Math.random() * 10) + 4, r.getY() + (int) (Math.random() * 10) + 2, 30, 30);
-                    if(u.getLocation().equals("Outside")){
-                        label.hide();
-                    }
                     houseImage.add(label);
                     userLabels.put(u.getUsername(), label);
 
@@ -516,10 +632,11 @@ public class MainFrame {
             }
         }
 
+
+
         for (Room r: rooms) {
             if(!(r.getRoomName().equals("Outside"))){
                 JLabel label = new JLabel();
-                label.setName("house");
                 String temp = Double.toString(r.getTemperature());
                 label.setForeground(Color.blue);
                 label.setText(temp + "°");
@@ -528,6 +645,8 @@ public class MainFrame {
                 temperatureLabels.put(r,label);
             }
         }
+
+
 
         houseLayoutLabel.setBounds(0, -60, 550, 500);
         houseImage.add(houseLayoutLabel, BorderLayout.CENTER);
@@ -557,7 +676,7 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
-                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1,smartHomeSecurity);
+                SHCDisplay displayHelper = new SHCDisplay(checkBoxPanel,h,selectedItem, textArea1);
                 if (selectedItem.equals("Doors")) {
                     displayHelper.displayItems(h.getDoors());
                 } else if (selectedItem.equals("Windows")) {
@@ -585,10 +704,10 @@ public class MainFrame {
                 loginPage.setVisible(true);            }
         });
 
+
         //-------------------------------------------------------------------------------------------------------------
 
-
-     // ON/OFF SHH button
+// ON/OFF SHH button
         SHHisOn = false;
         onOffSHHButton.addActionListener(new ActionListener() {
             @Override
@@ -622,35 +741,8 @@ public class MainFrame {
             }
         });
 
-//away mode
-        onOffAwayModeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Check if the user is outside before toggling away mode
-                String loggedInUsername = userAccountManager.getLoggedInUsername();
-                if (loggedInUsername != null && "Outside".equals(userAccountManager.getUserLocation(loggedInUsername))) {
-                    // Toggle the away mode when the button is clicked
-                    smartHomeSecurity.toggleAwayMode();
-
-                    // Set the button text to "On" when away mode is activated
-                    if (smartHomeSecurity.isAwayModeActive()) {
-                        onOffAwayModeButton.setText("On");
-                    } else {
-                        onOffAwayModeButton.setText("Off");
-                    }
-
-                    // If away mode is activated, close all windows and doors
-                    if (smartHomeSecurity.isAwayModeActive()) {
-                        smartHomeSecurity.closeAllWindowsAndDoors(); // Close all windows and doors
-                    }
-                } else {
-                    // Display a popup message indicating that the user is inside
-                    JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
         //-----------------------------------ON/OFF Simulator button--------------------------------------------------------------------------
+
 
         buttonOff.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -658,12 +750,10 @@ public class MainFrame {
                     // Freeze all components except the off button
                     freezeComponents();
                     buttonOff.setText("ON");
-                    shh.resumeTimer(shs.getSimSpeed());
                 } else {
                     // Unfreeze all components
                     unfreezeComponents();
                     buttonOff.setText("Off");
-                    shh.pauseTimer();
                 }
                 // Toggle freeze state
                 isFrozen = !isFrozen;
@@ -698,7 +788,6 @@ public class MainFrame {
                 double temperature1 = jsonResponse.get("hourly").get("temperature_2m").get(index).asDouble();
                 temperature.setText("Outside Temperature " + ": " + temperature1 + "°C");
                 shh.setOutsideTemp(temperature1);
-                shs.simulateWeather(temperature1,temperature,shh);
             } else {
                 temperature.setText("Temperature data not found for the current time.");
             }
@@ -777,8 +866,6 @@ public class MainFrame {
         time.setVisible(false);
         // Enable the off button
         buttonOff.setEnabled(true);
-        houseImage.setEnabled(true);
-        houseLayoutLabel.setEnabled(true);
     }
 
     // Method to unfreeze all components
@@ -788,8 +875,6 @@ public class MainFrame {
         time.setVisible(true);
         // Enable the off button
         buttonOff.setEnabled(true);
-        houseImage.setEnabled(true);
-        houseLayoutLabel.setEnabled(true);
     }
 
     // Recursive method to set component enabled state
@@ -800,9 +885,8 @@ public class MainFrame {
                 setComponentEnabled(comp, enabled);
             }
         }
-        if(component.getName() != "house"){
-            component.setEnabled(enabled);
-        }
+        component.setEnabled(enabled);
+
     }
 
 
@@ -810,7 +894,7 @@ public class MainFrame {
         JFrame frame = new JFrame("Dashboard");
         frame.setContentPane(WindowContainer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1250, 800);
+        frame.setSize(1250, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -1011,6 +1095,8 @@ public class MainFrame {
         }
     }
 
+
+
     private static String getTemperatureJSON() throws Exception {
         URL url = new URL("https://api.open-meteo.com/v1/forecast?latitude=45.5088&longitude=-73.5878&hourly=temperature_2m");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -1032,6 +1118,30 @@ public class MainFrame {
             throw new Exception("Failed to fetch temperature data. Response code: " + responseCode);
         }
     }
+
+    public void loadZones(House h, SmartHomeHeating shh) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String file = "database/zones.json";
+        List<Map<String, Object>> zoneList = mapper.readValue(new File(file), new TypeReference<List<Map<String, Object>>>() {});
+        for (Map<String, Object> zoneMap : zoneList) {
+            String zoneName = (String) zoneMap.get("zoneName");
+            double desiredTemperature = (double) zoneMap.get("desiredTemperature");
+            Zone zone = new Zone(zoneName,desiredTemperature);
+            List<Map<String, Object>> roomList = (List<Map<String, Object>>) zoneMap.get("rooms");
+            for (Map<String, Object> roomMap : roomList) {
+                String roomName = roomMap.get("roomName").toString();
+                List<Room> rooms = h.getRooms();
+                for (Room r:rooms) {
+                    if(r.getRoomName().equals(roomName)){
+                        zone.addRoomToZone(r);
+                    }
+                }
+            }
+            shh.attach(zone);
+        }
+
+    }
+
 
     public JPanel getZoneManagementPanel() {
         return zoneManagement;

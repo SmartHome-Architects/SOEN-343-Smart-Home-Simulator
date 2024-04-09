@@ -1,7 +1,6 @@
 package presentationTest;
 
 import org.junit.jupiter.api.Test;
-import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.table.DefaultTableModel;
 import static org.junit.jupiter.api.Assertions.*;

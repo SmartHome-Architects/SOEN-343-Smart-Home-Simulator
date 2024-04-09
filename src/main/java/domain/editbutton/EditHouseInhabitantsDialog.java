@@ -2,35 +2,34 @@ package domain.editbutton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
 import domain.house.Room;
+import domain.house.House;
 import domain.user.LoggedInUser;
-import domain.user.Users;
 import presentation.Swing.LogEntry;
 import presentation.Swing.command.UserAccountManager;
-import domain.house.House;
 
 public class EditHouseInhabitantsDialog extends JDialog {
     private String oldLocation;
     private JLabel locationTag;
 
     private JTextArea textArea1;
-
     private JComboBox<String> inhabitantComboBox;
     private JComboBox<String> locationComboBox;
     private UserAccountManager userAccountManager;
     private House houseInstance;
     private String selectedUsername;
     private LogEntry logEntry;
-    private Map<String,JLabel> userLabels;
+    private Map<String, JLabel> userLabels;
 
     private LoggedInUser user;
 
-    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String,JLabel> userLabels, LoggedInUser user, JLabel locationTag, JTextArea textArea1) {
+    public EditHouseInhabitantsDialog(Frame parent, UserAccountManager userAccountManager, List<String> usernames, String username, House houseInstance, Map<String, JLabel> userLabels, LoggedInUser user, JLabel locationTag, JTextArea textArea1) {
         super(parent, "Edit House Inhabitants", true);
         setSize(300, 150);
         setLocationRelativeTo(parent);
@@ -98,13 +97,28 @@ public class EditHouseInhabitantsDialog extends JDialog {
     }
 
 
-        public void populateLocationComboBoxWithRoomNames() {
+    public void populateLocationComboBoxWithRoomNames() {
         List<String> roomNames = houseInstance.getRoomNames();
         locationComboBox.removeAllItems();
         for (String roomName : roomNames) {
             locationComboBox.addItem(roomName);
         }
     }
+    public void refreshDialog(List<String> usernames, String selectedUsername) {
+        // Clear and populate the inhabitantComboBox with updated usernames
+        populateInhabitantComboBox(usernames, selectedUsername);
+
+        // Populate the locationComboBox with room names
+        populateLocationComboBoxWithRoomNames();
+
+        // Update the old location of the selected user
+        oldLocation = userAccountManager.getUserLocation(selectedUsername);
+
+        // Update the displayed location in locationTag
+        locationTag.setText(oldLocation);
+    }
+
+
 
     private void layoutComponents() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
@@ -157,8 +171,8 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         int new_x_bound = 0;
         int new_y_bound = 0;
-        for (Room r: rooms) {
-            if(r.getRoomName().equals(newLocation)){
+        for (Room r : rooms) {
+            if (r.getRoomName().equals(newLocation)) {
                 new_x_bound = r.getX();
                 new_y_bound = r.getY();
             }
@@ -167,53 +181,62 @@ public class EditHouseInhabitantsDialog extends JDialog {
         JLabel jLabel = userLabels.get(inhabitant);
 
         if (jLabel != null) { // Check if the label exists
-            jLabel.setBounds(new_x_bound + (int)(Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
+            jLabel.setBounds(new_x_bound + (int) (Math.random() * 2 + 10), new_y_bound, 30, 30); // Move the label to the new location
         } else {
             System.err.println("Label not found for inhabitant: " + inhabitant);
             return; // Exit the method if the label is not found
         }
 
-        if (newLocation.equals("Outside")) {
-            System.out.println("Moving " + inhabitant + " outside the home");
-        } else {
-            System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
+        System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
 
-            // Log the location change in database
-            logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant , oldLocation, newLocation);
+        // Log the location change in database
+        logEntry.LocationLog(user.getLoggedInUser().getUsername(), inhabitant, oldLocation, newLocation);
 
-            // Update the location in the user's file
-            updateUserLocation(inhabitant, newLocation);
-            // Update the oldLocation to the new location
-            oldLocation = newLocation;
-            // Assuming you have a JLabel locationTag to display the location
-            locationTag.setText(newLocation); // Update the displayed location in locationTag
-        }
-
-
+        // Update the location in the user's file
+        updateUserLocation(inhabitant, newLocation);
+        // Update the oldLocation to the new location
+        oldLocation = newLocation;
+        // Assuming you have a JLabel locationTag to display the location
+        locationTag.setText(newLocation); // Update the displayed location in locationTag
 
         dispose();
     }
 
     private void updateUserLocation(String username, String newLocation) {
-//        // Get the instance of UserAccountManager
 
-//
-//        // Update the location in the user's file
+        if (username.equals(user.getLoggedInUser().getUsername())) {
+            UserAccountManager userAccountManager = new UserAccountManager("database/Users.txt");
+            userAccountManager.updateUserLocation(username, newLocation);
 
+        } else {
 
-        UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
-        userAccountManager1.updateUserLocation(username, newLocation);
+            try (BufferedReader br = new BufferedReader(new FileReader("database/Users.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length > 0 && parts[0].equals(username)) {
+                        // Username found in Users.txt, update location directly
+                        UserAccountManager userAccountManager2 = new UserAccountManager("database/Users.txt");
+                        userAccountManager2.updateUserLocation(username, newLocation);
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            UserAccountManager userAccountManager1 = new UserAccountManager("database/" + user.getLoggedInUser().getUsername() + ".txt");
+//            userAccountManager1.updateUserLocation(username, newLocation);
+
+        }
     }
-
-
-
 
     private void displayLoggedInUserContent(List<String> loggedInUserContent) {
         // Display the content of the logged-in user's file
         // For demonstration, let's print it to the console
         for (String line : loggedInUserContent) {
 
-      }
+        }
     }
 
     public void updateUserDropdown(List<String> updatedUsernames, String selectedUsername) {

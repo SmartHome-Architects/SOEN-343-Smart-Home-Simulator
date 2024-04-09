@@ -1,8 +1,9 @@
 package presentationTest;
 
-import presentation.Swing.command.UserAccountManager;
 import org.junit.Before;
 import org.junit.Test;
+import presentation.Swing.command.UserAccountManager;
+
 import static org.junit.Assert.*;
 import java.io.*;
 

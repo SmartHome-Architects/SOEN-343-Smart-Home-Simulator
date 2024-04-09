@@ -4,8 +4,6 @@ import domain.house.House;
 import domain.sensors.Door;
 import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import org.junit.Test;
-import presentation.Swing.SHC.SHCTableModel;
-import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

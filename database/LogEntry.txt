@@ -20,3 +20,85 @@ Timestamp: 2024-04-06 16:18:52|Device ID: Window-Living Room 2|Event Triggered b
 Timestamp: 2024-04-06 16:18:59|Device ID: Window-Living Room 2|Event Triggered by: d|Event Type: Window State Change|Event Description: Window has been Closed
 Timestamp: 2024-04-06 16:19:03|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Opened
 Timestamp: 2024-04-06 16:19:15|Device ID: Light-Outside 2|Event Triggered by: d|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:21:54|Event Triggered by: f|Event Type: Location Change of Inhabitant: f|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:23:06|Event Triggered by: steven|Event Type: Location Change of Inhabitant: steven|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:23:15|Event Triggered by: steven|Event Type: Location Change of Inhabitant: steven|Old Location: Kitchen|New Location: Living Room
+Timestamp: 2024-04-08 18:23:28|Event Triggered by: steven|Event Type: Location Change of Inhabitant: steven|Old Location: Outside|New Location: Living Room
+Timestamp: 2024-04-08 18:27:34|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:27:51|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:28:04|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned ON.
+Timestamp: 2024-04-08 18:28:06|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned OFF.
+Timestamp: 2024-04-08 18:28:49|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:29:25|Device ID: Door-Garage|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:29:26|Device ID: Door-Living Room|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:29:26|Device ID: Door-Bedroom2|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:29:31|Device ID: Light-Bathroom 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:29:31|Device ID: Light-Outside 2|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:29:33|Device ID: Light-Bedroom1 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:29:36|Device ID: Window-Living Room 2|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:29:36|Device ID: Window-Bedroom1 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:29:36|Device ID: Window-Bedroom2 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:29:37|Device ID: Window-Kitchen 2|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:30:09|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned ON.
+Timestamp: 2024-04-08 18:30:40|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned OFF.
+Timestamp: 2024-04-08 18:30:53|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Living Room
+Timestamp: 2024-04-08 18:31:18|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Bedroom1
+Timestamp: 2024-04-08 18:31:24|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned ON.
+Timestamp: 2024-04-08 18:31:30|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned OFF.
+Timestamp: 2024-04-08 18:33:22|Device: SHH Module|Event Triggered by: s|Event Type: Opening/Closing SHH Module|Event Description: Smart Home Heating is turned ON.
+Timestamp: 2024-04-08 18:34:05|Event Triggered by: s|Event Type: Location Change of Inhabitant: s|Old Location: Outside|New Location: Kitchen
+Timestamp: 2024-04-08 18:34:32|Device ID: Light-Bathroom 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:34:33|Device ID: Light-Outside 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:34:33|Device ID: Light-Outside 2|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:34:35|Device ID: Light-Bathroom 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:34:36|Device ID: Light-Bathroom 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:34:42|Device ID: Door-Bedroom2|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:34:43|Device ID: Door-Bedroom1|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:34:43|Device ID: Door-Garage|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:34:45|Device ID: Window-Kitchen 2|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:34:46|Device ID: Window-Bedroom1 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:34:46|Device ID: Window-Bedroom1 2|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:34:47|Device ID: Window-Bedroom2 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:34:49|Device ID: Light-Bedroom2 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:34:49|Device ID: Light-Bedroom1 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:34:49|Device ID: Light-Living Room 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:34:50|Device ID: Light-Kitchen 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Opened
+Timestamp: 2024-04-08 18:36:53|Device ID: Light-Kitchen 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:36:53|Device ID: Light-Living Room 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:36:54|Device ID: Light-Bedroom2 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:36:55|Device ID: Light-Bedroom1 1|Event Triggered by: s|Event Type: Light State Change|Event Description: Light has been Closed
+Timestamp: 2024-04-08 18:36:57|Device ID: Door-Living Room|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:36:57|Device ID: Door-Bedroom1|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:36:58|Device ID: Door-Bedroom2|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:36:59|Device ID: Door-Bathroom|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:37:00|Device ID: Door-Entrance|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:37:04|Device ID: Door-Entrance|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:04|Device ID: Door-Bathroom|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:05|Device ID: Door-Bedroom2|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:05|Device ID: Door-Bedroom1|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:05|Device ID: Door-Garage|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:37:06|Device ID: Door-Living Room|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:06|Device ID: Door-Garage|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Closed
+Timestamp: 2024-04-08 18:37:48|Device ID: Window-Bathroom 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:37:49|Device ID: Window-Bathroom 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Closed
+Timestamp: 2024-04-08 18:37:52|Device ID: Window-Garage 1|Event Triggered by: s|Event Type: Window State Change|Event Description: Window has been Opened
+Timestamp: 2024-04-08 18:38:03|Device ID: Door-Living Room|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:38:05|Device ID: Door-Entrance|Event Triggered by: s|Event Type: Door State Change|Event Description: Door has been Opened
+Timestamp: 2024-04-08 18:40:53|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:53|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:53|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:55|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: SHH|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Parent|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: SHH|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Children|Updated Permissions: Outside Permission: falseand Inside Permission: false|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: SHH|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
