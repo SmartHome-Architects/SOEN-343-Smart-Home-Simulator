@@ -105,7 +105,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
             locationComboBox.addItem(roomName);
         }
     }
-
+//This class, EditHouseInhabitantsDialog, represents a dialog window for editing the inhabitants of a house. It allows users to change the location of an inhabitant within the house and provides functionality to save or cancel the changes.
     private void layoutComponents() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.add(new JLabel("Inhabitant:"));
