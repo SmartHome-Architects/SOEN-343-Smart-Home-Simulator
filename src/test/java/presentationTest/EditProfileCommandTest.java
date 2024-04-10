@@ -1,8 +1,8 @@
 package presentationTest;
 
 import org.junit.Test;
-import presentation.Swing.command.EditProfileCommand;
 import presentation.Swing.command.UserAccountManager;
+import presentation.Swing.command.EditProfileCommand;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
