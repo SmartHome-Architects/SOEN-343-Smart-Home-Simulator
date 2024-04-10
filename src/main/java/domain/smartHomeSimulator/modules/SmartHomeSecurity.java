@@ -2,6 +2,7 @@ package domain.smartHomeSimulator.modules;
 
 import domain.sensors.Door;
 import domain.sensors.Window;
+import domain.user.Users;
 import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
@@ -64,11 +65,45 @@ public class SmartHomeSecurity {
     public boolean isMotionDetectorActive() {
         return motionDetectorActive;
     }
-
-    // Method to toggle motion detector state
     public void toggleMotionDetector() {
-        motionDetectorActive = !motionDetectorActive;
+        if (!isAwayModeActive()) {
+            motionDetectorActive = !motionDetectorActive;
+            if (motionDetectorActive && isUserInside()) {
+                // If motion detector is activated and a user is inside, take necessary action
+                System.out.println("Motion detected inside the house.");
+                // Implement action here, such as displaying an icon or sending a notification
+            }
+        } else {
+            System.out.println("Cannot activate motion detector when away mode is active.");
+        }
     }
+
+
+    // Method to check if any user is inside when motion detector is active
+    public boolean isUserInside() {
+        List<String> userLocations = userAccountManager.getAllUsersLocations();
+        for (String location : userLocations) {
+            if (!"Outside".equals(location)) {
+                return true; // At least one user is inside
+            }
+        }
+        return false; // No user is inside
+    }
+
+    public String getUserInside() {
+        List<String> usernames = userAccountManager.getAllUsernames();
+        for (String username : usernames) {
+            String location = userAccountManager.getUserLocation(username);
+            if (!"Outside".equals(location)) {
+                return username; // Return the username of the user inside
+            }
+        }
+        return null; // Return null if no user is inside
+    }
+
+
+
+
 
     // Method to handle motion detector activation
     private void activateMotionDetector() {
