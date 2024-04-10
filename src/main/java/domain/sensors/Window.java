@@ -1,11 +1,9 @@
 package domain.sensors;
 
 import domain.house.Coordinate;
-import domain.user.UserSingleton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class Window {
     private String name;

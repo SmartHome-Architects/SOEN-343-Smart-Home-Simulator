@@ -1,5 +1,9 @@
 package presentation.Swing.command;
 
+import domain.Permission.Permission;
+import domain.user.UserPermissionInitializer;
+import domain.user.Users;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +14,8 @@ public class UserAccountManager {
     private final File loggedInUserFile;
     private final File usersFile;
     private final String databaseDirectory;
+
+    private Users lastAddedUser;
 
     public UserAccountManager(String usersFilePath) {
         this.loggedInUserFile = new File("database/userNameLoggedIn.txt");
@@ -34,9 +40,12 @@ public class UserAccountManager {
 
         String loggedInUsername = getLoggedInUsername();
         if (loggedInUsername != null) {
+
+            String defaultLocation = "Entrance"; // Set default location to "Entrance"
+
             // Append user to users.txt
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + "Users.txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
@@ -44,11 +53,16 @@ public class UserAccountManager {
 
             // Append user to the file named after the logged-in user
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(databaseDirectory + loggedInUsername + ".txt", true))) {
-                writer.write(username + "|" + email + "|" + password + "|" + accessibility);
+                writer.write(username + "|" + email + "|" + password + "|" + accessibility + "|" + defaultLocation);
                 writer.newLine();
             } catch (IOException e) {
                 handleFileError("Error adding user", e);
             }
+
+            Permission permission = UserPermissionInitializer.initializePermission("database/DoorPermission.txt", "database/LightPermission.txt", "database/WindowPermission.txt", "database/SHHPermission.txt","database/SHPPermission.txt", accessibility);
+            // Set the last added user
+            lastAddedUser = new Users(username, email, password, accessibility, defaultLocation, permission);
+
         } else {
             System.err.println("No user is logged in. Cannot add user.");
         }
@@ -68,7 +82,6 @@ public class UserAccountManager {
         List<String> existingUsernames = getAllUsernames(); // Implement this method to get existing usernames
         return existingUsernames.contains(username);
     }
-
 
 
     private List<String> getAllUsernames() {
@@ -155,6 +168,8 @@ public class UserAccountManager {
 
     public void editUser(String oldUsername, String username, String email, String password, String accessibility) {
         String loggedInUsername = getLoggedInUsername();
+        String currentLocation = "";
+
         if (loggedInUsername != null) {
             File userFile = new File(databaseDirectory + loggedInUsername + ".txt");
             List<String> lines = new ArrayList<>();
@@ -163,7 +178,12 @@ public class UserAccountManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith(oldUsername + "|")) {
-                        line = username + "|" + email + "|" + password + "|" + accessibility;
+
+                        // Preserve the location information
+                        String[] parts = line.split("\\|");
+                        currentLocation = parts.length >= 5 ? parts[4] : ""; // Get the location
+                        line = username + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
+
                         userFound = true;
                     }
                     lines.add(line);
@@ -188,19 +208,19 @@ public class UserAccountManager {
             }
 
             // Update the user entry in Users.txt
-            updateUserInUsersFile(oldUsername, username, email, password, accessibility);
+            updateUserInUsersFile(oldUsername, username, email, password, accessibility, currentLocation);
         } else {
             System.err.println("No user is logged in.");
         }
     }
 
-    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility) {
+    private void updateUserInUsersFile(String oldUsername, String newUsername, String email, String password, String accessibility, String currentLocation) {
         List<String> updatedLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith(oldUsername + "|")) {
-                    line = newUsername + "|" + email + "|" + password + "|" + accessibility;
+                    line = newUsername + "|" + email + "|" + password + "|" + accessibility + "|" + currentLocation;
                 }
                 updatedLines.add(line);
             }
@@ -288,29 +308,32 @@ public class UserAccountManager {
     }
 
     public void updateUserLocation(String username, String newLocation) {
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length >= 5 && parts[0].equals(username)) {
-                    parts[4] = newLocation; // Update the location
+        try {
+            File tempFile = new File(usersFile.getAbsolutePath() + ".tmp");
+            try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length >= 5 && parts[0].equals(username)) {
+                        parts[4] = newLocation; // Update the location
+                        line = String.join("|", parts); // Reconstruct the line with updated location
+                    }
+                    writer.write(line);
+                    writer.newLine();
                 }
-                lines.add(String.join("|", parts)); // Reconstruct the line
             }
-        } catch (IOException e) {
-            handleFileError("Error updating user location", e);
-            return;
-        }
-        // Write the updated content back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
+            // Replace the original file with the temporary file
+            if (!tempFile.renameTo(usersFile)) {
+                throw new IOException("Could not rename temporary file to the original file.");
             }
         } catch (IOException e) {
             handleFileError("Error updating user location", e);
         }
+    }
+
+    public Users getLastAddedUser() {
+        return lastAddedUser;
     }
 
 }
