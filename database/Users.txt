@@ -1,8 +1,2 @@
-rana|rana@gmail.com|rana|Parent|Bedroom1
-d|d|d|Parent|Garage
-gigi|gigi@gmail.com|gigi|Children|Living Room
-f|f|f|Parent|Bedroom2
-fofo|fofo@gmail.com|fofo|Child|Bedroom2
-roro|roro@gmail.com|roro|Child|Bedroom1
-mar|mar@gmail.com|mar|Child|Entrance
-rrr|rrr@gmail.com|rrr|Child|Bathroom
+j|j@gmail.com|j|Children|Garage
+s|s@gmail.com|s|Parent|Outside

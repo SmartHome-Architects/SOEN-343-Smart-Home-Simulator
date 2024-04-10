@@ -2,6 +2,7 @@ package domain.house;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class Zone implements Observer {
     public Zone(String zoneName){
         this.zoneName = zoneName;
     }
-    public List<Room> getZoneRooms() {
+    public List<Room> getZoneRooms(){
         return zoneRooms;
     }
 
@@ -47,12 +48,12 @@ public class Zone implements Observer {
         this.desiredZoneTemperature = temp;
     }
 
-    public double getDesiredZoneTemperature() {
+    public double getDesiredZoneTemperature(){
         return desiredZoneTemperature;
     }
 
     @Override
-    public void update(double tempRate, boolean isActive, double outsideTemp, Map<Room, JLabel> temperatureLabels) {
+    public void update(double tempRate, boolean isActive, double outsideTemp, Map<Room, JLabel> temperatureLabels, boolean isAwayModeActive){
 
         double temp_outside = outsideTemp;
 
@@ -99,8 +100,13 @@ public class Zone implements Observer {
                     }
                     else if(temp_outside >= desiredZoneTemperature){
                         room.getHeater().turnOff();
-                        for(Window w: room.getWindows()) {
-                            w.setOpen(true);
+                        if(!isAwayModeActive){
+                            for(Window w: room.getWindows()) {
+                                w.setOpen(true);
+                            }
+                        }
+                        else{
+                            room.getHeater().turnOn();
                         }
                     }
                     double temp = roomTemp + tempRate;
@@ -116,8 +122,15 @@ public class Zone implements Observer {
                     }
                     else if(temp_outside < desiredZoneTemperature){
                         room.getAcUnit().turnOff();
-                        for(Window w: room.getWindows()) {
-                            w.setOpen(true);
+                        room.getHeater().turnOff();
+                        //
+                        if(!isAwayModeActive){
+                            for(Window w: room.getWindows()) {
+                                w.setOpen(true);
+                            }
+                        }
+                        else {
+                            room.turnACOn();
                         }
                     }
                     double temp = roomTemp - tempRate;
@@ -150,7 +163,7 @@ public class Zone implements Observer {
         }
     }
 
-    private double readZoneDesiredTemp() throws IOException {
+    private double readZoneDesiredTemp() throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         String file = "database/zones.json";
         double temp = 0;

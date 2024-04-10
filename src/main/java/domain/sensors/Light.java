@@ -1,9 +1,16 @@
 package domain.sensors;
 
+import domain.Permission.Permission;
 import domain.house.Coordinate;
+import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
+import domain.user.Users;
+import domain.user.UsersInitializer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Objects;
 
 public class Light {
     private String name;

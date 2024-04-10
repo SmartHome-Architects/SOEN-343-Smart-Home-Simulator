@@ -3,9 +3,12 @@ package presentationTest;
 import domain.house.Coordinate;
 import domain.house.House;
 import domain.sensors.Door;
+import domain.sensors.Light;
 import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import org.junit.Before;
 import org.junit.Test;
+import presentation.Swing.SHC.SHCDisplay;
+import presentation.Swing.command.UserAccountManager;
 
 import javax.swing.*;
 import java.awt.*;

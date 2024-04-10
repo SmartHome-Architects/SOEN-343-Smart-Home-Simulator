@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.Permission.Permission;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

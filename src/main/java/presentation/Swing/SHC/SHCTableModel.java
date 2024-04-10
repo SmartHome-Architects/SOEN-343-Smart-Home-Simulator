@@ -1,9 +1,8 @@
 package presentation.Swing.SHC;
 
 import domain.house.House;
-import domain.sensors.Door;
-import domain.sensors.Light;
-import domain.sensors.Window;
+import domain.smartHomeSimulator.modules.SmartHomeCore;
+import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
 import presentation.Swing.LogEntry;
@@ -24,6 +23,7 @@ import java.util.Objects;
 public class SHCTableModel<T> {
     private static LoggedInUser user;
     private LogEntry logEntry;
+    private  static SmartHomeSecurity shp;
 
     public static <T> DefaultTableModel createTableModel(List<T> items, SingleItem<T> singleItem, JTextArea textArea1) {
         List<Object[]> data = getData(items, singleItem);
@@ -53,7 +53,8 @@ public class SHCTableModel<T> {
         return data;
     }
 
-    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1) {
+    public static JTable createTable(DefaultTableModel model, House h, String selectedItem, JTextArea textArea1, SmartHomeSecurity security) {
+        shp = security;
         return new JTable(model) {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
@@ -78,13 +79,13 @@ public class SHCTableModel<T> {
         };
     }
 
-    static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
-        public CheckBoxRenderer() {
+    static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer{
+        public CheckBoxRenderer(){
             setHorizontalAlignment(SwingConstants.LEFT);
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
             setSelected(value != null && (boolean) value);
             return this;
         }
@@ -102,6 +103,7 @@ public class SHCTableModel<T> {
             checkBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SmartHomeCore shc = new SmartHomeCore();
                     boolean isChecked = checkBox.isSelected();
                     int column = 0;
                     int row = table.getSelectedRow();
@@ -122,15 +124,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Window", component, state, "Window State Change", textArea1);
-
-                        List<Window> windows = house.getWindows();
-                            for (Window w : windows) {
-                                String window = w.getLocation() + " " + w.getWindowID();
-                                if (window.equals(component)) {
-                                    // Perform action if user has permission
-                                    w.setOpen(isChecked);
-                                }
-                            }
+                            shc.windowAction(house,component,isChecked);
                          }else{
                             textArea1.setText("You do not have permission to open/close windows");
                             checkBox.setSelected(!isChecked);
@@ -148,14 +142,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Door", component, state, "Door State Change", textArea1);
-
-                            List<Door> doors = house.getDoors();
-                            for (Door d : doors) {
-                                String door = d.getLocation();
-                                if (door.equals(component)) {
-                                    d.setOpen(isChecked);
-                                }
-                            }
+                            shc.doorAction(house,component,isChecked);
                         }else {
                             textArea1.setText("You do not have permission to open/close doors");
                             checkBox.setSelected(!isChecked);
@@ -173,14 +160,7 @@ public class SHCTableModel<T> {
 
                             //Log entry for textfile
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Light", component, state, "Light State Change", textArea1);
-
-                            List<Light> lights = house.getLights();
-                            for (Light l : lights) {
-                                String window = l.getLocation() + " " + l.getLightID();
-                                if (window.equals(component)) {
-                                    l.setOpen(isChecked);
-                                }
-                            }
+                            shc.lightAction(house,component,isChecked);
                         } else {
                             textArea1.setText("You do not have permission to open/close lights");
                             checkBox.setSelected(!isChecked);
@@ -191,23 +171,25 @@ public class SHCTableModel<T> {
         }
 
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            checkBox.setSelected(value != null && (boolean) value);
-            // Disable checkbox if user doesn't have permission
-            checkBox.setEnabled(checkBox.isSelected() || selectedItem.equals("Lights") || selectedItem.equals("Doors") || selectedItem.equals("Windows"));
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column){
+            if(shp.isAwayModeActive()){
+                checkBox.setEnabled(false);
+                return null;
+            }
+            else{
+                checkBox.setSelected(value != null && (boolean) value);
+                checkBox.setEnabled(checkBox.isSelected() || selectedItem.equals("Lights") || selectedItem.equals("Doors") || selectedItem.equals("Windows"));
+            }
             return checkBox;
         }
 
         @Override
-        public Object getCellEditorValue() {
+        public Object getCellEditorValue(){
             return checkBox.isSelected();
         }
     }
 
-
-
-
-    public interface SingleItem<T> {
+    public interface SingleItem<T>{
         Object[] extractData(T item);
     }
 }

@@ -1,9 +1,12 @@
 package domain.sensors;
 
 import domain.house.Coordinate;
+import domain.user.LoggedInUser;
+import domain.user.UserSingleton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Door {
     private String name;

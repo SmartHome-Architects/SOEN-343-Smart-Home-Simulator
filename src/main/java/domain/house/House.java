@@ -1,10 +1,7 @@
 package domain.house;
 
 
-import domain.sensors.Door;
-import domain.sensors.Light;
-import domain.sensors.TempControlUnit;
-import domain.sensors.Window;
+import domain.sensors.*;
 
 import java.util.ArrayList;
 import java.util.List;
