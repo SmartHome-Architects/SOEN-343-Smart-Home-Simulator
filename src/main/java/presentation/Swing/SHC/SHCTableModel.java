@@ -126,7 +126,7 @@ public class SHCTableModel<T> {
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Window", component, state, "Window State Change", textArea1);
                             shc.windowAction(house,component,isChecked);
                          }else{
-                            System.out.println("You do not have permission to open/close windows");
+                            textArea1.setText("You do not have permission to open/close windows");
                             checkBox.setSelected(!isChecked);
                         }
                     }
@@ -144,7 +144,7 @@ public class SHCTableModel<T> {
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Door", component, state, "Door State Change", textArea1);
                             shc.doorAction(house,component,isChecked);
                         }else {
-                            System.out.println("You do not have permission to open/close doors");
+                            textArea1.setText("You do not have permission to open/close doors");
                             checkBox.setSelected(!isChecked);
                         }
 
@@ -162,7 +162,7 @@ public class SHCTableModel<T> {
                             LogEntry.SHClog(user.getLoggedInUser().getUsername(), "Light", component, state, "Light State Change", textArea1);
                             shc.lightAction(house,component,isChecked);
                         } else {
-                            System.out.println("You do not have permission to open/close lights");
+                            textArea1.setText("You do not have permission to open/close lights");
                             checkBox.setSelected(!isChecked);
                         }
                     }
