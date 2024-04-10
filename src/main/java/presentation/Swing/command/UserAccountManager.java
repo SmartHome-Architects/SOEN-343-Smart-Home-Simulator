@@ -69,9 +69,24 @@ public class UserAccountManager {
         return existingUsernames.contains(username);
     }
 
+    public List<String> getAllUsersLocations() {
+        List<String> userLocations = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    userLocations.add(parts[4]); // Assuming location is stored in the fifth column
+                }
+            }
+        } catch (IOException e) {
+            handleFileError("Error reading Users.txt", e);
+        }
+        return userLocations;
+    }
 
 
-    private List<String> getAllUsernames() {
+    public List<String> getAllUsernames() {
         List<String> usernames = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line;
