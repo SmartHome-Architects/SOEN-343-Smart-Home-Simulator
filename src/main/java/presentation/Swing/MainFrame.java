@@ -7,43 +7,39 @@ import domain.dateTime.Date;
 import domain.dateTime.Time;
 import domain.editbutton.EditHouseInhabitantsDialog;
 import domain.house.House;
-
 import domain.house.Room;
-import domain.sensors.*;
+import domain.sensors.Door;
+import domain.sensors.Light;
+import domain.sensors.TempControlUnit;
 import domain.sensors.Window;
 import domain.smartHomeSimulator.modules.SmartHomeHeating;
 import domain.smartHomeSimulator.modules.SmartHomeSecurity;
 import domain.smartHomeSimulator.modules.SmartHomeSimulator;
 import domain.user.LoggedInUser;
 import domain.user.UserSingleton;
-
 import domain.user.Users;
 import domain.user.UsersInitializer;
 import presentation.Swing.LoginAndSignUp.LogIn;
 import presentation.Swing.SHC.SHCDisplay;
-import presentation.Swing.SHH.ZoneManager;
 import presentation.Swing.SHH.RoomTemperature;
-import presentation.Swing.command.AddProfileCommand;
-import presentation.Swing.command.DeleteProfileCommand;
-import presentation.Swing.command.EditProfileCommand;
-import presentation.Swing.command.ProfileManager;
-import presentation.Swing.command.UserAccountManager;
+import presentation.Swing.SHH.ZoneManager;
+import presentation.Swing.command.*;
 import presentation.Swing.managePermission.PermissionsPopup;
 
 import javax.swing.*;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -295,7 +291,7 @@ public class MainFrame {
         });
 
 
-        // Assuming you have a JLabel locationTag to display the location
+    // Assuming you have a JLabel locationTag to display the location
         String loggedInUsername = userAccountManager.getLoggedInUsername();
         String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
         locationTag.setText(oldLocation);
@@ -459,10 +455,10 @@ public class MainFrame {
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
 
-        // Keep track of whether any user is in a room
+    // Keep track of whether any user is in a room
         boolean userInAnyRoom = false;
 
-        // Inside the method or event where user icons are added to the layout
+    // Inside the method or event where user icons are added to the layout
         for (Users u : usersList) {
             String location = u.getLocation();
             boolean userInRoom = false;
@@ -505,7 +501,7 @@ public class MainFrame {
             userInAnyRoom |= userInRoom;
         }
 
-        // After processing all users, check if any user is in any room
+    // After processing all users, check if any user is in any room
         if (!userInAnyRoom) {
             // If no user is in any room, turn off lights in all rooms
             for (Room r : rooms) {
@@ -587,7 +583,7 @@ public class MainFrame {
         //-------------------------------------------------------------------------------------------------------------
 
 
-        // ON/OFF SHH button
+     // ON/OFF SHH button
         SHHisOn = false;
         onOffSHHButton.addActionListener(new ActionListener() {
             @Override
