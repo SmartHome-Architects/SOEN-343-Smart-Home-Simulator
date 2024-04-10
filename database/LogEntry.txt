@@ -102,3 +102,4 @@ Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Manageme
 Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: SHH|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
 Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Light|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
 Timestamp: 2024-04-08 18:40:57|Executed through: SHS Module|Event Type: Management of Permissions|Event Description: Unknown Event Type|Permission Category: Door|User Type: Guest|Updated Permissions: Outside Permission: trueand Inside Permission: true|Event Triggered by: s
+

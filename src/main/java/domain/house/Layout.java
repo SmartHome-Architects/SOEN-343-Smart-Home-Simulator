@@ -47,7 +47,7 @@ public class Layout {
             }
         return rooms;
     }
-
+// * It contains static methods to load the layout file, parse its contents, and create Room objects with sensors based on the layout information.
     private static Coordinate createCoordinates(JsonNode node){
         return new Coordinate(node.path("x").asInt(),node.path("y").asInt());
     }

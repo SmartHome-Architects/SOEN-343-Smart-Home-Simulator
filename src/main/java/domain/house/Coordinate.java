@@ -9,7 +9,7 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
-
+//This class, Coordinate, represents a basic model for storing coordinates in a two-dimensional space.
     public int getX() {
         return x;
     }

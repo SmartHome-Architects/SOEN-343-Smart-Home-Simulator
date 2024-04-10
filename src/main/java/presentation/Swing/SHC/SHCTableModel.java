@@ -132,7 +132,7 @@ public class SHCTableModel<T> {
                                 }
                             }
                          }else{
-                            System.out.println("You do not have permission to open/close windows");
+                            textArea1.setText("You do not have permission to open/close windows");
                             checkBox.setSelected(!isChecked);
                         }
                     }
@@ -157,7 +157,7 @@ public class SHCTableModel<T> {
                                 }
                             }
                         }else {
-                            System.out.println("You do not have permission to open/close doors");
+                            textArea1.setText("You do not have permission to open/close doors");
                             checkBox.setSelected(!isChecked);
                         }
 
@@ -182,7 +182,7 @@ public class SHCTableModel<T> {
                                 }
                             }
                         } else {
-                            System.out.println("You do not have permission to open/close lights");
+                            textArea1.setText("You do not have permission to open/close lights");
                             checkBox.setSelected(!isChecked);
                         }
                     }

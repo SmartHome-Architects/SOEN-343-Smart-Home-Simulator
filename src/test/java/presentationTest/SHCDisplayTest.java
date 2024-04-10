@@ -21,13 +21,15 @@ public class SHCDisplayTest {
 
     private JTextArea textArea1;
 
+    private String user;
+
     @Before
     public void setUp() {
         checkBoxPanel = new JPanel();
         // Mock values for House and selectedItem
         House mockHouse = new House(); // You can create a mock House object according to your test needs
         String mockSelectedItem = "Selected"; // You can set a mock value for selectedItem
-        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("f.txt")));
+        shcDisplay = new SHCDisplay(checkBoxPanel, mockHouse, mockSelectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("f.txt"), user, textArea1));
     }
 
 

@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
 
 public class SHCTableModelTest {
 
+    private String user;
+
     @Test
     public void testCreateTableModel() {
         // Test createTableModel method
@@ -43,7 +45,7 @@ public class SHCTableModelTest {
         String selectedItem = "Doors";
         JTextArea textArea1 = new JTextArea();
         DefaultTableModel model = new DefaultTableModel(new Object[][]{{"Living Room Door", "Open"}}, new Object[]{"Room Name", "Open/Close"});
-        JTable table = SHCTableModel.createTable(model,house,selectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("a.txt")));
+        JTable table = SHCTableModel.createTable(model,house,selectedItem, textArea1, new SmartHomeSecurity(new UserAccountManager("a.txt"), user, textArea1));
 
         assertNotNull("Table should not be null", table);
         assertEquals("Table should have correct number of rows", 1, table.getRowCount());
