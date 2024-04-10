@@ -713,9 +713,9 @@ public class MainFrame {
                         MotionDetectorButton.setText("Off");
                     }
                 } else {
-                    // Display a popup message indicating that the user is inside
-                    JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
-
+                        // Display a popup message indicating that the user is inside
+                        JOptionPane.showMessageDialog(null, "Cannot activate away mode. User must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }else {
                     System.out.println("You do not have SHP permission");
                     textArea1.setText("You do not have SHP permission");
