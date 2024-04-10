@@ -295,7 +295,7 @@ public class MainFrame {
         });
 
 
-    // Assuming you have a JLabel locationTag to display the location
+        // Assuming you have a JLabel locationTag to display the location
         String loggedInUsername = userAccountManager.getLoggedInUsername();
         String oldLocation = userAccountManager.getUserLocation(loggedInUsername);
         locationTag.setText(oldLocation);
@@ -459,10 +459,10 @@ public class MainFrame {
         List<Users> usersList = UsersInitializer.getAllUsers();
         List<Room> rooms = h.getRooms();
 
-    // Keep track of whether any user is in a room
+        // Keep track of whether any user is in a room
         boolean userInAnyRoom = false;
 
-    // Inside the method or event where user icons are added to the layout
+        // Inside the method or event where user icons are added to the layout
         for (Users u : usersList) {
             String location = u.getLocation();
             boolean userInRoom = false;
@@ -505,7 +505,7 @@ public class MainFrame {
             userInAnyRoom |= userInRoom;
         }
 
-    // After processing all users, check if any user is in any room
+        // After processing all users, check if any user is in any room
         if (!userInAnyRoom) {
             // If no user is in any room, turn off lights in all rooms
             for (Room r : rooms) {
@@ -587,7 +587,7 @@ public class MainFrame {
         //-------------------------------------------------------------------------------------------------------------
 
 
-     // ON/OFF SHH button
+        // ON/OFF SHH button
         SHHisOn = false;
         onOffSHHButton.addActionListener(new ActionListener() {
             @Override
