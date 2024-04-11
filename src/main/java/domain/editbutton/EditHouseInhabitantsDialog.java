@@ -179,7 +179,7 @@ public class EditHouseInhabitantsDialog extends JDialog {
 
         if (newLocation.equals("Outside")) {
             System.out.println("Moving " + inhabitant + " outside the home");
-            jLabel.hide();
+
         } else {
             System.out.println("Placing " + inhabitant + " from " + oldLocation + " to " + newLocation);
 
