@@ -43,12 +43,17 @@ public class SmartHomeSecurity {
         this.doors = doors;
         this.doorLabels = doorLabels;
     }
-
-    // Method to toggle Away Mode
     public void toggleAwayMode() {
-        String loggedInUsername = userAccountManager.getLoggedInUsername();
-        if (loggedInUsername != null && "Outside".equals(userAccountManager.getUserLocation(loggedInUsername))) {
+        // Get the locations of all users
+        List<String> userLocations = userAccountManager.getAllUsersLocations();
+
+        // Check if any user is inside
+        boolean anyUserInside = userLocations.stream().anyMatch(location -> !"Outside".equals(location));
+
+        if (!anyUserInside) {
+            // All users are outside, toggle away mode
             awayModeActive = !awayModeActive;
+
             if (awayModeActive) {
                 closeAllWindowsAndDoors(); // Close all windows and doors when away mode is activated
                 activateMotionDetector(); // Activate motion detector when away mode is activated
@@ -61,7 +66,9 @@ public class SmartHomeSecurity {
                 deactivateMotionDetector(); // Deactivate motion detector when away mode is deactivated
             }
         } else {
-            System.out.println("Cannot activate away mode. User must be outside.");
+            // Display error message if any user is inside
+            System.out.println("Cannot activate away mode. User(s) must be outside.");
+            JOptionPane.showMessageDialog(null, "Cannot activate away mode. User(s) must be outside.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
