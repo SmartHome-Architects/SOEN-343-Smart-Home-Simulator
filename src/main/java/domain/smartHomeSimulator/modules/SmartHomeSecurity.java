@@ -81,8 +81,11 @@ public class SmartHomeSecurity {
     public boolean isMotionDetectorActive() {
         return motionDetectorActive;
     }
+
+
+
     public void toggleMotionDetector() {
-        if (!isAwayModeActive()) {
+        if (isAwayModeActive()) { // Check if away mode is active
             motionDetectorActive = !motionDetectorActive;
             if (motionDetectorActive && isUserInside()) {
                 // If motion detector is activated and a user is inside, take necessary action
@@ -90,9 +93,11 @@ public class SmartHomeSecurity {
                 // Implement action here, such as displaying an icon or sending a notification
             }
         } else {
-            System.out.println("Cannot activate motion detector when away mode is active.");
+            System.out.println("Cannot activate motion detector when away mode is not active.");
         }
     }
+
+
 
 
     // Method to check if any user is inside when motion detector is active

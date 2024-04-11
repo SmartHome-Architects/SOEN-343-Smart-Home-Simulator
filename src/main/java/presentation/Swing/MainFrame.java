@@ -129,7 +129,7 @@ public class MainFrame {
 
     private ImageIcon userIcon;
 
-    private ImageIcon motionDetectorIcone;
+    private ImageIcon motionDetectorIcon;
 
     private boolean isFrozen = false;
     LoggedInUser user;
@@ -445,15 +445,15 @@ public class MainFrame {
 
         // Load user icon.
         userIcon = new ImageIcon("images/UserIcon.png");
-        motionDetectorIcone = new ImageIcon("images/motiondetector.png");
+        motionDetectorIcon = new ImageIcon("images/motiondetector.png");
 
         Image userImage = userIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
 
-        Image motiondetector = motionDetectorIcone.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        Image motiondetector = motionDetectorIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
 
         userIcon = new ImageIcon(userImage);
 
-        motionDetectorIcone = new ImageIcon(motiondetector);
+        motionDetectorIcon = new ImageIcon(motiondetector);
 
         shs.loadLightIcons(h,houseImage,lightLabels);
         shs.loadDoorIcons(h,houseImage,doorLabels,smartHomeSecurity);
@@ -466,8 +466,7 @@ public class MainFrame {
 
     // Keep track of whether any user is in a room
         boolean userInAnyRoom = false;
-
-    // Inside the method or event where user icons are added to the layout
+// Inside the method where user icons are added to the layout
         for (Users u : usersList) {
             String location = u.getLocation();
             boolean userInRoom = false;
@@ -477,7 +476,6 @@ public class MainFrame {
                     JLabel label = new JLabel();
                     label.setName("house");
                     label.setIcon(userIcon);
-                    label.setIcon(motionDetectorIcone);
                     if (u.getUsername().equals(user.getLoggedInUser().getUsername())) {
                         label.setForeground(Color.red);
                         label.setText(u.getUsername());
@@ -502,6 +500,11 @@ public class MainFrame {
                             // The associated JLabel's icon will be updated automatically
                         }
                     }
+
+//                    // Check if the user enters any room other than "Outside" and away mode is on
+//                    if (!location.equals("Outside") && smartHomeSecurity.isAwayModeActive()) {
+//                        label.setIcon(motionDetectorIcon); // Set motion detector icon
+//                    }
 
                     // Break the loop once user is found in the room
                     break;
@@ -647,6 +650,7 @@ public class MainFrame {
                     if (smartHomeSecurity.isAwayModeActive()) {
                         onOffAwayModeButton.setText("On");
                         MotionDetectorButton.setEnabled(true); // Enable motion detector button
+
                     } else {
                         onOffAwayModeButton.setText("Off");
                         MotionDetectorButton.setEnabled(false); // Disable motion detector button
@@ -667,59 +671,50 @@ public class MainFrame {
                 }
             }
         });
+// Motion detector button action listener
+        MotionDetectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if away mode is active before toggling motion detector
+                if (smartHomeSecurity.isAwayModeActive()) {
+                    // Toggle motion detector state in SmartHomeSecurity
+                    smartHomeSecurity.toggleMotionDetector();
 
-//
-//
-//// Motion detector button action listener
-//        MotionDetectorButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Check the current state of the motion detector
-//                boolean motionDetectorActiveBefore = smartHomeSecurity.isMotionDetectorActive();
-//
-//                // Toggle motion detector state in SmartHomeSecurity
-//                smartHomeSecurity.toggleMotionDetector();
-//
-//                // Check the new state of the motion detector after toggling
-//                boolean motionDetectorActiveAfter = smartHomeSecurity.isMotionDetectorActive();
-//
-//                // Check if any user is inside when motion detector is active
-//                String userInside = smartHomeSecurity.getUserInside();
-//                if (motionDetectorActiveAfter && userInside != null) {
-//                    // Perform actions if a user is detected inside
-//                    MotionDetectorButton.setIcon(motionDetectorIcone); // Set the motion detector icon
-//                } else {
-//                    // Set a default icon when no user is detected
-//                    MotionDetectorButton.setIcon(null); // Set to null or any other appropriate icon
-//                }
-//
-//                // Update text of motion detector button based on its state
-//                if (motionDetectorActiveAfter) {
-//                    MotionDetectorButton.setText("On");
-//                    // Start a timer to call the police after 3 seconds
-//                    Timer timer = new Timer(3000, new ActionListener() {
-//                        @Override
-//                        public void actionPerformed(ActionEvent e) {
-//                            // Display a popup alert message when the timer expires
-//                            JOptionPane.showMessageDialog(null, "Motion detected for more than 3 seconds! Calling the police.", "Alert", JOptionPane.WARNING_MESSAGE);
-//                            // Here you can add code to call the police
-//                        }
-//                    });
-//                    timer.setRepeats(false); // Ensure the timer only runs once
-//                    timer.start(); // Start the timer
-//                } else {
-//                    MotionDetectorButton.setText("Off");
-//                }
-//
-//                // Update the away mode button text based on the motion detector state
-//                if (smartHomeSecurity.isMotionDetectorActive()) {
-//                    onOffAwayModeButton.setText("On");
-//                } else {
-//                    onOffAwayModeButton.setText("Off");
-//                }
-//            }
-//        });
+                    // Check the new state of the motion detector after toggling
+                    boolean motionDetectorActiveAfter = smartHomeSecurity.isMotionDetectorActive();
 
+                    // Update text of motion detector button based on its state
+                    if (motionDetectorActiveAfter) {
+                        MotionDetectorButton.setText("On");
+
+                        // Set the motion detector icon
+                        MotionDetectorButton.setIcon(motionDetectorIcon); // Make sure motionDetectorIcon is properly initialized
+
+                        // Check if any user is inside when motion detector is activated
+                        if (smartHomeSecurity.isUserInside()) {
+                            // Perform actions if a user is detected inside
+                            // Start a timer to call the police after 3 seconds
+                            Timer timer = new Timer(3000, new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    // Display a popup alert message when the timer expires
+                                    JOptionPane.showMessageDialog(null, "Motion detected for more than 3 seconds! Calling the police.", "Alert", JOptionPane.WARNING_MESSAGE);
+                                    // Here you can add code to call the police
+                                }
+                            });
+                            timer.setRepeats(false); // Ensure the timer only runs once
+                            timer.start(); // Start the timer
+                        }
+                    } else {
+                        MotionDetectorButton.setText("Off");
+                        MotionDetectorButton.setIcon(null); // Set to null when motion detector is turned off
+                    }
+                } else {
+                    // Display error message if away mode is not active
+                    JOptionPane.showMessageDialog(null, "Cannot activate motion detector when away mode is not active.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
 
 
